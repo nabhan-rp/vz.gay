@@ -1,5 +1,5 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "vz-gay-portal"
+name = "vz-gay"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = "dist"
 
@@ -9,18 +9,18 @@ AUTH0_DOMAIN = "acccounts.vz.gay"
 ACCOUNT_DASHBOARD_URL = "https://myaccount.vz.gay"
 SPONSOR_DOMAIN = "jajanserver.com"
 
-# Cloudflare D1 Database (Edge SQLite)
-[[d1_databases]]
-binding = "DB"
-database_name = "vz_portal_db"
-database_id = "00000000-0000-0000-0000-000000000000"
-
-# Cloudflare KV Namespace (Edge Catalog Cache & 301 Redirect Map)
-[[kv_namespaces]]
-binding = "PORTAL_KV"
-id = "00000000000000000000000000000000"
-
-# Cloudflare R2 Bucket (Edge Object Storage for Media & Brand Assets)
-[[r2_buckets]]
-binding = "ASSETS_BUCKET"
-bucket_name = "vz-gay-assets"
+# Opsional: Hubungkan binding D1, KV, dan R2 melalui Cloudflare Pages Dashboard
+# (Settings -> Functions -> Bindings) atau aktifkan blok di bawah setelah ID tersedia:
+#
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "vz_portal_db"
+# database_id = "<YOUR_D1_DATABASE_ID>"
+#
+# [[kv_namespaces]]
+# binding = "PORTAL_KV"
+# id = "<YOUR_KV_NAMESPACE_ID>"
+#
+# [[r2_buckets]]
+# binding = "ASSETS_BUCKET"
+# bucket_name = "vz-gay-assets"
