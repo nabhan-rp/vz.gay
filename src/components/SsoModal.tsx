@@ -24,7 +24,7 @@ export function SsoModal({ isOpen, lang, onClose }: SsoModalProps) {
 
   if (!isOpen) return null;
 
-  const auth0Domain = import.meta.env.VITE_AUTH0_DOMAIN || 'acccounts.vz.gay';
+  const auth0Domain = import.meta.env.VITE_AUTH0_DOMAIN || 'accounts.vz.gay';
   const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID || '';
   const accountPortalUrl = import.meta.env.VITE_ACCOUNT_PORTAL_URL || 'https://myaccount.vz.gay';
   const redirectUri =

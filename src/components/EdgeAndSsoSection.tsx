@@ -80,7 +80,7 @@ export function EdgeAndSsoSection({ lang, onOpenSso }: EdgeAndSsoSectionProps) {
                       onClick={onOpenSso}
                       className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
                     >
-                      acccounts.vz.gay
+                      accounts.vz.gay
                     </button>
                   </div>
                 )}

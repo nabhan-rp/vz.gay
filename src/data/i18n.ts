@@ -80,7 +80,7 @@ export const UI_COPY = {
       cards: [
         {
           title: 'Autentikasi Tunggal (SSO)',
-          meta: 'acccounts.vz.gay',
+          meta: 'accounts.vz.gay',
           desc: 'Masuk sekali melalui Auth0 SSO untuk mengakses berbagai layanan dan aplikasi di bawah domain *.vz.gay.',
         },
         {
@@ -127,11 +127,11 @@ export const UI_COPY = {
       dashboardLabel: 'Dasbor Akun Pengguna',
       statusReady: 'Konfigurasi Auth0 Client ID terdeteksi',
       statusStandby: 'Mode Pratinjau (Tambahkan VITE_AUTH0_CLIENT_ID untuk aktivasi produksi)',
-      launchLogin: 'Lanjutkan ke acccounts.vz.gay',
+      launchLogin: 'Lanjutkan ke accounts.vz.gay',
       openDashboard: 'Buka myaccount.vz.gay',
       close: 'Tutup',
       howItWorks:
-        'Seperti sistem sub-akun terpusat, seluruh layanan di bawah *.vz.gay berbagi sesi autentikasi yang diterbitkan oleh acccounts.vz.gay.',
+        'Seperti sistem sub-akun terpusat, seluruh layanan di bawah *.vz.gay berbagi sesi autentikasi yang diterbitkan oleh accounts.vz.gay.',
     },
     footer: {
       rights: 'vz.gay & jajanserver.com di bawah naungan PT Galeri Langkah Bahagia Yuwana (galbay).',
@@ -222,7 +222,7 @@ export const UI_COPY = {
       cards: [
         {
           title: 'Single Sign-On (SSO)',
-          meta: 'acccounts.vz.gay',
+          meta: 'accounts.vz.gay',
           desc: 'Sign in once via Auth0 SSO to access tools and applications across *.vz.gay subdomains.',
         },
         {
@@ -269,11 +269,11 @@ export const UI_COPY = {
       dashboardLabel: 'User Account Dashboard',
       statusReady: 'Auth0 Client ID configured',
       statusStandby: 'Preview Mode (Set VITE_AUTH0_CLIENT_ID to enable live OAuth redirect)',
-      launchLogin: 'Continue to acccounts.vz.gay',
+      launchLogin: 'Continue to accounts.vz.gay',
       openDashboard: 'Open myaccount.vz.gay',
       close: 'Close',
       howItWorks:
-        'Following a centralized subdomain architecture, services across *.vz.gay authenticate through acccounts.vz.gay and link back to myaccount.vz.gay.',
+        'Following a centralized subdomain architecture, services across *.vz.gay authenticate through accounts.vz.gay and link back to myaccount.vz.gay.',
     },
     footer: {
       rights: 'vz.gay & jajanserver.com under PT Galeri Langkah Bahagia Yuwana (galbay).',

@@ -113,8 +113,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Unified web application launcher for managing daily workspaces, utilities, and central account integrations.',
     },
     architectureNotes: {
-      id: 'Saat ini sedang dalam pengembangan aktif dan akan terhubung ke SSO acccounts.vz.gay.',
-      en: 'Currently under active development and will integrate directly with acccounts.vz.gay SSO.',
+      id: 'Saat ini sedang dalam pengembangan aktif dan akan terhubung ke SSO accounts.vz.gay.',
+      en: 'Currently under active development and will integrate directly with accounts.vz.gay SSO.',
     },
   },
   {
@@ -248,8 +248,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Unified digital payment and transaction management service for vz.gay tools and merchant storefronts.',
     },
     architectureNotes: {
-      id: 'Saat ini sedang dalam pengembangan dan akan terhubung dengan business.vz.gay serta SSO acccounts.vz.gay.',
-      en: 'Currently in development and designed to integrate with business.vz.gay and acccounts.vz.gay SSO.',
+      id: 'Saat ini sedang dalam pengembangan dan akan terhubung dengan business.vz.gay serta SSO accounts.vz.gay.',
+      en: 'Currently in development and designed to integrate with business.vz.gay and accounts.vz.gay SSO.',
     },
   },
   {
