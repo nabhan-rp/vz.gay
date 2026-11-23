@@ -39,6 +39,7 @@ export const UI_COPY = {
         media_content: 'Media & Hiburan',
         developer_cloud: 'Developer & Cloud',
         productivity: 'Utilitas & Kerja',
+        education: 'Edukasi',
       },
       statusLabels: {
         live: 'Tersedia',
@@ -98,9 +99,9 @@ export const UI_COPY = {
           desc: 'Direktori portal dan pengalihan domain dirancang ringan agar dapat diakses cepat dari berbagai lokasi.',
         },
       ],
-      sponsorHeading: 'Mitra & Sponsor Layanan',
+      sponsorHeading: 'galbay · PT Galeri Langkah Bahagia Yuwana',
       sponsorText:
-        'Pengembangan layanan cloud.vz.gay dan business.vz.gay mendapat dukungan sponsor dari jajanserver.com.',
+        'Ekosistem vz.gay dan jajanserver.com berada dalam satu naungan resmi PT Galeri Langkah Bahagia Yuwana (galbay).',
       visitSponsor: 'Kunjungi jajanserver.com',
     },
     serviceModal: {
@@ -133,11 +134,13 @@ export const UI_COPY = {
         'Seperti sistem sub-akun terpusat, seluruh layanan di bawah *.vz.gay berbagi sesi autentikasi yang diterbitkan oleh acccounts.vz.gay.',
     },
     footer: {
-      rights: 'Ekosistem Multi-Layanan vz.gay.',
+      rights: 'vz.gay & jajanserver.com di bawah naungan PT Galeri Langkah Bahagia Yuwana (galbay).',
+      umbrellaNote: 'Portal navigasi utama ekosistem SaaS multi-fitur · PT Galeri Langkah Bahagia Yuwana (galbay)',
       ssoLink: 'SSO Accounts',
       dashboardLink: 'MyAccount',
       searchLink: 'VZ Search',
-      sponsorLink: 'Sponsor: jajanserver.com',
+      filesLink: 'VZ Files',
+      sponsorLink: 'jajanserver.com (galbay)',
     },
   },
   en: {
@@ -178,6 +181,7 @@ export const UI_COPY = {
         media_content: 'Media & Culture',
         developer_cloud: 'Developer & Cloud',
         productivity: 'Utilities & Mail',
+        education: 'Education',
       },
       statusLabels: {
         live: 'Live',
@@ -237,9 +241,9 @@ export const UI_COPY = {
           desc: 'Designed for rapid navigation, instant directory filtering, and clean domain redirection.',
         },
       ],
-      sponsorHeading: 'Ecosystem Partner & Sponsor',
+      sponsorHeading: 'galbay · PT Galeri Langkah Bahagia Yuwana',
       sponsorText:
-        'Development of cloud.vz.gay and business.vz.gay is supported and sponsored by jajanserver.com.',
+        'The vz.gay ecosystem and jajanserver.com operate together under PT Galeri Langkah Bahagia Yuwana (galbay).',
       visitSponsor: 'Visit jajanserver.com',
     },
     serviceModal: {
@@ -272,11 +276,13 @@ export const UI_COPY = {
         'Following a centralized subdomain architecture, services across *.vz.gay authenticate through acccounts.vz.gay and link back to myaccount.vz.gay.',
     },
     footer: {
-      rights: 'vz.gay Multi-Service Ecosystem.',
+      rights: 'vz.gay & jajanserver.com under PT Galeri Langkah Bahagia Yuwana (galbay).',
+      umbrellaNote: 'Main navigation portal for the multi-feature SaaS ecosystem · PT Galeri Langkah Bahagia Yuwana (galbay)',
       ssoLink: 'SSO Accounts',
       dashboardLink: 'MyAccount',
       searchLink: 'VZ Search',
-      sponsorLink: 'Sponsor: jajanserver.com',
+      filesLink: 'VZ Files',
+      sponsorLink: 'jajanserver.com (galbay)',
     },
   },
 } as const;

@@ -4,7 +4,8 @@ export type ServiceCategory =
   | 'web_business'
   | 'media_content'
   | 'developer_cloud'
-  | 'productivity';
+  | 'productivity'
+  | 'education';
 
 export interface LiveChildApp {
   name: string;
@@ -45,7 +46,8 @@ export interface VzService {
     | 'film'
     | 'music'
     | 'image'
-    | 'credit-card';
+    | 'credit-card'
+    | 'graduation-cap';
   name: {
     id: string;
     en: string;
@@ -343,13 +345,13 @@ export const VZ_SERVICES: VzService[] = [
         },
       },
       {
-        name: 'WiyataX LMS',
+        name: 'WiyataxLMS',
         domain: 'wiyataxlms.code.vz.gay',
         altDomain: 'wiyataxlms.orgz.top',
         kind: 'demo',
         description: {
-          id: 'Demo platform Learning Management System (LMS) siap pakai',
-          en: 'Live Learning Management System (LMS) template demo',
+          id: 'Portal akademik & LMS white-label multi-tenant (PPDB Online, Rapor, CMS, AI FAQ, Open API)',
+          en: 'Multi-tenant white-label academic portal & LMS (Online PPDB, Gradebook, CMS, AI FAQ, Open API)',
         },
       },
     ],
@@ -510,6 +512,30 @@ export const VZ_SERVICES: VzService[] = [
     architectureNotes: {
       id: 'Aset media publik dioptimalkan untuk pemuatan dan pengiriman gambar berkecepatan tinggi.',
       en: 'Public visual uploads are optimized for fast, reliable global image delivery.',
+    },
+  },
+  {
+    id: 'wiyataxlms',
+    primaryDomain: 'wiyataxlms.code.vz.gay',
+    altDomains: ['wiyataxlms.orgz.top'],
+    category: 'education',
+    status: 'live',
+    iconName: 'graduation-cap',
+    name: {
+      id: 'WiyataxLMS',
+      en: 'WiyataxLMS',
+    },
+    shortType: {
+      id: 'Portal Akademik & LMS SaaS',
+      en: 'Academic Portal & LMS SaaS',
+    },
+    description: {
+      id: 'Template portal akademik & LMS white-label multi-tenant siap Self-Hosted maupun SaaS Cloud (gaya SIAKADCloud) dengan PPDB Online, Rapor, Student Portal, CMS, AI FAQ, dan Open API.',
+      en: 'Multi-tenant white-label academic portal & LMS platform ready for Self-Hosted or SaaS Cloud with Online Admissions (PPDB), Gradebook, Student Portal, Theme Studio, AI FAQ, and Open API.',
+    },
+    architectureNotes: {
+      id: 'Demo aktif di *.code.vz.gay dengan domain alias wiyataxlms.orgz.top.',
+      en: 'Active demo service under *.code.vz.gay with live alias domain wiyataxlms.orgz.top.',
     },
   },
 ];

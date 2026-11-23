@@ -31,6 +31,7 @@ export function ServiceDirectory({
     { id: 'web_business', label: t.tabs.web_business },
     { id: 'developer_cloud', label: t.tabs.developer_cloud },
     { id: 'media_content', label: t.tabs.media_content },
+    { id: 'education', label: t.tabs.education },
   ];
 
   const normalizedQuery = searchQuery.trim().toLowerCase();

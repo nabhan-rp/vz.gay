@@ -6,6 +6,7 @@ import {
   Film,
   Gamepad2,
   Globe,
+  GraduationCap,
   Image as ImageIcon,
   LayoutGrid,
   Mail,
@@ -57,5 +58,7 @@ export function ServiceIcon({ name, className = 'w-5 h-5' }: ServiceIconProps) {
       return <ImageIcon className={className} />;
     case 'credit-card':
       return <CreditCard className={className} />;
+    case 'graduation-cap':
+      return <GraduationCap className={className} />;
   }
 }
