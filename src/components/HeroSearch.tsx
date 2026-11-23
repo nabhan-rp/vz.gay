@@ -19,7 +19,7 @@ const LIVE_SHORTCUTS = [
   { label: 'pdftoblade.app.vz.gay', href: 'https://pdftoblade.app.vz.gay' },
   { label: 'directqr.app.vz.gay', href: 'https://directqr.app.vz.gay' },
   { label: 'inkframeflipbook.game.vz.gay', href: 'https://inkframeflipbook.game.vz.gay' },
-  { label: 'lensastudio.vz.gay', href: 'https://lensastudio.vz.gay' },
+  { label: 'lensastudio.code.vz.gay', href: 'https://lensastudio.code.vz.gay' },
   { label: 'wiyataxlms.code.vz.gay', href: 'https://wiyataxlms.code.vz.gay' },
 ];
 

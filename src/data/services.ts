@@ -335,7 +335,7 @@ export const VZ_SERVICES: VzService[] = [
     liveChildren: [
       {
         name: 'Lensa Studio',
-        domain: 'lensastudio.vz.gay',
+        domain: 'lensastudio.code.vz.gay',
         kind: 'demo',
         description: {
           id: 'Demo aplikasi & showcase template aktif pertama',
@@ -552,7 +552,7 @@ export const CLIENT_DOMAIN_MATRIX = [
     roleId: 'Marketplace Template Kode',
     roleEn: 'Code Template Hub',
     patterns: ['*.code.vz.gay'],
-    routingNoteId: '2 demo aktif: lensastudio.vz.gay & wiyataxlms.code.vz.gay',
-    routingNoteEn: '2 live demos: lensastudio.vz.gay & wiyataxlms.code.vz.gay',
+    routingNoteId: '2 demo aktif: lensastudio.code.vz.gay & wiyataxlms.code.vz.gay',
+    routingNoteEn: '2 live demos: lensastudio.code.vz.gay & wiyataxlms.code.vz.gay',
   },
 ];
