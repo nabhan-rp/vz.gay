@@ -177,8 +177,9 @@ export const VZ_SERVICES: VzService[] = [
   {
     id: 'files',
     primaryDomain: 'files.vz.gay',
+    altDomains: ['file.vz.gay'],
     category: 'productivity',
-    status: 'development',
+    status: 'live',
     iconName: 'file-up',
     name: {
       id: 'VZ Files',
@@ -193,8 +194,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Temporary file transfer powered by the VikingFiles API without storing user files on vz.gay servers.',
     },
     architectureNotes: {
-      id: 'Zero-storage di sisi server vz.gay; seluruh unggahan dan tautan unduhan ditangani melalui API VikingFiles.',
-      en: 'Zero server-side file retention on vz.gay; uploads and temporary links are delegated cleanly to the VikingFiles API.',
+      id: 'Sudah aktif dengan URL kanonik SEO https://files.vz.gay dan alias file.vz.gay. Seluruh unggahan ditangani melalui API VikingFiles tanpa penyimpanan server.',
+      en: 'Live with SEO canonical https://files.vz.gay and alias file.vz.gay. All uploads are delegated cleanly to the VikingFiles API with zero server storage.',
     },
   },
   {
@@ -339,6 +340,16 @@ export const VZ_SERVICES: VzService[] = [
         description: {
           id: 'Demo aplikasi & showcase template aktif pertama',
           en: 'First live production demo showcase',
+        },
+      },
+      {
+        name: 'WiyataX LMS',
+        domain: 'wiyataxlms.code.vz.gay',
+        altDomain: 'wiyataxlms.orgz.top',
+        kind: 'demo',
+        description: {
+          id: 'Demo platform Learning Management System (LMS) siap pakai',
+          en: 'Live Learning Management System (LMS) template demo',
         },
       },
     ],
@@ -541,7 +552,7 @@ export const CLIENT_DOMAIN_MATRIX = [
     roleId: 'Marketplace Template Kode',
     roleEn: 'Code Template Hub',
     patterns: ['*.code.vz.gay'],
-    routingNoteId: 'Demo aktif: lensastudio.vz.gay',
-    routingNoteEn: 'Live demo: lensastudio.vz.gay',
+    routingNoteId: '2 demo aktif: lensastudio.vz.gay & wiyataxlms.code.vz.gay',
+    routingNoteEn: '2 live demos: lensastudio.vz.gay & wiyataxlms.code.vz.gay',
   },
 ];

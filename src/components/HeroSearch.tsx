@@ -14,11 +14,13 @@ interface HeroSearchProps {
 
 const LIVE_SHORTCUTS = [
   { label: 'search.vz.gay', href: 'https://search.vz.gay' },
+  { label: 'files.vz.gay', href: 'https://files.vz.gay' },
   { label: 'myvault.app.vz.gay', href: 'https://myvault.app.vz.gay' },
   { label: 'pdftoblade.app.vz.gay', href: 'https://pdftoblade.app.vz.gay' },
   { label: 'directqr.app.vz.gay', href: 'https://directqr.app.vz.gay' },
   { label: 'inkframeflipbook.game.vz.gay', href: 'https://inkframeflipbook.game.vz.gay' },
   { label: 'lensastudio.vz.gay', href: 'https://lensastudio.vz.gay' },
+  { label: 'wiyataxlms.code.vz.gay', href: 'https://wiyataxlms.code.vz.gay' },
 ];
 
 export function HeroSearch({
