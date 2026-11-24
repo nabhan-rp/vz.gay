@@ -13,12 +13,35 @@ export function LiveAndDomainsSection({ lang }: LiveAndDomainsSectionProps) {
   const [imgError, setImgError] = useState(false);
   const t = UI_COPY[lang].liveAndDomains;
 
-  const liveSubApps = VZ_SERVICES.flatMap((svc) =>
-    (svc.liveChildren ?? []).map((child) => ({
-      ...child,
-      parentDomain: svc.primaryDomain,
-    }))
-  );
+  const liveSubAppMap = new Map<
+    string,
+    {
+      name: string;
+      domain: string;
+      altDomain?: string;
+      kind: 'app' | 'game' | 'demo';
+      description: { id: string; en: string };
+      parentDomains: string[];
+    }
+  >();
+
+  for (const svc of VZ_SERVICES) {
+    for (const child of svc.liveChildren ?? []) {
+      const existing = liveSubAppMap.get(child.domain);
+      if (existing) {
+        if (!existing.parentDomains.includes(svc.primaryDomain)) {
+          existing.parentDomains.push(svc.primaryDomain);
+        }
+      } else {
+        liveSubAppMap.set(child.domain, {
+          ...child,
+          parentDomains: [svc.primaryDomain],
+        });
+      }
+    }
+  }
+
+  const liveSubApps = Array.from(liveSubAppMap.values());
 
   return (
     <section
@@ -80,7 +103,7 @@ export function LiveAndDomainsSection({ lang }: LiveAndDomainsSectionProps) {
                           ·
                         </span>
                         <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
-                          {app.parentDomain}
+                          {app.parentDomains.join(' · ')}
                         </span>
                       </div>
                       <p className="mt-0.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">

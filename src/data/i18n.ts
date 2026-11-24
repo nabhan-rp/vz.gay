@@ -46,7 +46,7 @@ export const UI_COPY = {
       statusLabels: {
         live: 'Tersedia',
         development: 'Dalam Pengembangan',
-        coming_soon: 'Segera Hadir',
+        coming_soon: 'Segera Hadir (Belum Tersedia)',
       },
       openService: 'Buka Layanan',
       viewDetails: 'Lihat Rincian',
@@ -64,11 +64,11 @@ export const UI_COPY = {
     vzDesk: {
       sectionTitle: 'VZ Desk — Suite Produktivitas & Kreatif',
       sectionSubtitle:
-        '17 layanan kerja modular di bawah desk.vz.gay yang dirancang hemat penyimpanan berbasis teks polos (.md, .csv, .svg, .typ, .vcf), media WebP/AVIF, autosave SSO, enkripsi offline .enc (MyVault), serta integrasi NurDB.',
+        '17 layanan kerja modular di bawah desk.vz.gay yang menyimpan sumber secara hemat ruang (.md, .csv, .svg, .typ, .vcf) dan mendukung ekspor penuh ke format dokumen perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF), media WebP/AVIF, autosave SSO, enkripsi offline .enc (MyVault), serta rencana integrasi NurDB (Segera Hadir).',
       summaryStrip: [
-        { label: 'Format Ringan', value: '.md · .csv · .svg · .typ · .vcf + WebP/AVIF' },
-        { label: 'Mode Web & Offline', value: 'Autosave SSO · Enkripsi offline .enc (MyVault)' },
-        { label: 'Integrasi Data', value: 'Siap terhubung ke nurdb.vz.gay & mail.vz.gay' },
+        { label: 'Ekspor Format Kantor', value: 'DOC/DOCX · XLS/XLSX · PPT/PPTX · PDF · CSV · SVG' },
+        { label: 'Sumber Ringan & Offline', value: '.md · .csv · .typ · .vcf + Enkripsi .enc (MyVault)' },
+        { label: 'Integrasi Ekosistem', value: 'Terhubung mail.vz.gay & rencana NurDB (Segera Hadir)' },
       ],
       groups: {
         documents_publishing: 'Dokumen, Tabel & Penerbitan',
@@ -82,7 +82,7 @@ export const UI_COPY = {
     liveAndDomains: {
       sectionTitle: 'Aplikasi Aktif & Peta Domain Klien',
       sectionSubtitle:
-        'Beberapa layanan di bawah payung play.vz.gay dan codeplace.vz.gay sudah dapat dipakai hari ini, bersama peta domain kustom untuk pengguna dan kreator.',
+        'Beberapa layanan di bawah payung play.vz.gay, codeplace.vz.gay, dan business.vz.gay sudah dapat dipakai hari ini, bersama peta domain kustom untuk pengguna dan kreator.',
       liveSpotlightTitle: 'Sudah Aktif Digunakan',
       imageAlt: 'Ruang kerja digital ekosistem vz.gay',
       imageCaption: 'Ekosistem multi-aplikasi vz.gay · Rilis bertahap',
@@ -141,6 +141,8 @@ export const UI_COPY = {
       launchLive: 'Buka di Tab Baru',
       devNotice:
         'Layanan inti ini sedang dalam tahap pengembangan di sesi terpisah. Anda sudah dapat melihat struktur domain serta membuka sub-aplikasi yang tersedia.',
+      comingSoonNotice:
+        'Layanan ini berstatus Segera Hadir (Coming Soon) dan saat ini belum tersedia maupun belum masuk tahap pengembangan aktif. Spesifikasi di bawah merupakan cetak biru arsitektur yang direncanakan.',
     },
     ssoModal: {
       title: 'Autentikasi Tunggal (Auth0 SSO)',
@@ -224,7 +226,7 @@ export const UI_COPY = {
       statusLabels: {
         live: 'Live',
         development: 'In Development',
-        coming_soon: 'Coming Soon',
+        coming_soon: 'Coming Soon (Not Yet Available)',
       },
       openService: 'Open Service',
       viewDetails: 'View Details',
@@ -242,11 +244,11 @@ export const UI_COPY = {
     vzDesk: {
       sectionTitle: 'VZ Desk — Productivity & Creative Suite',
       sectionSubtitle:
-        '17 modular workspace apps under desk.vz.gay built on lightweight plain-text formats (.md, .csv, .svg, .typ, .vcf), WebP/AVIF media compression, Auth0 SSO autosave, offline .enc encryption (MyVault), and NurDB integration.',
+        '17 modular workspace apps under desk.vz.gay storing compact plain-text source files (.md, .csv, .svg, .typ, .vcf) with full export support for office document formats (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF), WebP/AVIF media compression, Auth0 SSO autosave, offline .enc encryption (MyVault), and planned NurDB integration (Coming Soon).',
       summaryStrip: [
-        { label: 'Compact Formats', value: '.md · .csv · .svg · .typ · .vcf + WebP/AVIF' },
-        { label: 'Web & Offline Modes', value: 'SSO Autosave · Encrypted .enc Vaults (MyVault)' },
-        { label: 'Ecosystem Sync', value: 'Integrates with nurdb.vz.gay & mail.vz.gay' },
+        { label: 'Office Format Exports', value: 'DOC/DOCX · XLS/XLSX · PPT/PPTX · PDF · CSV · SVG' },
+        { label: 'Compact Source & Offline', value: '.md · .csv · .typ · .vcf + Encrypted .enc (MyVault)' },
+        { label: 'Ecosystem Sync', value: 'Connected to mail.vz.gay & planned NurDB (Coming Soon)' },
       ],
       groups: {
         documents_publishing: 'Documents, Data & Publishing',
@@ -260,7 +262,7 @@ export const UI_COPY = {
     liveAndDomains: {
       sectionTitle: 'Live Apps & Client Domain Matrix',
       sectionSubtitle:
-        'Select tools under play.vz.gay and codeplace.vz.gay are already live today, alongside multi-domain tenant routing across partner TLDs.',
+        'Select tools under play.vz.gay, codeplace.vz.gay, and business.vz.gay are already live today, alongside multi-domain tenant routing across partner TLDs.',
       liveSpotlightTitle: 'Ready to Use Today',
       imageAlt: 'Digital workspace for vz.gay ecosystem',
       imageCaption: 'vz.gay Multi-App Ecosystem · Modular Rollout',
@@ -319,6 +321,8 @@ export const UI_COPY = {
       launchLive: 'Open in New Tab',
       devNotice:
         'This core service is under active development in its own workspace. You can review its domain structure and launch any live child apps below.',
+      comingSoonNotice:
+        'This service is marked Coming Soon (Not Yet Available) and has not yet entered active public development. The specifications below outline its planned architectural blueprint.',
     },
     ssoModal: {
       title: 'Single Sign-On (Auth0 SSO)',

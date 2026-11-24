@@ -49,7 +49,7 @@ export function ServiceDirectory({
         ? true
         : filter === 'live'
           ? svc.status === 'live' || (svc.liveChildren && svc.liveChildren.length > 0)
-          : svc.category === filter;
+          : svc.category === filter || Boolean(svc.secondaryCategories?.includes(filter));
 
     if (!matchesCategory) return false;
     if (!normalizedQuery) return true;
@@ -239,7 +239,13 @@ export function ServiceDirectory({
 
                   {/* Zero-pill unboxed metadata with middle dots */}
                   <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 tabular-nums">
-                    <span className="font-medium text-amber-700 dark:text-amber-400">
+                    <span
+                      className={`font-medium ${
+                        service.status === 'coming_soon'
+                          ? 'text-violet-700 dark:text-violet-400'
+                          : 'text-amber-700 dark:text-amber-400'
+                      }`}
+                    >
                       {statusText}
                     </span>
                     <span aria-hidden="true">·</span>

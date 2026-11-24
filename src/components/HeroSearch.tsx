@@ -18,6 +18,9 @@ interface HeroSearchProps {
 const LIVE_SHORTCUTS = [
   { label: 'search.vz.gay', href: 'https://search.vz.gay' },
   { label: 'files.vz.gay', href: 'https://files.vz.gay' },
+  { label: 'demo.jajanan.online', href: 'https://demo.jajanan.online' },
+  { label: 'omnipostai.code.vz.gay', href: 'https://omnipostai.code.vz.gay' },
+  { label: 'lovelogicalai.kopi.pw', href: 'https://lovelogicalai.pages.dev' },
   { label: 'marimenulis.web.id', href: 'https://www.marimenulis.web.id/' },
   { label: 'republikjomokerto.vercel.app', href: 'https://republikjomokerto.vercel.app' },
   { label: 'myvault.app.vz.gay', href: 'https://myvault.app.vz.gay' },

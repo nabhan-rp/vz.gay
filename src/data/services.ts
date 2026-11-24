@@ -107,6 +107,7 @@ export interface VzService {
   launchUrl?: string;
   altDomains?: string[];
   category: ServiceCategory;
+  secondaryCategories?: ServiceCategory[];
   status: ServiceStatus;
   iconName: ServiceIconName;
   ageRestricted?: boolean;
@@ -171,14 +172,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'documents_publishing',
     iconName: 'file-text',
     name: { id: 'VZ Docs', en: 'VZ Docs' },
-    reference: { id: 'Dokumen / Pengolah Kata', en: 'Word Processor / Docs' },
+    reference: {
+      id: 'Pengolah Kata & Dokumen (Ekspor DOC/DOCX, PDF, .md)',
+      en: 'Word Processor & Documents (Export DOC/DOCX, PDF, .md)',
+    },
     description: {
-      id: 'Editor dokumen kolaboratif ringan berbasis teks polos (.md) dengan kompresi media WebP/AVIF, autosave SSO, dan ekspor PDF instan.',
-      en: 'Lightweight collaborative document editor built on plain text (.md) with WebP/AVIF media compression, SSO autosave, and instant PDF export.',
+      id: 'Editor dokumen kolaboratif ringan berbasis teks polos (.md) dengan kompresi media WebP/AVIF, autosave SSO, serta dukungan ekspor langsung ke format dokumen kantor DOC/DOCX, ODT, dan PDF.',
+      en: 'Lightweight collaborative document editor built on plain text (.md) with WebP/AVIF media compression, SSO autosave, and direct export to office document formats DOC/DOCX, ODT, and PDF.',
     },
     formatNote: {
-      id: 'Format .md + embed gambar terkompresi · Siap ekspor PDF & bundel offline .enc (MyVault)',
-      en: '.md source + compressed media embeds · Instant PDF & offline .enc export (MyVault)',
+      id: 'Sumber .md + ekspor DOC/DOCX & PDF · Bundel offline terenkripsi .enc (MyVault)',
+      en: '.md source + DOC/DOCX & PDF export · Offline encrypted .enc bundle (MyVault)',
     },
   },
   {
@@ -187,14 +191,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'documents_publishing',
     iconName: 'table-2',
     name: { id: 'VZ Sheets', en: 'VZ Sheets' },
-    reference: { id: 'Spreadsheet / XLS', en: 'Spreadsheets / XLS' },
+    reference: {
+      id: 'Lembar Kerja & Spreadsheet (Ekspor XLS/XLSX, CSV)',
+      en: 'Spreadsheet & Tabular Data (Export XLS/XLSX, CSV)',
+    },
     description: {
-      id: 'Lembar kerja data tabular berkecepatan tinggi berbasis .csv dan tabel terstruktur dengan integrasi langsung ke NurDB.',
-      en: 'High-speed tabular spreadsheet workspace backed by lightweight .csv sheets with planned NurDB data binding.',
+      id: 'Lembar kerja data tabular berkecepatan tinggi berbasis .csv yang mendukung impor dan ekspor langsung ke format spreadsheet kantor XLS/XLSX, ODS, maupun PDF.',
+      en: 'High-speed tabular spreadsheet workspace backed by lightweight .csv storage with full import and export support for office spreadsheet formats XLS/XLSX, ODS, and PDF.',
     },
     formatNote: {
-      id: 'Format .csv ringan · Kompatibel Excel/Sheets & siap tersambung ke NurDB',
-      en: 'Lightweight .csv sheets · Excel/Sheets compatible & NurDB integration ready',
+      id: 'Sumber .csv ringan · Ekspor/impor XLS/XLSX & rencana integrasi NurDB (Segera Hadir)',
+      en: 'Lightweight .csv source · XLS/XLSX export/import & planned NurDB sync (Coming Soon)',
     },
   },
   {
@@ -203,14 +210,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'documents_publishing',
     iconName: 'presentation',
     name: { id: 'VZ Presentations', en: 'VZ Presentations' },
-    reference: { id: 'Presentasi / PPT', en: 'Slide Decks / PPT' },
+    reference: {
+      id: 'Slide Presentasi (Ekspor PPT/PPTX, PDF)',
+      en: 'Slide Decks & Presentations (Export PPT/PPTX, PDF)',
+    },
     description: {
-      id: 'Pembuat slide presentasi modern berbasis Markdown (gaya Marp/Slidev) yang ringan, siap layar penuh, dan dapat diekspor ke PDF/PPTX.',
-      en: 'Modern Markdown-driven slide deck creator (Marp/Slidev style) with fullscreen presenting and PDF/PPTX export.',
+      id: 'Pembuat slide presentasi modern berbasis struktur teks polos yang ringan, siap ditampilkan layar penuh di browser, serta dapat diekspor ke format presentasi kantor PPT/PPTX dan PDF.',
+      en: 'Modern plain-text-backed slide deck creator with fullscreen browser presenter view and direct export to office presentation formats PPT/PPTX and PDF.',
     },
     formatNote: {
-      id: 'Slide berbasis teks polos (---) · Gambar WebP/AVIF & ekspor PDF rapi',
-      en: 'Plain-text slide decks (---) · WebP/AVIF visuals & crisp PDF export',
+      id: 'Slide berbasis teks polos (---) · Ekspor PPT/PPTX, PDF & visual WebP/AVIF',
+      en: 'Plain-text slide decks (---) · Export to PPT/PPTX, PDF & WebP/AVIF visuals',
     },
   },
   {
@@ -219,14 +229,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'documents_publishing',
     iconName: 'clipboard-list',
     name: { id: 'VZ Forms', en: 'VZ Forms' },
-    reference: { id: 'Formulir / Google Forms', en: 'Online Forms / GForm' },
+    reference: {
+      id: 'Formulir & Survei Online (Ekspor CSV, XLS/XLSX)',
+      en: 'Online Forms & Surveys (Export CSV, XLS/XLSX)',
+    },
     description: {
-      id: 'Pembuat formulir survei, pendaftaran, dan kuesioner publik yang langsung menyimpan respons secara terstruktur ke VZ Sheets atau NurDB.',
-      en: 'Public survey, registration, and questionnaire builder that streams responses directly into VZ Sheets or NurDB.',
+      id: 'Pembuat formulir survei, pendaftaran, dan kuesioner publik dengan validasi kolom otomatis yang menyimpan respons ke VZ Sheets serta dapat diunduh dalam format CSV maupun XLS/XLSX.',
+      en: 'Public survey, registration, and questionnaire builder with automated field validation that streams responses to VZ Sheets and exports to CSV or XLS/XLSX.',
     },
     formatNote: {
-      id: 'Formulir publik instan · Sinkronisasi respons ke VZ Sheets & NurDB',
-      en: 'Instant public forms · Direct response sync to VZ Sheets & NurDB',
+      id: 'Formulir publik instan · Ekspor respons ke VZ Sheets, CSV & XLS/XLSX',
+      en: 'Instant public forms · Export responses to VZ Sheets, CSV & XLS/XLSX',
     },
   },
   {
@@ -235,14 +248,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'documents_publishing',
     iconName: 'notebook-pen',
     name: { id: 'VZ Diary', en: 'VZ Diary' },
-    reference: { id: 'Buku Catatan / MS OneNote', en: 'Notebooks / MS OneNote' },
+    reference: {
+      id: 'Buku Catatan & Jurnal Digital (Ekspor .md, DOCX, PDF)',
+      en: 'Digital Notebooks & Journals (Export .md, DOCX, PDF)',
+    },
     description: {
-      id: 'Ruang buku catatan terstruktur, kliping ide, dan jurnal pribadi dengan penandaan YAML frontmatter serta backlinks antar catatan.',
-      en: 'Structured digital notebooks, idea clippings, and personal journals with YAML metadata and linked notes.',
+      id: 'Ruang buku catatan multi-bab, kliping ide, dan jurnal pribadi dengan penandaan YAML frontmatter, tautan silang antar catatan, serta ekspor ke DOC/DOCX, PDF, atau arsip terenkripsi .enc.',
+      en: 'Multi-section digital notebooks, idea clippings, and personal journals with YAML metadata, cross-note backlinks, and export to DOC/DOCX, PDF, or encrypted .enc archives.',
     },
     formatNote: {
-      id: 'Markdown + YAML Frontmatter · Mendukung arsip terenkripsi offline .enc',
-      en: 'Markdown + YAML Frontmatter · Supports offline .enc encrypted vaults',
+      id: 'Markdown + YAML Frontmatter · Ekspor DOCX/PDF & arsip offline .enc (MyVault)',
+      en: 'Markdown + YAML Frontmatter · DOCX/PDF export & offline .enc vaults (MyVault)',
     },
   },
   {
@@ -251,14 +267,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'documents_publishing',
     iconName: 'newspaper',
     name: { id: 'VZ Press', en: 'VZ Press' },
-    reference: { id: 'Tata Letak Cetak / MS Publisher', en: 'Desktop Publishing / MS Publisher' },
+    reference: {
+      id: 'Tata Letak Cetak & Publikasi (Ekspor PDF Cetak, DOCX)',
+      en: 'Desktop Publishing & Print Layout (Export Print PDF, DOCX)',
+    },
     description: {
-      id: 'Alat desktop publishing untuk brosur, buletin, pamflet, dan publikasi siap cetak berpresisi tinggi berbasis Typst/CSS Paged Media.',
-      en: 'Precision desktop publishing tool for brochures, newsletters, and print-ready layouts powered by Typst/CSS Paged Media.',
+      id: 'Alat tata letak publikasi desktop untuk menyusun brosur, buletin, pamflet, zine, dan dokumen siap cetak berpresisi tinggi dengan ekspor PDF resolusi cetak serta DOC/DOCX.',
+      en: 'Precision desktop publishing workspace for brochures, newsletters, pamphlets, and print-ready layouts with press-grade PDF and DOC/DOCX export.',
     },
     formatNote: {
-      id: 'Sumber teks polos (.typ / HTML+CSS) · Hasil ekspor PDF kualitas cetak',
-      en: 'Plain-text layout source (.typ / HTML+CSS) · Print-grade PDF output',
+      id: 'Sumber tata letak ringan (.typ / HTML+CSS) · Ekspor PDF siap cetak & DOCX',
+      en: 'Lightweight layout source (.typ / HTML+CSS) · Print-ready PDF & DOCX output',
     },
   },
 
@@ -269,14 +288,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'visual_3d',
     iconName: 'box',
     name: { id: 'VZ Craft', en: 'VZ Craft' },
-    reference: { id: 'Pembuat Objek 3D (OBJ)', en: '3D OBJ Creator' },
+    reference: {
+      id: 'Studio Pemodelan Objek 3D (Ekspor .obj, .stl, .gltf)',
+      en: '3D Object Modeling Studio (Export .obj, .stl, .gltf)',
+    },
     description: {
-      id: 'Studio pemodelan 3D berbasis browser untuk merancang, mengedit, dan mengekspor aset objek 3D (.obj) secara langsung.',
-      en: 'Browser-native 3D modeling workspace to build, inspect, and export 3D object (.obj) assets directly online.',
+      id: 'Studio pemodelan 3D berbasis browser untuk merancang, menginspeksi mesh, dan mengekspor aset objek 3D (.obj, .stl, .gltf) secara langsung tanpa instalasi perangkat lunak berat.',
+      en: 'Browser-native 3D modeling workspace to design, inspect meshes, and export 3D object (.obj, .stl, .gltf) assets directly online without heavy desktop software.',
     },
     formatNote: {
-      id: 'Ekspor standar .obj · Ringan di browser tanpa instalasi aplikasi berat',
-      en: 'Standard .obj export · Runs in-browser without heavy desktop installs',
+      id: 'Ekspor standar .obj / .stl / .gltf · Ringan dijalankan langsung di browser',
+      en: 'Standard .obj / .stl / .gltf export · Runs smoothly in the browser',
     },
   },
   {
@@ -285,14 +307,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'visual_3d',
     iconName: 'palette',
     name: { id: 'VZ Design', en: 'VZ Design' },
-    reference: { id: 'Canva-lite / Photoshop Online', en: 'Canva-lite / Online Photoshop' },
+    reference: {
+      id: 'Studio Desain Grafis & Olah Gambar (WebP, AVIF, PNG, SVG, PDF)',
+      en: 'Graphic Design & Image Editor (WebP, AVIF, PNG, SVG, PDF)',
+    },
     description: {
-      id: 'Editor desain grafis dan olah gambar berbasis web (Canva-lite & Photoshop online) untuk poster, media sosial, dan aset visual cepat.',
-      en: 'Web-based graphic design and image editor (Canva-lite & online Photoshop) for posters, thumbnails, and social assets.',
+      id: 'Studio desain grafis berbasis layer dan penyuntingan foto di browser untuk membuat poster, materi publikasi, serta aset visual dengan ekspor ke WebP, AVIF, PNG, JPG, SVG, dan PDF.',
+      en: 'Layer-based graphic design studio and raster/vector image editor in the browser for posters, visual layouts, and social assets with export to WebP, AVIF, PNG, JPG, SVG, and PDF.',
     },
     formatNote: {
-      id: 'Ekspor otomatis WebP/AVIF & PNG · Terintegrasi dengan media.vz.gay',
-      en: 'Optimized WebP/AVIF & PNG output · Connects cleanly with media.vz.gay',
+      id: 'Ekspor multi-format WebP/AVIF, PNG, SVG & PDF · Terhubung dengan media.vz.gay',
+      en: 'Multi-format WebP/AVIF, PNG, SVG & PDF export · Integrated with media.vz.gay',
     },
   },
   {
@@ -301,14 +326,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'visual_3d',
     iconName: 'clapperboard',
     name: { id: 'VZ Motion', en: 'VZ Motion' },
-    reference: { id: 'Pembuat & Editor Animasi', en: 'Animation Maker & Editor' },
+    reference: {
+      id: 'Pembuat & Editor Animasi (Ekspor SVG, WebM, MP4, GIF)',
+      en: 'Animation Maker & Timeline Editor (Export SVG, WebM, MP4, GIF)',
+    },
     description: {
-      id: 'Studio animasi berbasis timeline di browser untuk menyusun motion graphics, animasi vektor SVG, dan klip pendek interaktif.',
-      en: 'Timeline-driven browser animation studio for motion graphics, SVG vector animations, and interactive clips.',
+      id: 'Studio animasi berbasis timeline keyframe di browser untuk menyusun motion graphics, animasi vektor, dan klip interaktif dengan ekspor ke SVG animasi, WebM, MP4, atau GIF.',
+      en: 'Keyframe timeline animation studio in the browser for motion graphics, vector animations, and interactive clips with export to animated SVG, WebM, MP4, or GIF.',
     },
     formatNote: {
-      id: 'Timeline keyframe ringan · Ekspor SVG animasi, WebM, atau GIF',
-      en: 'Lightweight keyframe timeline · Export animated SVG, WebM, or GIF',
+      id: 'Timeline keyframe ringan · Ekspor SVG animasi, WebM, MP4, atau GIF',
+      en: 'Lightweight keyframe timeline · Export animated SVG, WebM, MP4, or GIF',
     },
   },
   {
@@ -317,14 +345,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'visual_3d',
     iconName: 'pen-tool',
     name: { id: 'VZ Draw', en: 'VZ Draw' },
-    reference: { id: 'Google Drawings / Libre Draw', en: 'Google Drawings / Libre Draw' },
+    reference: {
+      id: 'Kanvas Gambar & Ilustrasi Vektor (Ekspor .svg, PNG, PDF)',
+      en: 'Vector Drawing & Illustration Canvas (Export .svg, PNG, PDF)',
+    },
     description: {
-      id: 'Kanvas gambar vektor bebas berbasis SVG/JSON ringan untuk ilustrasi sketsa, diagram cepat, dan grafis dokumen.',
-      en: 'Freeform vector drawing canvas stored as lightweight SVG/JSON for sketches, quick visuals, and clean document graphics.',
+      id: 'Kanvas gambar vektor bebas berbasis SVG/JSON ringan untuk membuat ilustrasi garis, sketsa teknis, dan bagan visual yang dapat diekspor ke .svg, PNG, PDF, atau disematkan ke VZ Docs & Presentations.',
+      en: 'Freeform vector drawing canvas stored as lightweight SVG/JSON for line illustrations, technical sketches, and visual callouts with .svg, PNG, and PDF export.',
     },
     formatNote: {
-      id: 'Vektor murni .svg / JSON · Tidak pecah saat diperbesar & mudah disematkan',
-      en: 'Pure .svg / JSON vector format · Infinite zoom & easy document embed',
+      id: 'Vektor murni .svg / JSON · Ekspor PNG/PDF & sematkan langsung ke dokumen',
+      en: 'Pure .svg / JSON vector format · PNG/PDF export & direct document embedding',
     },
   },
   {
@@ -333,14 +364,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'visual_3d',
     iconName: 'git-branch',
     name: { id: 'VZ Flowcharts', en: 'VZ Flowcharts' },
-    reference: { id: 'Diagram Alur / MS Visio', en: 'Diagramming / MS Visio' },
+    reference: {
+      id: 'Diagram Alur & Arsitektur Sistem (Ekspor SVG, PNG, PDF)',
+      en: 'Flowcharts & System Architecture Diagrams (Export SVG, PNG, PDF)',
+    },
     description: {
-      id: 'Pembuat diagram arsitektur, flowchart, ERD, dan bagan sistem berbasis Mermaid/D2 serta editor node visual ala MS Visio.',
-      en: 'Architecture, flowchart, ERD, and system diagramming tool combining visual nodes with Mermaid/D2 declarative text.',
+      id: 'Perangkat pembuat diagram alur kerja (flowchart), peta jaringan, ERD basis data, dan arsitektur sistem yang memadukan editor node visual dengan kode deklaratif serta ekspor ke SVG, PNG, dan PDF.',
+      en: 'Workflow flowchart, network topology, database ERD, and system architecture diagramming tool combining a visual node canvas with declarative syntax and SVG, PNG, and PDF export.',
     },
     formatNote: {
-      id: 'Kode diagram Mermaid/D2 + kanvas visual · Ekspor SVG & PDF presisi',
-      en: 'Mermaid/D2 declarative syntax + visual canvas · Crisp SVG & PDF export',
+      id: 'Kanvas node visual + sintaks deklaratif · Ekspor SVG, PNG & PDF presisi',
+      en: 'Visual node canvas + declarative syntax · Crisp SVG, PNG & PDF export',
     },
   },
 
@@ -351,14 +385,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'analytics_math',
     iconName: 'calculator',
     name: { id: 'VZ Math', en: 'VZ Math' },
-    reference: { id: 'Kalkulator Ilmiah Online', en: 'Online Scientific Calculator' },
+    reference: {
+      id: 'Kalkulator Ilmiah & Editor Persamaan (LaTeX, MathML, CSV)',
+      en: 'Scientific Calculator & Equation Workbench (LaTeX, MathML, CSV)',
+    },
     description: {
-      id: 'Kalkulator sains online, pembuat grafik fungsi, dan penyusun notasi persamaan matematika LaTeX/Typst Math.',
-      en: 'Online scientific calculator, function plotter, and LaTeX/Typst mathematical equation workbench.',
+      id: 'Kalkulator ilmiah online, pembuat grafik fungsi multi-variabel, serta penyusun notasi persamaan matematika yang dapat diekspor ke LaTeX, MathML, SVG, atau disisipkan ke VZ Docs.',
+      en: 'Online scientific calculator, multi-variable function plotter, and mathematical equation workbench with export to LaTeX, MathML, SVG, and VZ Docs.',
     },
     formatNote: {
-      id: 'Dukungan persamaan LaTeX / Typst Math · Siap salin ke VZ Docs',
-      en: 'LaTeX & Typst Math rendering · Ready to embed directly into VZ Docs',
+      id: 'Ekspor notasi LaTeX / MathML & grafik SVG · Siap disematkan ke VZ Docs',
+      en: 'LaTeX / MathML notation & SVG plot export · Ready to embed into VZ Docs',
     },
   },
   {
@@ -367,14 +404,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'analytics_math',
     iconName: 'trending-up',
     name: { id: 'VZ Ekonometrics', en: 'VZ Ekonometrics' },
-    reference: { id: 'Alat Analisis Ekonomi', en: 'Economic Analysis Tools' },
+    reference: {
+      id: 'Analisis Ekonometrika & Statistik (Impor/Ekspor CSV, XLS/XLSX)',
+      en: 'Econometrics & Statistical Analysis (Import/Export CSV, XLS/XLSX)',
+    },
     description: {
-      id: 'Perangkat analisis ekonometrika, regresi statistik, pemodelan deret waktu, dan visualisasi indikator ekonomi langsung di browser.',
-      en: 'Econometrics and statistical modeling suite for regression, time-series analysis, and economic data visualization.',
+      id: 'Perangkat analisis ekonometrika, regresi linier/panel, pemodelan deret waktu, dan uji hipotesis statistik di browser dengan dukungan impor/ekspor dataset CSV, XLS/XLSX, serta laporan PDF.',
+      en: 'Browser-based econometrics, regression, time-series modeling, and statistical hypothesis suite supporting CSV and XLS/XLSX dataset import/export and PDF reports.',
     },
     formatNote: {
-      id: 'Impor dataset .csv / VZ Sheets · Terhubung dengan pipeline data NurDB',
-      en: 'Direct .csv / VZ Sheets import · Compatible with NurDB data pipelines',
+      id: 'Impor/ekspor dataset .csv & XLS/XLSX · Rencana integrasi NurDB (Segera Hadir)',
+      en: 'Import/export .csv & XLS/XLSX datasets · Planned NurDB pipeline (Coming Soon)',
     },
   },
   {
@@ -383,14 +423,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'analytics_math',
     iconName: 'bar-chart-3',
     name: { id: 'VZ Metrics', en: 'VZ Metrics' },
-    reference: { id: 'Google Analytics / Yandex Metrica', en: 'Google Analytics / Yandex Metrica' },
+    reference: {
+      id: 'Analitik Trafik Web & Telemetri (Ekspor Laporan CSV, XLS/XLSX, PDF)',
+      en: 'Web Traffic & Product Telemetry Analytics (Export CSV, XLS/XLSX, PDF)',
+    },
     description: {
-      id: 'Analitik trafik situs web, pelacakan konversi, dan metrik performa aplikasi yang ringan dan ramah privasi.',
-      en: 'Lightweight, privacy-respecting web traffic analytics, conversion tracking, and product telemetry dashboard.',
+      id: 'Dasbor analitik kunjungan situs web, pemantauan konversi, peta interaksi halaman, dan metrik performa aplikasi yang ringan serta ramah privasi dengan ekspor laporan ke CSV, XLS/XLSX, dan PDF.',
+      en: 'Lightweight, privacy-conscious web traffic analytics, conversion funnel tracking, and application performance metrics with report exports to CSV, XLS/XLSX, and PDF.',
     },
     formatNote: {
-      id: 'Skrip pelacakan ringan · Penyimpanan agregasi cepat siap integrasi NurDB',
-      en: 'Minimal tracking script · Fast event aggregation ready for NurDB',
+      id: 'Skrip telemetri ringan · Ekspor laporan CSV/XLSX & rencana sinkronisasi NurDB',
+      en: 'Minimal telemetry script · CSV/XLSX report export & planned NurDB sync',
     },
   },
 
@@ -401,14 +444,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'communication',
     iconName: 'message-square',
     name: { id: 'VZ Chat', en: 'VZ Chat' },
-    reference: { id: 'Google Chat (Terhubung VZ Mail)', en: 'Google Chat (Linked to VZ Mail)' },
+    reference: {
+      id: 'Pesan Instan & Ruang Kolaborasi Tim (Terhubung VZ Mail)',
+      en: 'Instant Messaging & Team Channels (Connected to VZ Mail)',
+    },
     description: {
-      id: 'Pesan instan dan ruang kolaborasi tim bergaya Google Chat yang terhubung erat dengan percakapan email di mail.vz.gay.',
-      en: 'Instant team and direct messaging modeled after Google Chat, deeply connected with mail.vz.gay threads.',
+      id: 'Layanan pesan instan, kanal diskusi proyek, dan kolaborasi tim real-time yang terhubung langsung dengan utas surat elektronik di mail.vz.gay serta akun SSO.',
+      en: 'Real-time instant messaging, project channels, and team collaboration workspace directly bridged with email threads on mail.vz.gay and SSO identity.',
     },
     formatNote: {
-      id: 'Terhubung langsung dengan mail.vz.gay & sesi identitas accounts.vz.gay',
-      en: 'Directly connected to mail.vz.gay and accounts.vz.gay SSO sessions',
+      id: 'Terhubung langsung dengan mail.vz.gay · Ekspor riwayat obrolan ke .txt / .json',
+      en: 'Directly bridged with mail.vz.gay · Export chat archives to .txt / .json',
     },
   },
   {
@@ -417,14 +463,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'communication',
     iconName: 'users',
     name: { id: 'VZ Groups', en: 'VZ Groups' },
-    reference: { id: 'Milis & Grup / Google Groups', en: 'Mailing Lists / Google Groups' },
+    reference: {
+      id: 'Milis, Forum Diskusi Tim & Manajemen Hak Akses',
+      en: 'Mailing Lists, Team Forums & Access Groups',
+    },
     description: {
-      id: 'Grup diskusi, milis komunitas, dan pengelolaan izin akses tim terpusat ala Google Groups untuk proyek di VZ Desk.',
-      en: 'Discussion groups, mailing lists, and team access management modeled after Google Groups across VZ Desk.',
+      id: 'Pengelolaan grup diskusi, milis komunitas, dan pengaturan hak akses kolaborasi dokumen tim secara terpusat untuk seluruh layanan di dalam VZ Desk.',
+      en: 'Centralized discussion groups, mailing lists, and team document permission management across all VZ Desk applications.',
     },
     formatNote: {
-      id: 'Sinkron dengan mail.vz.gay, chat.vz.gay, dan hak akses dokumen VZ Desk',
-      en: 'Synced with mail.vz.gay, chat.vz.gay, and VZ Desk sharing permissions',
+      id: 'Sinkron dengan mail.vz.gay, chat.vz.gay & izin berbagi berkas VZ Desk',
+      en: 'Synced with mail.vz.gay, chat.vz.gay & VZ Desk file sharing permissions',
     },
   },
   {
@@ -433,14 +482,17 @@ export const VZ_DESK_APPS: VzDeskTool[] = [
     group: 'communication',
     iconName: 'contact',
     name: { id: 'VZ Contacts', en: 'VZ Contacts' },
-    reference: { id: 'Buku Kontak / vCard (.vcf)', en: 'Contacts / vCard (.vcf)' },
+    reference: {
+      id: 'Buku Alamat & Direktori Kontak (Ekspor/Impor .vcf, .csv, XLSX)',
+      en: 'Address Book & Contact Directory (Export/Import .vcf, .csv, XLSX)',
+    },
     description: {
-      id: 'Buku alamat dan direktori kontak pribadi maupun tim berbasis standar terbuka vCard (.vcf) yang tersinkron dengan VZ Mail & VZ Chat.',
-      en: 'Personal and team address book built on open vCard (.vcf) standards, synced with VZ Mail and VZ Chat.',
+      id: 'Buku alamat dan direktori kontak pribadi maupun organisasi berbasis standar terbuka vCard (.vcf) dengan fitur impor/ekspor ke CSV serta XLS/XLSX yang tersinkron dengan VZ Mail & VZ Chat.',
+      en: 'Personal and organizational address book built on open vCard (.vcf) standards with CSV and XLS/XLSX import/export, synced across VZ Mail and VZ Chat.',
     },
     formatNote: {
-      id: 'Standar terbuka .vcf · Ekspor/impor mudah & integrasi NurDB',
-      en: 'Open .vcf standard · Easy export/import & NurDB directory sync',
+      id: 'Standar terbuka .vcf + ekspor/impor CSV & XLSX · Rencana sinkronisasi NurDB',
+      en: 'Open .vcf standard + CSV & XLSX export/import · Planned NurDB directory sync',
     },
   },
 ];
@@ -456,8 +508,8 @@ export function deskToolToService(tool: VzDeskTool): VzService {
     shortType: tool.reference,
     description: tool.description,
     architectureNotes: {
-      id: `Bagian dari ekosistem VZ Desk (desk.vz.gay). ${tool.formatNote.id}. Terhubung dengan cloud identity SSO (accounts.vz.gay), dukungan enkripsi offline .enc lewat myvault.app.vz.gay, serta integrasi data NurDB (nurdb.vz.gay).`,
-      en: `Part of the VZ Desk suite (desk.vz.gay). ${tool.formatNote.en}. Built for Auth0 SSO cloud autosave (accounts.vz.gay), optional offline .enc encryption via myvault.app.vz.gay, and NurDB integration (nurdb.vz.gay).`,
+      id: `Bagian dari ekosistem VZ Desk (desk.vz.gay). ${tool.formatNote.id}. Mendukung ekspor ke format standar industri & perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG), autentikasi SSO (accounts.vz.gay), enkripsi offline .enc lewat myvault.app.vz.gay, serta rencana integrasi dengan NurDB (nurdb.vz.gay — Segera Hadir / Belum Tersedia).`,
+      en: `Part of the VZ Desk suite (desk.vz.gay). ${tool.formatNote.en}. Supports industry and office file exports (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG), Auth0 SSO autosave (accounts.vz.gay), optional offline .enc encryption via myvault.app.vz.gay, and future integration with NurDB (nurdb.vz.gay — Coming Soon / Not Yet Available).`,
     },
     highlights: [
       {
@@ -465,14 +517,14 @@ export function deskToolToService(tool: VzDeskTool): VzService {
         value: { id: 'VZ Desk (desk.vz.gay)', en: 'VZ Desk (desk.vz.gay)' },
       },
       {
-        label: { id: 'Format & Efisiensi', en: 'Format & Storage' },
+        label: { id: 'Format & Ekspor', en: 'Formats & Export' },
         value: tool.formatNote,
       },
       {
-        label: { id: 'Integrasi Masa Depan', en: 'Planned Integrations' },
+        label: { id: 'Rencana Integrasi', en: 'Planned Integrations' },
         value: {
-          id: 'NurDB (nurdb.vz.gay) · MyVault .enc · VZ Media',
-          en: 'NurDB (nurdb.vz.gay) · MyVault .enc · VZ Media',
+          id: 'MyVault (.enc) · VZ Media · NurDB (nurdb.vz.gay — Segera Hadir)',
+          en: 'MyVault (.enc) · VZ Media · NurDB (nurdb.vz.gay — Coming Soon)',
         },
       },
     ],
@@ -491,8 +543,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Search',
     },
     shortType: {
-      id: 'Mesin Pencari',
-      en: 'Search Engine',
+      id: 'Mesin Pencari Web',
+      en: 'Web Search Engine',
     },
     description: {
       id: 'Mesin pencari web utama di ekosistem vz.gay untuk menelusuri informasi dan layanan lintas web secara cepat.',
@@ -528,6 +580,82 @@ export const VZ_SERVICES: VzService[] = [
     },
   },
   {
+    id: 'demo-jajanan',
+    primaryDomain: 'demo.jajanan.online',
+    category: 'developer_cloud',
+    secondaryCategories: ['web_business'],
+    status: 'live',
+    iconName: 'store',
+    name: {
+      id: 'SkripX Marketplace & Reseller Code',
+      en: 'SkripX Marketplace & Reseller Code',
+    },
+    shortType: {
+      id: 'Source Code Self-Hosted Marketplace & SaaS Reseller',
+      en: 'Self-Hosted Marketplace & SaaS Reseller Code',
+    },
+    description: {
+      id: 'Source code platform marketplace & portal reseller multi-tenant siap Self-Hosted (termasuk layanan pengecekan dokumen & kemiripan AI). Menggunakan domain tunggal demo.jajanan.online untuk edisi kode mandiri, sedangkan *.jajanan.online dialokasikan khusus untuk edisi SaaS.',
+      en: 'Self-hosted multi-tenant marketplace and reseller portal source code (featuring document checking & AI similarity business modules). Hosted on the single domain demo.jajanan.online for the self-hosted code edition, while *.jajanan.online is reserved for the SaaS edition.',
+    },
+    clientDomainPatterns: ['demo.jajanan.online'],
+    sponsor: 'jajanserver.com',
+    architectureNotes: {
+      id: 'Ditampilkan pada kategori Developer & Cloud (Codeplace) sekaligus Web & Bisnis. Hanya memiliki 1 domain demo resmi (demo.jajanan.online) untuk paket kode self-hosting, terpisah dari domain wildcard *.jajanan.online milik versi SaaS.',
+      en: 'Indexed under both Developer & Cloud (Codeplace) and Web & Business. Uses the single dedicated domain demo.jajanan.online for self-hosted code buyers, distinct from the *.jajanan.online wildcard used by the managed SaaS platform.',
+    },
+  },
+  {
+    id: 'omnipostai',
+    primaryDomain: 'omnipostai.code.vz.gay',
+    category: 'developer_cloud',
+    secondaryCategories: ['web_business'],
+    status: 'live',
+    iconName: 'sparkles',
+    name: {
+      id: 'OmniPost AI',
+      en: 'OmniPost AI',
+    },
+    shortType: {
+      id: 'Otomasi Konten & Penerbitan Multi-Kanal AI',
+      en: 'AI Multi-Channel Content & Publishing Suite',
+    },
+    description: {
+      id: 'Platform otomasi pembuatan konten, penjadwalan, dan penerbitan lintas kanal berbasis kecerdasan buatan yang berjalan aktif di bawah ekosistem Codeplace (*.code.vz.gay).',
+      en: 'AI-driven content creation, scheduling, and multi-channel publishing platform live under the Codeplace (*.code.vz.gay) ecosystem.',
+    },
+    architectureNotes: {
+      id: 'Sudah aktif dan dapat diakses langsung melalui omnipostai.code.vz.gay.',
+      en: 'Live and directly accessible at omnipostai.code.vz.gay.',
+    },
+  },
+  {
+    id: 'lovelogicalai',
+    primaryDomain: 'lovelogicalai.kopi.pw',
+    altDomains: ['lovelogicalai.pages.dev'],
+    launchUrl: 'https://lovelogicalai.pages.dev',
+    category: 'media_content',
+    secondaryCategories: ['developer_cloud'],
+    status: 'live',
+    iconName: 'heart-handshake',
+    name: {
+      id: 'LoveLogical AI',
+      en: 'LoveLogical AI',
+    },
+    shortType: {
+      id: 'Aplikasi Web Analisis Relasi & Logika AI',
+      en: 'AI Relationship & Logic Analysis Web App',
+    },
+    description: {
+      id: 'Aplikasi web interaktif berbasis AI untuk eksplorasi perspektif komunikasi, kompatibilitas, dan penalaran logis dalam dinamika relasi.',
+      en: 'Interactive AI-powered web application exploring communication dynamics, compatibility insights, and logical reasoning in relationships.',
+    },
+    architectureNotes: {
+      id: 'Tersedia melalui domain klien lovelogicalai.kopi.pw serta mirror aktif lovelogicalai.pages.dev.',
+      en: 'Available across client domain lovelogicalai.kopi.pw and active mirror lovelogicalai.pages.dev.',
+    },
+  },
+  {
     id: 'wiyataxlms',
     primaryDomain: 'wiyataxlms.code.vz.gay',
     altDomains: ['wiyataxlms.orgz.top'],
@@ -539,12 +667,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'WiyataxLMS',
     },
     shortType: {
-      id: 'Portal Akademik & LMS SaaS',
-      en: 'Academic Portal & LMS SaaS',
+      id: 'Portal Akademik & LMS Multi-Tenant',
+      en: 'Multi-Tenant Academic Portal & LMS',
     },
     description: {
-      id: 'Template portal akademik & LMS white-label multi-tenant siap Self-Hosted maupun SaaS Cloud (gaya SIAKADCloud) dengan PPDB Online, Rapor, Student Portal, CMS, AI FAQ, dan Open API.',
-      en: 'Multi-tenant white-label academic portal & LMS platform ready for Self-Hosted or SaaS Cloud with Online Admissions (PPDB), Gradebook, Student Portal, Theme Studio, AI FAQ, and Open API.',
+      id: 'Template portal akademik & sistem manajemen pembelajaran (LMS) white-label multi-tenant siap Self-Hosted maupun SaaS Cloud dengan modul PPDB Online, Rapor Digital, Portal Siswa, CMS, AI FAQ, dan Open API.',
+      en: 'Multi-tenant white-label academic portal & LMS platform ready for Self-Hosted or SaaS Cloud with Online Admissions (PPDB), Digital Gradebook, Student Portal, Theme Studio, AI FAQ, and Open API.',
     },
     architectureNotes: {
       id: 'Demo aktif di *.code.vz.gay dengan domain alias wiyataxlms.orgz.top.',
@@ -567,8 +695,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Writing & Literacy Portal',
     },
     description: {
-      id: 'Platform ekosistem edukasi dan literasi kepenulisan Indonesia. Saat ini sudah online pada tahap awal (WP 0) dan terus dikembangkan secara bertahap.',
-      en: 'Indonesian writing and digital literacy ecosystem platform. Live in its initial WordPress (WP 0) stage with ongoing editorial expansion.',
+      id: 'Platform ekosistem edukasi dan literasi kepenulisan Indonesia. Saat ini sudah online pada tahap awal (rilis fondasi 0) dan terus dikembangkan secara bertahap.',
+      en: 'Indonesian writing and digital literacy ecosystem platform. Live in its initial foundation stage (release 0) with ongoing editorial expansion.',
     },
     architectureNotes: {
       id: 'Tersedia di marimenulis.web.id (www.marimenulis.web.id) sebagai bagian dari ekosistem edukasi dan literasi vz.gay.',
@@ -609,12 +737,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Desk',
     },
     shortType: {
-      id: 'Suite Produktivitas (17 Layanan)',
-      en: 'Productivity Suite (17 Apps)',
+      id: 'Suite Produktivitas & Kreatif (17 Layanan)',
+      en: 'Productivity & Creative Suite (17 Apps)',
     },
     description: {
-      id: 'Meja kerja digital terpadu (Docs, Sheets, Presentations, Craft 3D, Design, Motion, Draw, Forms, Math, Ekonometrics, Metrics, Diary, Press, Flowcharts, Chat, Groups, Contacts) berbasis teks polos, kompresi WebP/AVIF, autosave SSO, dan integrasi NurDB.',
-      en: 'Unified cloud workspace uniting 17 productivity, creative, analytics, and communication tools built on lightweight plain-text formats, WebP/AVIF media, Auth0 SSO autosave, offline .enc MyVault encryption, and NurDB.',
+      id: 'Meja kerja digital terpadu (Docs, Sheets, Presentations, Craft 3D, Design, Motion, Draw, Forms, Math, Ekonometrics, Metrics, Diary, Press, Flowcharts, Chat, Groups, Contacts) berbasis penyimpanan teks polos yang ringan dengan dukungan ekspor penuh ke format dokumen perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG, OBJ, VCF).',
+      en: 'Unified cloud workspace uniting 17 productivity, creative, analytics, and communication tools built on lightweight plain-text storage with full export compatibility for standard office formats (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG, OBJ, VCF).',
     },
     clientDomainPatterns: [
       'docs.vz.gay',
@@ -636,29 +764,29 @@ export const VZ_SERVICES: VzService[] = [
       'contacts.vz.gay',
     ],
     architectureNotes: {
-      id: 'Menyimpan berkas secara hemat ruang di server (.md, .csv, .svg, .typ, .vcf) dengan gambar terkompresi WebP/AVIF, cloud autosave lewat accounts.vz.gay, opsi enkripsi offline .enc menggunakan myvault.app.vz.gay (CipherVaultPro), serta integrasi data langsung dengan NurDB.',
-      en: 'Server-side autosave backed by compact plain-text formats (.md, .csv, .svg, .typ, .vcf) and WebP/AVIF media compression, authenticated via accounts.vz.gay SSO, with optional offline .enc encryption via myvault.app.vz.gay (CipherVaultPro) and native NurDB integration.',
+      id: 'Menyimpan berkas sumber secara hemat ruang (.md, .csv, .svg, .typ, .vcf) dengan konversi ekspor/impor ke format dokumen kantor (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF), kompresi media WebP/AVIF, cloud autosave lewat accounts.vz.gay, opsi enkripsi offline .enc menggunakan myvault.app.vz.gay, serta rencana integrasi dengan NurDB (Segera Hadir / Belum Tersedia).',
+      en: 'Stores compact plain-text source files (.md, .csv, .svg, .typ, .vcf) with seamless export/import for office document formats (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF), WebP/AVIF media compression, accounts.vz.gay SSO autosave, offline .enc encryption via myvault.app.vz.gay, and future integration with NurDB (Coming Soon / Not Yet Available).',
     },
     highlights: [
       {
-        label: { id: 'Mode Web Cloud', en: 'Web Cloud Mode' },
+        label: { id: 'Ekspor Format Kantor & Standar', en: 'Office & Open Format Exports' },
         value: {
-          id: 'Autosave otomatis terikat Auth0 SSO + ekspor PDF instan di browser',
-          en: 'Automatic cloud autosave tied to Auth0 SSO + instant in-browser PDF export',
+          id: 'DOC/DOCX · XLS/XLSX · PPT/PPTX · PDF · CSV · SVG · OBJ · VCF · WebP/AVIF',
+          en: 'DOC/DOCX · XLS/XLSX · PPT/PPTX · PDF · CSV · SVG · OBJ · VCF · WebP/AVIF',
         },
       },
       {
-        label: { id: 'Mode Offline Native (.enc)', en: 'Native Offline Mode (.enc)' },
+        label: { id: 'Mode Web & Offline (.enc)', en: 'Web & Offline Modes (.enc)' },
         value: {
-          id: 'Kontainer terenkripsi AES via myvault.app.vz.gay (tidak bisa dibaca lewat Notepad tanpa login)',
-          en: 'Encrypted .enc containers via myvault.app.vz.gay (unreadable outside authenticated decrypt)',
+          id: 'Autosave SSO di browser + kontainer terenkripsi AES .enc via myvault.app.vz.gay',
+          en: 'Browser SSO autosave + encrypted .enc containers via myvault.app.vz.gay',
         },
       },
       {
-        label: { id: 'Integrasi Data', en: 'Data Integration' },
+        label: { id: 'Integrasi Ekosistem', en: 'Ecosystem Integration' },
         value: {
-          id: 'Terhubung dengan mail.vz.gay, media.vz.gay, dan basis data nurdb.vz.gay',
-          en: 'Connects with mail.vz.gay, media.vz.gay, and nurdb.vz.gay databases',
+          id: 'Terhubung ke mail.vz.gay & media.vz.gay · Rencana konektor nurdb.vz.gay (Segera Hadir)',
+          en: 'Connected to mail.vz.gay & media.vz.gay · Planned nurdb.vz.gay connector (Coming Soon)',
         },
       },
     ],
@@ -697,16 +825,16 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Mail',
     },
     shortType: {
-      id: 'Email Privat Gaya Chat',
-      en: 'Offline-First Chat Email',
+      id: 'Email Privat Antarmuka Percakapan',
+      en: 'Offline-First Conversational Email',
     },
     description: {
-      id: 'Klien email dengan antarmuka percakapan ala WhatsApp yang terhubung dengan chat.vz.gay. Data disimpan lokal di perangkat tanpa beban penyimpanan server.',
-      en: 'Email client with a WhatsApp-style conversational UI connected to chat.vz.gay. Messages live locally on your device with zero server retention.',
+      id: 'Klien surat elektronik dengan tampilan gelembung percakapan cepat yang terhubung dengan chat.vz.gay. Data disimpan lokal di perangkat tanpa retensi kotak surat di server.',
+      en: 'Email client with a fast conversational bubble interface connected to chat.vz.gay. Messages live locally on your device with zero server mailbox retention.',
     },
     architectureNotes: {
-      id: 'Privasi maksimal tanpa penyimpanan email di server. Sinkronisasi antar perangkat dilakukan melalui fitur ekspor & impor berkas backup.',
-      en: 'Privacy-first local-device architecture: zero server mailbox storage; cross-device sync works via export/import backup files.',
+      id: 'Privasi maksimal tanpa penyimpanan email di server. Sinkronisasi antar perangkat dilakukan melalui fitur ekspor & impor berkas cadangan terenkripsi (.eml, .mbox, .enc).',
+      en: 'Privacy-first local-device architecture: zero server mailbox storage; cross-device sync works via export/import backup files (.eml, .mbox, .enc).',
     },
   },
   {
@@ -734,6 +862,18 @@ export const VZ_SERVICES: VzService[] = [
       '*.web.vz.gay',
       '*.site.vz.gay',
     ],
+    liveChildren: [
+      {
+        name: 'LoveLogical AI',
+        domain: 'lovelogicalai.kopi.pw',
+        altDomain: 'lovelogicalai.pages.dev',
+        kind: 'app',
+        description: {
+          id: 'Aplikasi web interaktif analisis relasi & penalaran logis berbasis AI',
+          en: 'Interactive AI relationship dynamics and logical reasoning web app',
+        },
+      },
+    ],
     architectureNotes: {
       id: 'Menargetkan publikasi situs statis dan dinamis secara instan dengan opsi domain kustom klien yang beragam.',
       en: 'Designed to publish static and dynamic sites rapidly with flexible client subdomain choices.',
@@ -751,12 +891,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Go-Blog',
     },
     shortType: {
-      id: 'Platform Blogging',
-      en: 'Blogging Platform',
+      id: 'Platform Penerbitan Blog & Artikel',
+      en: 'Blog & Article Publishing Platform',
     },
     description: {
-      id: 'Platform penerbitan blog modern ala Blogspot dan WordPress dengan dukungan domain tulisan khusus.',
-      en: 'Modern blogging platform inspired by Blogspot and WordPress with dedicated writer subdomains.',
+      id: 'Platform penerbitan blog dan manajemen artikel modern dengan editor Markdown/WYSIWYG, umpan RSS otomatis, ekspor arsip tulisan, serta dukungan subdomain penulis khusus.',
+      en: 'Modern blog and article publishing platform featuring Markdown/rich-text editing, automatic RSS feeds, content export archives, and dedicated writer subdomains.',
     },
     clientDomainPatterns: ['*.kaca.blog', '*.blog.vz.gay'],
     redirectRules: [
@@ -779,22 +919,33 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Business',
     },
     shortType: {
-      id: 'Marketplace Generator SaaS',
-      en: 'Marketplace Generator SaaS',
+      id: 'Generator Marketplace & Toko SaaS',
+      en: 'SaaS Marketplace & Storefront Generator',
     },
     description: {
-      id: 'Generator marketplace dan etalase toko online siap pakai bagi pelaku usaha dengan domain bisnis instan.',
-      en: 'Turnkey SaaS marketplace and storefront generator for merchants with instant business subdomains.',
+      id: 'Generator marketplace dan etalase toko online SaaS siap pakai bagi pelaku usaha dengan subdomain bisnis instan (*.jajanan.online, *.biz.orgz.top, *.biz.vz.gay), dilengkapi opsi paket source code self-hosted di demo.jajanan.online.',
+      en: 'Turnkey SaaS marketplace and online storefront generator for merchants with instant business subdomains (*.jajanan.online, *.biz.orgz.top, *.biz.vz.gay), complemented by a self-hosted code edition at demo.jajanan.online.',
     },
     clientDomainPatterns: [
       '*.jajanan.online',
       '*.biz.orgz.top',
       '*.biz.vz.gay',
     ],
+    liveChildren: [
+      {
+        name: 'SkripX Self-Hosted Marketplace Demo',
+        domain: 'demo.jajanan.online',
+        kind: 'demo',
+        description: {
+          id: 'Demo tunggal source code marketplace & portal reseller self-hosted (edisi SaaS menggunakan *.jajanan.online)',
+          en: 'Single-domain demo for the self-hosted marketplace & reseller portal code (SaaS edition uses *.jajanan.online)',
+        },
+      },
+    ],
     sponsor: 'jajanserver.com',
     architectureNotes: {
-      id: 'Didukung dan disponsori oleh jajanserver.com untuk menopang trafik katalog dan transaksi tenant marketplace.',
-      en: 'Supported and sponsored by jajanserver.com to power multi-tenant storefronts and high-traffic merchant catalogs.',
+      id: 'Didukung dan disponsori oleh jajanserver.com. Domain wildcard *.jajanan.online digunakan untuk tenant versi SaaS, sedangkan domain tunggal demo.jajanan.online dikhususkan untuk demo source code self-hosting.',
+      en: 'Supported and sponsored by jajanserver.com. Wildcard *.jajanan.online powers multi-tenant SaaS storefronts, while the single domain demo.jajanan.online showcases the self-hosted source code package.',
     },
   },
   {
@@ -808,12 +959,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Pay',
     },
     shortType: {
-      id: 'Pembayaran & Transaksi',
-      en: 'Payment Service',
+      id: 'Gerbang Pembayaran & Transaksi',
+      en: 'Payment & Checkout Gateway',
     },
     description: {
-      id: 'Layanan pembayaran digital dan manajemen transaksi terpadu untuk layanan vz.gay serta toko klien.',
-      en: 'Unified digital payment and transaction management service for vz.gay tools and merchant storefronts.',
+      id: 'Layanan pembayaran digital, faktur otomatis, dan manajemen transaksi terpadu untuk layanan vz.gay serta toko klien dengan ekspor mutasi CSV/XLSX.',
+      en: 'Unified digital payment, automated invoicing, and transaction management service for vz.gay tools and merchant storefronts with CSV/XLSX ledger exports.',
     },
     architectureNotes: {
       id: 'Saat ini sedang dalam pengembangan dan akan terhubung dengan business.vz.gay serta SSO accounts.vz.gay.',
@@ -831,12 +982,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Links',
     },
     shortType: {
-      id: 'SaaS Link-in-Bio & Short Links',
+      id: 'SaaS Link-in-Bio & Pemendek Tautan',
       en: 'Link-in-Bio & URL Shortener',
     },
     description: {
-      id: 'Platform SaaS untuk membuat halaman tautan bio (link-in-bio), pemendek tautan cepat, dan pelacakan klik terintegrasi.',
-      en: 'SaaS platform for customizable link-in-bio pages, fast short URLs, and integrated click tracking.',
+      id: 'Platform SaaS untuk membuat halaman tautan profil (link-in-bio), pemendek URL cepat, pembuatan kode QR, dan statistik klik terintegrasi.',
+      en: 'SaaS platform for customizable link-in-bio pages, fast short URLs, QR generation, and integrated click statistics.',
     },
     architectureNotes: {
       id: 'Dapat dihubungkan dengan analitik metrics.vz.gay serta halaman profil publik profile.vz.gay/$USERNAME.',
@@ -854,16 +1005,16 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Ads',
     },
     shortType: {
-      id: 'Jaringan Iklan / AdSense',
-      en: 'Ad Network / AdSense',
+      id: 'Jaringan Periklanan & Monetisasi Penerbit',
+      en: 'Publisher Ad & Monetization Network',
     },
     description: {
-      id: 'Jaringan monetisasi dan pemasangan iklan bergaya AdSense bagi penerbit situs, blog, dan aplikasi di ekosistem vz.gay.',
-      en: 'AdSense-style advertising and monetization network for publishers, blogs, and apps across the vz.gay ecosystem.',
+      id: 'Jaringan monetisasi tampilan iklan kontekstual dan manajemen kampanye mandiri bagi penerbit situs, blog, serta aplikasi di ekosistem vz.gay.',
+      en: 'Contextual display advertising and self-serve campaign monetization network for web publishers, blogs, and applications across the vz.gay ecosystem.',
     },
     architectureNotes: {
-      id: 'Terintegrasi dengan pelaporan metrics.vz.gay dan pencairan transaksi melalui pay.vz.gay.',
-      en: 'Designed to integrate with metrics.vz.gay reporting and payouts through pay.vz.gay.',
+      id: 'Terintegrasi dengan pelaporan performa di metrics.vz.gay dan pencairan pendapatan melalui pay.vz.gay.',
+      en: 'Designed to integrate with metrics.vz.gay performance reporting and payouts through pay.vz.gay.',
     },
   },
   {
@@ -877,12 +1028,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'NurDB',
     },
     shortType: {
-      id: 'Native Universal Rapid Databases',
-      en: 'Native Universal Rapid Databases',
+      id: 'Native Universal Rapid Databases (Segera Hadir / Belum Tersedia)',
+      en: 'Native Universal Rapid Databases (Coming Soon / Not Yet Available)',
     },
     description: {
-      id: 'Native Universal Rapid Databases — terinspirasi dari makna "Nur" (cahaya), menghadirkan basis data multi-model (NoSQL + Relasional) berkecepatan tinggi dalam satu file portabel (.nur) untuk self-host maupun managed cloud.',
-      en: 'Native Universal Rapid Databases — inspired by "Nur" (light), combining multi-model NoSQL + relational power, single-file portable .nur vaults, visual studio tools, and sub-millisecond edge speed for self-host or managed cloud.',
+      id: '[SEGERA HADIR — BELUM TERSEDIA] Native Universal Rapid Databases — terinspirasi dari makna "Nur" (cahaya), rancangan basis data multi-model (Dokumen JSON + Relasional) berkecepatan tinggi dalam satu kontainer portabel (.nur) untuk self-host maupun managed cloud di masa mendatang.',
+      en: '[COMING SOON — NOT YET AVAILABLE] Native Universal Rapid Databases — inspired by "Nur" (light), a planned high-velocity multi-model database engine (JSON Document + Relational) packaged in a single portable .nur vault for future self-hosted and managed cloud deployments.',
     },
     clientDomainPatterns: [
       'nurdb.vz.gay/docs',
@@ -892,36 +1043,36 @@ export const VZ_SERVICES: VzService[] = [
       'nurdb.vz.gay/v1/[vault-id]',
     ],
     architectureNotes: {
-      id: 'Memadukan fleksibilitas dokumen JSON (Schema-on-Read), relasi visual ala MS Access, isolasi 1 project per ruang eksekusi dengan banyak file Vault .nur, instant CoW branching, local-first sync, TTL ephemeral micro-DB, hingga rencana Fase 3 Polymorphic Query / Custom Lexer Dictionary.',
-      en: 'Blends schemaless JSON documents with relational visual modeling, isolated per-project multi-vault .nur packaging, instant CoW branching, zero-latency local-first sync, TTL ephemeral micro-DBs, and a Phase 3 Polymorphic Query / Custom Lexer Dictionary security engine.',
+      id: 'STATUS: SEGERA HADIR (COMING SOON — belum tersedia dan belum masuk tahap rilis pengembangan publik). Cetak biru arsitektur mencakup dokumen JSON fleksibel (Schema-on-Read), pemodelan relasi visual antartabel, isolasi multi-vault .nur per proyek, instant CoW branching, sinkronisasi local-first, TTL ephemeral micro-DB, ekspor/impor CSV/JSON/SQL, serta rencana Fase 3 Polymorphic Query Engine.',
+      en: 'STATUS: COMING SOON (not yet available and not yet in active public development release). Architectural blueprint covers schemaless JSON documents, visual relational modeling, isolated per-project multi-vault .nur packaging, instant CoW branching, local-first sync, TTL ephemeral micro-DBs, CSV/JSON/SQL import-export, and a Phase 3 Polymorphic Query Engine.',
     },
     highlights: [
       {
-        label: { id: 'NURDB Studio', en: 'NURDB Studio' },
+        label: { id: 'Status Ketersediaan', en: 'Availability Status' },
+        value: {
+          id: 'Segera Hadir (Coming Soon) — Saat ini belum tersedia; masih berupa rancangan arsitektur masa depan ekosistem vz.gay',
+          en: 'Coming Soon — Not yet available; currently an upcoming architectural blueprint for the vz.gay ecosystem',
+        },
+      },
+      {
+        label: { id: 'Rancangan NURDB Studio', en: 'Planned NURDB Studio' },
         value: {
           id: 'Grids (Tables) · Synapse (Relations) · Lenses (Queries) · Portals (Forms) · Canvas (Reports) · Flows (Triggers)',
           en: 'Grids (Tables) · Synapse (Relations) · Lenses (Queries) · Portals (Forms) · Canvas (Reports) · Flows (Triggers)',
         },
       },
       {
-        label: { id: 'Inovasi Inti', en: 'Core Innovations' },
+        label: { id: 'Target Inovasi Inti', en: 'Planned Core Innovations' },
         value: {
-          id: 'Instant Branching (<50ms) · Bundel Portabel .nur (Data + UI + Logic) · Local-First Sync · Auto-Expire TTL Vaults',
-          en: 'Instant Branching (<50ms) · Portable .nur Bundles (Data + UI + Logic) · Local-First Sync · Auto-Expire TTL Vaults',
+          id: 'Instant Branching (<50ms) · Bundel Portabel .nur (Data + UI + Logic) · Ekspor CSV/JSON/XLSX · Auto-Expire TTL Vaults',
+          en: 'Instant Branching (<50ms) · Portable .nur Bundles (Data + UI + Logic) · CSV/JSON/XLSX Export · Auto-Expire TTL Vaults',
         },
       },
       {
-        label: { id: 'Keamanan Lanjutan (Fase 3)', en: 'Advanced Security (Phase 3)' },
+        label: { id: 'Rencana Keamanan Fase 3', en: 'Phase 3 Security Blueprint' },
         value: {
           id: 'Polymorphic Query Engine dengan Custom Dictionary / Tokenizer per-tenant (C/Rust/LLVM)',
           en: 'Polymorphic Query Engine with per-tenant Custom Dictionary / Tokenizer (C/Rust/LLVM)',
-        },
-      },
-      {
-        label: { id: 'Distribusi & Konsol', en: 'Distribution & Console' },
-        value: {
-          id: 'Self-Host & Docs di nurdb.vz.gay/docs · Managed Cloud di cloud.vz.gay/nurdb · Konsol di cloud.vz.gay/console/nurdb',
-          en: 'Self-Host & Docs at nurdb.vz.gay/docs · Managed Cloud at cloud.vz.gay/nurdb · Console at cloud.vz.gay/console/nurdb',
         },
       },
     ],
@@ -937,22 +1088,22 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Codeplace',
     },
     shortType: {
-      id: 'Marketplace Template Kode',
-      en: 'Modern Code Marketplace',
+      id: 'Katalog Source Code & Template Aplikasi',
+      en: 'Source Code & App Template Marketplace',
     },
     description: {
-      id: 'Pusat template dan source code modern berbasis Node.js, TypeScript, hingga aplikasi Android Kotlin dengan demo langsung.',
-      en: 'Modern source code and template hub for Node.js, TypeScript, and Kotlin Android apps with live subdomain demos.',
+      id: 'Pusat distribusi template aplikasi dan source code siap pakai berbasis Node.js, TypeScript, PHP, hingga aplikasi Android Kotlin yang masing-masing dilengkapi demo aktif langsung.',
+      en: 'Source code and application template marketplace for Node.js, TypeScript, PHP, and Kotlin Android projects, each paired with a live interactive preview.',
     },
-    clientDomainPatterns: ['*.code.vz.gay'],
+    clientDomainPatterns: ['*.code.vz.gay', 'demo.jajanan.online'],
     liveChildren: [
       {
         name: 'Lensa Studio',
         domain: 'lensastudio.code.vz.gay',
         kind: 'demo',
         description: {
-          id: 'Demo aplikasi & showcase template aktif pertama',
-          en: 'First live production demo showcase',
+          id: 'Demo aplikasi & showcase template kreatif aktif',
+          en: 'Live creative studio application & template showcase',
         },
       },
       {
@@ -965,10 +1116,28 @@ export const VZ_SERVICES: VzService[] = [
           en: 'Multi-tenant white-label academic portal & LMS (Online PPDB, Gradebook, CMS, AI FAQ, Open API)',
         },
       },
+      {
+        name: 'OmniPost AI',
+        domain: 'omnipostai.code.vz.gay',
+        kind: 'demo',
+        description: {
+          id: 'Platform otomasi konten & penerbitan multi-kanal berbasis AI',
+          en: 'AI-powered multi-channel content creation & publishing platform',
+        },
+      },
+      {
+        name: 'SkripX Marketplace Code',
+        domain: 'demo.jajanan.online',
+        kind: 'demo',
+        description: {
+          id: 'Source code self-hosted marketplace & portal reseller multi-tenant (1 domain demo khusus kode mandiri)',
+          en: 'Self-hosted multi-tenant marketplace & reseller portal code (single dedicated demo domain)',
+        },
+      },
     ],
     architectureNotes: {
-      id: 'Alternatif modern bergaya CodeCanyon di mana setiap script atau source code memiliki demo aktif di *.code.vz.gay.',
-      en: 'Modern CodeCanyon alternative where every template or script ships with a live preview at *.code.vz.gay.',
+      id: 'Setiap paket kode atau template aplikasi memiliki lingkungan pratinjau langsung di bawah *.code.vz.gay atau domain demo khusus seperti demo.jajanan.online.',
+      en: 'Every template or self-hosted code package includes a live preview environment under *.code.vz.gay or dedicated demo hostnames such as demo.jajanan.online.',
     },
   },
   {
@@ -982,18 +1151,18 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Cloud',
     },
     shortType: {
-      id: 'Layanan Infrastruktur Cloud',
-      en: 'Cloud Infrastructure',
+      id: 'Layanan Infrastruktur Cloud (Segera Hadir)',
+      en: 'Cloud Infrastructure (Coming Soon)',
     },
     description: {
-      id: 'Payung layanan komputasi, hosting, konsol manajemen proyek (cloud.vz.gay/console), dan Managed NurDB Cloud.',
-      en: 'Managed cloud umbrella for compute, hosting, centralized project console (cloud.vz.gay/console), and Managed NurDB Cloud.',
+      id: '[SEGERA HADIR] Payung layanan komputasi, hosting aplikasi, konsol manajemen proyek (cloud.vz.gay/console), dan rencana Managed NurDB Cloud.',
+      en: '[COMING SOON] Managed cloud umbrella for compute, app hosting, centralized project console (cloud.vz.gay/console), and future Managed NurDB Cloud.',
     },
     clientDomainPatterns: ['cloud.vz.gay/nurdb', 'cloud.vz.gay/console/nurdb'],
     sponsor: 'jajanserver.com',
     architectureNotes: {
-      id: 'Segera hadir melalui kolaborasi infrastruktur bersama sponsor jajanserver.com.',
-      en: 'Coming soon in infrastructure partnership with sponsor jajanserver.com.',
+      id: 'Berstatus Segera Hadir (Coming Soon) melalui kolaborasi infrastruktur bersama sponsor jajanserver.com.',
+      en: 'Status: Coming Soon in infrastructure partnership with sponsor jajanserver.com.',
     },
   },
   {
@@ -1007,16 +1176,16 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Platform API',
     },
     shortType: {
-      id: 'Gerbang REST API',
-      en: 'REST API Gateway',
+      id: 'Gerbang REST API & Webhook',
+      en: 'REST API & Webhook Gateway',
     },
     description: {
-      id: 'Dokumentasi pengembang, kunci akses, dan endpoint REST API terpadu untuk mengintegrasikan seluruh layanan vz.gay.',
-      en: 'Developer documentation, access keys, and unified REST API endpoints connecting the vz.gay ecosystem.',
+      id: 'Dokumentasi pengembang (OpenAPI/JSON), manajemen kunci akses, dan endpoint REST API terpadu untuk mengintegrasikan seluruh layanan vz.gay.',
+      en: 'Developer documentation (OpenAPI/JSON), access key management, and unified REST API endpoints connecting the vz.gay ecosystem.',
     },
     architectureNotes: {
-      id: 'Menyediakan endpoint REST API dengan latensi rendah untuk integrasi lintas layanan di seluruh wilayah.',
-      en: 'Provides low-latency REST API endpoints for cross-service integration across regions.',
+      id: 'Menyediakan endpoint REST API standar dengan pertukaran payload JSON dan skema OpenAPI.',
+      en: 'Provides standard REST API endpoints with JSON payload exchange and OpenAPI schema exports.',
     },
   },
   {
@@ -1030,12 +1199,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Dev Tools',
     },
     shortType: {
-      id: 'Utilitas Publik Developer',
-      en: 'Public Developer Utilities',
+      id: 'Utilitas Publik Developer & Konverter Format',
+      en: 'Public Developer Utilities & Format Converters',
     },
     description: {
-      id: 'Kumpulan alat bantu publik serbaguna untuk developer (formatter, encoder/decoder, validator, inspektor payload, dan konverter cepat).',
-      en: 'Collection of fast, generic public developer tools including formatters, encoders, validators, and quick converters.',
+      id: 'Kumpulan alat bantu publik serbaguna untuk developer (formatter JSON/YAML/SQL, encoder/decoder, validator, inspektor payload, serta konverter dokumen & tabel CSV/JSON/XLSX cepat).',
+      en: 'Collection of fast public developer utilities including JSON/YAML/SQL formatters, encoders, validators, payload inspectors, and quick CSV/JSON/XLSX format converters.',
     },
     architectureNotes: {
       id: 'Dirancang berjalan ringan langsung di browser agar instan dipakai tanpa login wajib.',
@@ -1057,8 +1226,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'AI Tools & Workspace',
     },
     description: {
-      id: 'Rangkaian alat bantu kecerdasan buatan untuk produktivitas teks, analisis, dan otomasi alur kerja lintas VZ Desk.',
-      en: 'Focused AI workspace for text workflows, analysis, and smart automation across vz.gay services and VZ Desk.',
+      id: 'Rangkaian alat bantu kecerdasan buatan untuk produktivitas penulisan, ringkasan dokumen (DOCX/PDF/MD), analisis data tabel (CSV/XLSX), dan otomasi alur kerja lintas VZ Desk.',
+      en: 'Focused AI workspace for writing assistance, document summarization (DOCX/PDF/MD), tabular data analysis (CSV/XLSX), and workflow automation across VZ Desk.',
     },
   },
   {
@@ -1076,8 +1245,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Games & Web Apps Hub',
     },
     description: {
-      id: 'Direktori game ringan dan aplikasi utilitas web. Beberapa aplikasi dan game sudah aktif dan dapat langsung digunakan.',
-      en: 'Hub for browser games and lightweight web utilities. Several standalone apps and games are already live.',
+      id: 'Direktori game ringan dan aplikasi utilitas web interaktif. Beberapa aplikasi dan game sudah aktif dan dapat langsung digunakan sekarang.',
+      en: 'Hub for browser games and interactive web utilities. Several standalone apps and games are already live today.',
     },
     clientDomainPatterns: ['*.game.vz.gay', '*.app.vz.gay'],
     liveChildren: [
@@ -1095,8 +1264,8 @@ export const VZ_SERVICES: VzService[] = [
         domain: 'pdftoblade.app.vz.gay',
         kind: 'app',
         description: {
-          id: 'Konversi dokumen PDF ke template Blade secara cepat',
-          en: 'Fast PDF document to Blade template converter',
+          id: 'Konversi dokumen PDF ke sintaks template HTML/Blade secara cepat',
+          en: 'Fast PDF document to HTML/Blade template converter',
         },
       },
       {
@@ -1104,8 +1273,8 @@ export const VZ_SERVICES: VzService[] = [
         domain: 'directqr.app.vz.gay',
         kind: 'app',
         description: {
-          id: 'Generator QR code instan tanpa perantara pelacakan',
-          en: 'Instant direct QR code generator without tracking hops',
+          id: 'Generator kode QR instan (ekspor PNG/SVG) tanpa perantara pelacakan',
+          en: 'Instant direct QR code generator (PNG/SVG export) without tracking hops',
         },
       },
       {
@@ -1120,7 +1289,7 @@ export const VZ_SERVICES: VzService[] = [
       },
     ],
     architectureNotes: {
-      id: 'Memisahkan namespace *.game.vz.gay untuk game dan *.app.vz.gay untuk aplikasi non-game.',
+      id: 'Memisahkan namespace *.game.vz.gay untuk game dan *.app.vz.gay untuk aplikasi utilitas web non-game.',
       en: 'Separates *.game.vz.gay for games and *.app.vz.gay for non-game web utilities.',
     },
   },
@@ -1135,16 +1304,16 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Wonderplace',
     },
     shortType: {
-      id: 'Jejaring Sosial Ruang Aman',
-      en: 'Safe-Space Social Network',
+      id: 'Jejaring Sosial Ruang Aman & Inklusif',
+      en: 'Inclusive Safe-Space Social Network',
     },
     description: {
-      id: 'Media sosial berbasis WoWonder (Laravel PHP) sebagai ruang aman inklusif berlandaskan humanisme universal serta kesetaraan sesuai ToS TLD .gay.',
-      en: 'WoWonder (Laravel PHP) social platform built as an inclusive safe space rooted in universal humanism, equality, and full .gay TLD Terms of Service compliance.',
+      id: 'Platform jejaring sosial komunitas sebagai ruang aman inklusif berlandaskan humanisme universal, kesetaraan, dan penghormatan martabat manusia sesuai dengan ToS TLD .gay.',
+      en: 'Community social networking platform built as an inclusive safe space rooted in universal humanism, equality, and human dignity in full alignment with .gay TLD Terms of Service.',
     },
     architectureNotes: {
-      id: 'Dikelola dengan moderasi aktif untuk menjaga ruang interaksi yang aman, setara, dan bebas kebencian sesuai kebijakan TLD .gay.',
-      en: 'Operated with active moderation to uphold an inclusive, harassment-free environment aligned with .gay TLD policy.',
+      id: 'Dikelola dengan moderasi komunitas aktif untuk menjaga ruang interaksi yang aman, setara, dan bebas ujaran kebencian sesuai kebijakan TLD .gay.',
+      en: 'Operated with active community moderation to uphold an inclusive, harassment-free environment aligned with .gay TLD policy.',
     },
   },
   {
@@ -1158,12 +1327,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Film',
     },
     shortType: {
-      id: 'Basis Data Film & Sinema',
-      en: 'Film Database (IMDb-style)',
+      id: 'Basis Data & Ensiklopedia Sinema',
+      en: 'Cinema & Film Reference Database',
     },
     description: {
-      id: 'Direktori referensi film, serial, pemeran, sinopsis, dan rating komunitas bergaya IMDb.',
-      en: 'Reference database for movies, series, cast credits, synopses, and community ratings in an IMDb-like catalog.',
+      id: 'Direktori referensi film, serial, profil pemeran, kru produksi, sinopsis, serta ulasan dan penilaian kurasi komunitas.',
+      en: 'Comprehensive reference database for movies, series, cast and crew credits, synopses, and community reviews.',
     },
   },
   {
@@ -1177,16 +1346,16 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Music Library',
     },
     shortType: {
-      id: 'Pustaka Lirik & Makna Lagu',
-      en: 'Lyrics & Song Meanings',
+      id: 'Pustaka Lirik, Kredit & Makna Lagu',
+      en: 'Lyrics, Credits & Song Meanings Library',
     },
     description: {
-      id: 'Pustaka musik untuk mencari lirik, kredit lagu, dan interpretasi makna lagu—bukan layanan pemutar audio streaming.',
-      en: 'Curated music reference library for searching lyrics, credits, and song meanings—not an audio streaming player.',
+      id: 'Pustaka referensi musik untuk menelusuri teks lirik, kredit pencipta lagu, metadata rilisan, dan anotasi makna lagu—bukan layanan pemutar audio streaming.',
+      en: 'Curated music reference library for exploring song lyrics, composer credits, release metadata, and lyrical interpretations—not an audio streaming player.',
     },
     architectureNotes: {
-      id: 'Berfokus pada teks lirik, metadata rilisan, dan anotasi makna lagu (berbeda dari YT Music, Spotify, atau iTunes).',
-      en: 'Focused strictly on lyrics, release metadata, and lyrical annotations rather than audio playback.',
+      id: 'Berfokus murni pada pengarsipan teks lirik, struktur kredit karya, dan bedah makna lagu tanpa distribusi berkas audio streaming.',
+      en: 'Focused strictly on lyrical text archives, songwriting credits, and meaning annotations without audio streaming playback.',
     },
   },
   {
@@ -1200,16 +1369,16 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Photo',
     },
     shortType: {
-      id: 'Papan Inspirasi & Hosting Gambar',
-      en: 'Pinterest + Imgur Hybrid',
+      id: 'Papan Inspirasi Visual & Hosting Gambar Publik',
+      en: 'Visual Moodboards & Public Image Hosting',
     },
     description: {
-      id: 'Hibrida 2-in-1 ala Pinterest dan Imgur untuk kurasi inspirasi visual sekaligus hosting gambar publik yang ringan.',
-      en: '2-in-1 Pinterest and Imgur hybrid built for visual moodboards and fast public image hosting—not private cloud backup.',
+      id: 'Platform ganda 2-in-1 untuk menyusun papan kurasi inspirasi visual sekaligus layanan hosting tautan gambar publik yang cepat dan ringan (mendukung WebP, AVIF, PNG, JPG).',
+      en: '2-in-1 visual discovery moodboard and fast public image hosting service supporting optimized WebP, AVIF, PNG, and JPG delivery.',
     },
     architectureNotes: {
-      id: 'Aset media publik dioptimalkan dengan kompresi WebP/AVIF untuk pemuatan gambar berkecepatan tinggi.',
-      en: 'Public visual uploads are optimized with WebP/AVIF compression for fast, reliable global image delivery.',
+      id: 'Aset visual publik dioptimalkan dengan kompresi WebP/AVIF untuk pemuatan gambar berkecepatan tinggi dan penyematan lintas dokumen.',
+      en: 'Public visual uploads are optimized with WebP/AVIF compression for high-speed delivery and direct document embedding.',
     },
   },
   {
@@ -1223,12 +1392,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Comic',
     },
     shortType: {
-      id: 'Pustaka Komik Digital',
-      en: 'Digital Comics Hub',
+      id: 'Pustaka Komik Digital (WebP/AVIF, CBZ, PDF)',
+      en: 'Digital Comics Hub (WebP/AVIF, CBZ, PDF)',
     },
     description: {
-      id: 'Ruang baca dan katalog komik digital independen maupun seri grafis lintas genre dengan pembaca ringan.',
-      en: 'Reading platform and catalog for independent digital comics and graphic series with a lightweight reader.',
+      id: 'Ruang baca dan katalog komik digital independen maupun seri grafis lintas genre dengan pembaca web ringan serta dukungan arsip komik (.cbz, .pdf).',
+      en: 'Reading platform and catalog for independent digital comics and graphic series with a lightweight web reader and comic archive (.cbz, .pdf) support.',
     },
   },
   {
@@ -1246,8 +1415,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Digital Manga Library',
     },
     description: {
-      id: 'Direktori dan pembaca manga digital dengan tata letak halaman vertikal maupun kanan-ke-kiri yang nyaman.',
-      en: 'Digital manga catalog and reader supporting smooth vertical scroll and right-to-left page navigation.',
+      id: 'Direktori dan pembaca manga digital dengan mode gulir vertikal maupun navigasi halaman kanan-ke-kiri yang responsif di perangkat mobile dan desktop.',
+      en: 'Digital manga catalog and reader supporting smooth vertical scroll and right-to-left page navigation across mobile and desktop.',
     },
   },
   {
@@ -1280,12 +1449,12 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Books',
     },
     shortType: {
-      id: 'Katalog & Buku Digital',
-      en: 'Digital Books Catalog',
+      id: 'Katalog & Buku Digital (EPUB, PDF)',
+      en: 'Digital Books Catalog (EPUB, PDF)',
     },
     description: {
-      id: 'Platform katalog, resensi, dan bacaan buku digital terstruktur untuk literasi umum dan akademik.',
-      en: 'Structured catalog, reviews, and digital reading hub for general and academic books.',
+      id: 'Platform katalog, resensi, dan ruang baca buku digital terstruktur (mendukung format standar EPUB dan PDF) untuk literasi umum maupun akademik.',
+      en: 'Structured catalog, reviews, and digital reading hub (supporting standard EPUB and PDF formats) for general and academic literature.',
     },
   },
   {
@@ -1303,8 +1472,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Multi-Format Digital Library',
     },
     description: {
-      id: 'Perpustakaan digital serba guna yang tidak hanya menghimpun buku, melainkan juga arsip riset, manuskrip, materi ajar, dan koleksi multimedia.',
-      en: 'Comprehensive digital library housing not only books, but also research archives, manuscripts, courseware, and multimedia collections.',
+      id: 'Perpustakaan digital serba guna yang tidak hanya menghimpun buku (EPUB/PDF), melainkan juga arsip riset, dataset (CSV/XLSX), naskah dokumen (DOCX/MD), materi ajar, dan koleksi multimedia.',
+      en: 'Comprehensive digital library housing not only books (EPUB/PDF), but also research archives, datasets (CSV/XLSX), manuscripts (DOCX/MD), courseware, and multimedia collections.',
     },
   },
   {
@@ -1314,16 +1483,16 @@ export const VZ_SERVICES: VzService[] = [
     status: 'development',
     iconName: 'file-text',
     name: {
-      id: 'VZ Journal (OJS)',
-      en: 'VZ Journal (OJS)',
+      id: 'VZ Journal',
+      en: 'VZ Journal',
     },
     shortType: {
-      id: 'Open Journal Systems (OJS)',
-      en: 'Open Journal Systems (OJS)',
+      id: 'Sistem Penerbitan Jurnal Ilmiah Terbuka (PDF, DOCX, BibTeX)',
+      en: 'Academic Peer-Reviewed Journal Publishing (PDF, DOCX, BibTeX)',
     },
     description: {
-      id: 'Sistem penerbitan jurnal ilmiah berbasis Open Journal Systems (OJS) untuk manajemen naskah, peer-review, dan publikasi riset terbuka.',
-      en: 'Academic journal publishing portal built on Open Journal Systems (OJS) for submissions, peer review, and open-access research.',
+      id: 'Sistem manajemen dan penerbitan jurnal ilmiah akses terbuka untuk pengiriman naskah (DOC/DOCX, LaTeX, PDF), proses telaah sejawat (peer-review), pengindeksan metadata DOI/BibTeX, dan publikasi riset.',
+      en: 'Open-access academic journal management and publishing platform for manuscript submissions (DOC/DOCX, LaTeX, PDF), peer-review workflows, DOI/BibTeX metadata indexing, and research publication.',
     },
   },
   {
@@ -1483,8 +1652,8 @@ export const CLIENT_DOMAIN_MATRIX = [
     roleId: 'Website Builder',
     roleEn: 'Website Builder',
     patterns: ['*.orgz.top', '*.kopi.pw', '*.jajanan.online', '*.web.vz.gay', '*.site.vz.gay'],
-    routingNoteId: 'Subdomain situs klien otomatis',
-    routingNoteEn: 'Automated client site routing',
+    routingNoteId: 'Subdomain situs klien otomatis (termasuk lovelogicalai.kopi.pw)',
+    routingNoteEn: 'Automated client site routing (including lovelogicalai.kopi.pw)',
   },
   {
     service: 'go-blog.vz.gay / goblog.vz.gay',
@@ -1496,11 +1665,11 @@ export const CLIENT_DOMAIN_MATRIX = [
   },
   {
     service: 'business.vz.gay',
-    roleId: 'Marketplace Generator',
-    roleEn: 'Marketplace Generator',
-    patterns: ['*.jajanan.online', '*.biz.orgz.top', '*.biz.vz.gay'],
-    routingNoteId: 'Sponsor oleh jajanserver.com',
-    routingNoteEn: 'Sponsored by jajanserver.com',
+    roleId: 'Marketplace Generator (SaaS & Self-Hosted)',
+    roleEn: 'Marketplace Generator (SaaS & Self-Hosted)',
+    patterns: ['*.jajanan.online (SaaS)', 'demo.jajanan.online (Self-Hosted Code)', '*.biz.orgz.top', '*.biz.vz.gay'],
+    routingNoteId: 'Sponsor jajanserver.com · *.jajanan.online untuk SaaS & demo.jajanan.online khusus kode self-host',
+    routingNoteEn: 'Sponsored by jajanserver.com · *.jajanan.online for SaaS & demo.jajanan.online for self-hosted code',
   },
   {
     service: 'play.vz.gay',
@@ -1512,19 +1681,19 @@ export const CLIENT_DOMAIN_MATRIX = [
   },
   {
     service: 'codeplace.vz.gay',
-    roleId: 'Marketplace Template Kode',
-    roleEn: 'Code Template Hub',
-    patterns: ['*.code.vz.gay'],
-    routingNoteId: '2 demo aktif: lensastudio.code.vz.gay & wiyataxlms.code.vz.gay',
-    routingNoteEn: '2 live demos: lensastudio.code.vz.gay & wiyataxlms.code.vz.gay',
+    roleId: 'Katalog Source Code & Template',
+    roleEn: 'Source Code & Template Hub',
+    patterns: ['*.code.vz.gay', 'demo.jajanan.online'],
+    routingNoteId: '4 demo aktif: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
+    routingNoteEn: '4 live demos: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
   },
   {
-    service: 'nurdb.vz.gay',
-    roleId: 'Native Universal Rapid Databases',
-    roleEn: 'Native Universal Rapid Databases',
+    service: 'nurdb.vz.gay (Segera Hadir)',
+    roleId: 'Native Universal Rapid Databases (Belum Tersedia)',
+    roleEn: 'Native Universal Rapid Databases (Coming Soon)',
     patterns: ['[vault-id]-nurdb.vz.gay', 'nurdb.vz.gay/v1/[vault-id]', 'cloud.vz.gay/console/nurdb'],
-    routingNoteId: 'Subdomain satu tingkat + path konsol & docs',
-    routingNoteEn: 'Single-level hostnames + console & docs paths',
+    routingNoteId: 'Segera Hadir (Coming Soon) — Cetak biru hostname satu tingkat & konsol',
+    routingNoteEn: 'Coming Soon (Not Yet Available) — Planned single-level hostnames & console',
   },
   {
     service: 'cdn.vz.gay',

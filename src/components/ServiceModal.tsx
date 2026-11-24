@@ -65,7 +65,15 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
                 {service.name[lang]}
               </h2>
               <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span className="font-medium text-amber-700 dark:text-amber-400">
+                <span
+                  className={`font-medium ${
+                    service.status === 'coming_soon'
+                      ? 'text-violet-700 dark:text-violet-400'
+                      : service.status === 'live'
+                        ? 'text-emerald-700 dark:text-emerald-400'
+                        : 'text-amber-700 dark:text-amber-400'
+                  }`}
+                >
                   {t.directory.statusLabels[service.status]}
                 </span>
                 <span aria-hidden="true">·</span>
@@ -111,8 +119,16 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
             </div>
           )}
 
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0E1117] border border-slate-200/80 dark:border-[#232732] text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-            {t.serviceModal.devNotice}
+          <div
+            className={`p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${
+              service.status === 'coming_soon'
+                ? 'bg-violet-50/70 dark:bg-violet-950/25 border-violet-200 dark:border-violet-900/60 text-violet-950 dark:text-violet-200'
+                : 'bg-slate-50 dark:bg-[#0E1117] border-slate-200/80 dark:border-[#232732] text-slate-600 dark:text-slate-300'
+            }`}
+          >
+            {service.status === 'coming_soon'
+              ? t.serviceModal.comingSoonNotice
+              : t.serviceModal.devNotice}
           </div>
 
           {/* Primary & Alias Domains */}
