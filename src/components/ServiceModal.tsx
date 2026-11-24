@@ -44,11 +44,11 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="service-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/55 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/55 backdrop-blur-xs"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl max-h-[88vh] overflow-y-auto rounded-2xl bg-white dark:bg-[#13161C] border border-slate-200 dark:border-[#262C3A] shadow-xl p-6 sm:p-8"
+        className="w-full max-w-2xl max-h-[88vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl bg-white dark:bg-[#13161C] border border-slate-200 dark:border-[#262C3A] shadow-xl p-5 sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

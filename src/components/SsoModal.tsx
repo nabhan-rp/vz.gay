@@ -75,11 +75,11 @@ export function SsoModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="sso-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/55 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/55 backdrop-blur-xs"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-[#13161C] border border-slate-200 dark:border-[#262C3A] shadow-xl p-6 sm:p-7"
+        className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl bg-white dark:bg-[#13161C] border border-slate-200 dark:border-[#262C3A] shadow-xl p-5 sm:p-7"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#232732]">

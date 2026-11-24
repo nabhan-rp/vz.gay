@@ -71,8 +71,8 @@ export function ServiceDirectory({
   });
 
   return (
-    <section id="services" className="max-w-[1200px] mx-auto px-4 sm:px-6 py-12 sm:py-16">
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-slate-200 dark:border-[#232732]">
+    <section id="services" className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-14">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 sm:pb-8 border-b border-slate-200 dark:border-[#232732]">
         <div className="max-w-2xl">
           <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white text-balance">
             {t.sectionTitle}
@@ -87,11 +87,30 @@ export function ServiceDirectory({
           )}
         </div>
 
-        {/* Interactive Category Tabs */}
+        {/* Mobile Category Select Dropdown */}
+        <div className="sm:hidden w-full">
+          <label htmlFor="mobile-category-select" className="sr-only">
+            {t.sectionTitle}
+          </label>
+          <select
+            id="mobile-category-select"
+            value={filter}
+            onChange={(e) => onFilterChange(e.target.value as DirectoryFilter)}
+            className="w-full px-3.5 py-2.5 text-sm font-medium rounded-xl bg-white dark:bg-[#151922] border border-slate-300 dark:border-[#282E3D] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+          >
+            {filterTabs.map((tab) => (
+              <option key={tab.id} value={tab.id}>
+                {tab.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Tablet & Desktop Interactive Category Tabs */}
         <div
           role="tablist"
           aria-label={t.sectionTitle}
-          className="flex flex-wrap items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-[#151922] border border-slate-200/80 dark:border-[#232732] self-start lg:self-auto"
+          className="hidden sm:flex flex-wrap items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-[#151922] border border-slate-200/80 dark:border-[#232732] self-start lg:self-auto"
         >
           {filterTabs.map((tab) => {
             const active = filter === tab.id;
