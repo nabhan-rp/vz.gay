@@ -2,6 +2,7 @@ import {
   Cloud,
   Code2,
   CreditCard,
+  Database,
   FileUp,
   Film,
   Gamepad2,
@@ -60,5 +61,7 @@ export function ServiceIcon({ name, className = 'w-5 h-5' }: ServiceIconProps) {
       return <CreditCard className={className} />;
     case 'graduation-cap':
       return <GraduationCap className={className} />;
+    case 'database':
+      return <Database className={className} />;
   }
 }

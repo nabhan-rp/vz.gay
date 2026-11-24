@@ -47,7 +47,8 @@ export interface VzService {
     | 'music'
     | 'image'
     | 'credit-card'
-    | 'graduation-cap';
+    | 'graduation-cap'
+    | 'database';
   name: {
     id: string;
     en: string;
@@ -382,6 +383,29 @@ export const VZ_SERVICES: VzService[] = [
     architectureNotes: {
       id: 'Segera hadir melalui kolaborasi infrastruktur bersama sponsor jajanserver.com.',
       en: 'Coming soon in infrastructure partnership with sponsor jajanserver.com.',
+    },
+  },
+  {
+    id: 'nurdb',
+    primaryDomain: 'nurdb.vz.gay',
+    category: 'developer_cloud',
+    status: 'coming_soon',
+    iconName: 'database',
+    name: {
+      id: 'NurDB',
+      en: 'NurDB',
+    },
+    shortType: {
+      id: 'Native Universal Rapid Databases',
+      en: 'Native Universal Rapid Databases',
+    },
+    description: {
+      id: 'Native Universal Rapid Databases — sistem basis data serbaguna berkecepatan tinggi yang dirancang untuk kebutuhan aplikasi modern.',
+      en: 'Native Universal Rapid Databases — a high-speed, universal database service built for modern application workloads.',
+    },
+    architectureNotes: {
+      id: 'Segera hadir di ekosistem vz.gay sebagai layanan basis data terkelola yang ringkas dan responsif.',
+      en: 'Coming soon to the vz.gay ecosystem as a responsive, universal managed database platform.',
     },
   },
   {
