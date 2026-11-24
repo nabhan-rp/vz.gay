@@ -7,13 +7,16 @@ import { ServiceDirectory, type DirectoryFilter } from './components/ServiceDire
 import { ServiceModal } from './components/ServiceModal';
 import { SsoModal } from './components/SsoModal';
 import { TopBar } from './components/TopBar';
+import { VzDeskSection } from './components/VzDeskSection';
 import { VZ_SERVICES, type VzService } from './data/services';
 import { useLanguage } from './hooks/useLanguage';
+import { useSsoSession } from './hooks/useSsoSession';
 import { useTheme } from './hooks/useTheme';
 
 export default function App() {
   const { theme, setTheme } = useTheme();
   const { lang, setLang } = useLanguage();
+  const { session, age, isVerifiedAdult21, signIn, signOut } = useSsoSession();
   const [filter, setFilter] = useState<DirectoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedService, setSelectedService] = useState<VzService | null>(null);
@@ -21,7 +24,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-slate-900 dark:bg-[#0B0D11] dark:text-slate-100">
-      <TopBar lang={lang} onOpenSso={() => setSsoOpen(true)} />
+      <TopBar
+        lang={lang}
+        isAuthenticated={session.isAuthenticated}
+        username={session.username}
+        onOpenSso={() => setSsoOpen(true)}
+      />
 
       <main className="flex-1">
         <HeroSearch
@@ -38,6 +46,13 @@ export default function App() {
           services={VZ_SERVICES}
           filter={filter}
           onFilterChange={setFilter}
+          searchQuery={searchQuery}
+          isVerifiedAdult21={isVerifiedAdult21}
+          onSelectService={setSelectedService}
+        />
+
+        <VzDeskSection
+          lang={lang}
           searchQuery={searchQuery}
           onSelectService={setSelectedService}
         />
@@ -58,6 +73,11 @@ export default function App() {
       <SsoModal
         isOpen={ssoOpen}
         lang={lang}
+        session={session}
+        age={age}
+        isVerifiedAdult21={isVerifiedAdult21}
+        onSignIn={signIn}
+        onSignOut={signOut}
         onClose={() => setSsoOpen(false)}
       />
     </div>

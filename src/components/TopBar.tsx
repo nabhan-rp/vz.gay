@@ -2,10 +2,17 @@ import { UI_COPY, type Language } from '../data/i18n';
 
 interface TopBarProps {
   lang: Language;
+  isAuthenticated: boolean;
+  username: string;
   onOpenSso: () => void;
 }
 
-export function TopBar({ lang, onOpenSso }: TopBarProps) {
+export function TopBar({
+  lang,
+  isAuthenticated,
+  username,
+  onOpenSso,
+}: TopBarProps) {
   const t = UI_COPY[lang].nav;
 
   return (
@@ -26,16 +33,16 @@ export function TopBar({ lang, onOpenSso }: TopBarProps) {
             {t.services}
           </a>
           <a
+            href="#vz-desk"
+            className="hover:text-slate-900 dark:hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 underline-offset-4 hover:underline"
+          >
+            {t.vzDesk}
+          </a>
+          <a
             href="#live-apps"
             className="hover:text-slate-900 dark:hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 underline-offset-4 hover:underline"
           >
             {t.liveApps}
-          </a>
-          <a
-            href="#domains"
-            className="hover:text-slate-900 dark:hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 underline-offset-4 hover:underline"
-          >
-            {t.domains}
           </a>
           <a
             href="#infrastructure"
@@ -49,9 +56,9 @@ export function TopBar({ lang, onOpenSso }: TopBarProps) {
           <button
             type="button"
             onClick={onOpenSso}
-            className="px-4 py-2 text-xs sm:text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0B0D11] cursor-pointer"
+            className="px-4 py-2 text-xs sm:text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors duration-150 whitespace-nowrap shrink-0 max-w-[180px] truncate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0B0D11] cursor-pointer"
           >
-            {t.signIn}
+            {isAuthenticated ? `${t.signedInPrefix} ${username}` : t.signIn}
           </button>
         </div>
       </div>

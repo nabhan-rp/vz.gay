@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Check, Copy, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, Copy, ShieldAlert, X } from 'lucide-react';
 import { UI_COPY, type Language } from '../data/i18n';
 import type { VzService } from '../data/services';
 import { ServiceIcon } from './ServiceIcon';
@@ -36,6 +36,8 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
       // Ignore clipboard failure
     }
   };
+
+  const launchHref = service.launchUrl || `https://${service.primaryDomain}`;
 
   return (
     <div
@@ -91,6 +93,23 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
           <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed">
             {service.description[lang]}
           </p>
+
+          {/* Compliance / Regional Restriction Notice (e.g., 21zone.vz.gay) */}
+          {service.complianceNotice && (
+            <div className="p-4 sm:p-5 rounded-xl bg-amber-50/70 dark:bg-amber-950/25 border border-amber-200 dark:border-amber-900/60 space-y-3">
+              <div className="flex items-center gap-2 text-amber-900 dark:text-amber-300">
+                <ShieldAlert className="w-4 h-4 shrink-0" />
+                <h3 className="font-display text-sm font-semibold">
+                  {service.complianceNotice.title[lang]}
+                </h3>
+              </div>
+              <ul className="space-y-2 text-xs sm:text-sm text-amber-950/90 dark:text-amber-200/90 leading-relaxed list-disc pl-4">
+                {service.complianceNotice.items.map((item, idx) => (
+                  <li key={idx}>{item[lang]}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0E1117] border border-slate-200/80 dark:border-[#232732] text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
             {t.serviceModal.devNotice}
@@ -167,6 +186,30 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
             </div>
           )}
 
+          {/* Structured Highlights (NurDB Studio, VZ Desk Modes, etc.) */}
+          {service.highlights && service.highlights.length > 0 && (
+            <div>
+              <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                {t.serviceModal.highlightsLabel}
+              </h3>
+              <div className="mt-2 space-y-2.5">
+                {service.highlights.map((hl, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#0E1117] border border-slate-200 dark:border-[#232732]"
+                  >
+                    <div className="text-xs font-semibold text-slate-900 dark:text-white">
+                      {hl.label[lang]}
+                    </div>
+                    <div className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {hl.value[lang]}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Client Domain Patterns */}
           {service.clientDomainPatterns && service.clientDomainPatterns.length > 0 && (
             <div>
@@ -177,15 +220,15 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
                 {service.clientDomainPatterns.map((pattern) => (
                   <div
                     key={pattern}
-                    className="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-50 dark:bg-[#0E1117] border border-slate-200 dark:border-[#232732]"
+                    className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-slate-50 dark:bg-[#0E1117] border border-slate-200 dark:border-[#232732]"
                   >
-                    <span className="font-mono text-xs text-slate-800 dark:text-slate-200">
+                    <span className="font-mono text-xs text-slate-800 dark:text-slate-200 break-all">
                       {pattern}
                     </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(pattern)}
-                      className="text-xs text-slate-400 hover:text-slate-800 dark:hover:text-white cursor-pointer"
+                      className="text-xs text-slate-400 hover:text-slate-800 dark:hover:text-white cursor-pointer shrink-0"
                       aria-label={`${t.serviceModal.copyDomain} ${pattern}`}
                     >
                       {copiedText === pattern ? (
@@ -279,7 +322,7 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
             {t.serviceModal.close}
           </button>
           <a
-            href={`https://${service.primaryDomain}`}
+            href={launchHref}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors whitespace-nowrap shrink-0"

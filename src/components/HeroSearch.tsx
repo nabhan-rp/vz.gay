@@ -15,6 +15,8 @@ interface HeroSearchProps {
 const LIVE_SHORTCUTS = [
   { label: 'search.vz.gay', href: 'https://search.vz.gay' },
   { label: 'files.vz.gay', href: 'https://files.vz.gay' },
+  { label: 'marimenulis.web.id', href: 'https://www.marimenulis.web.id/' },
+  { label: 'republikjomokerto.vercel.app', href: 'https://republikjomokerto.vercel.app' },
   { label: 'myvault.app.vz.gay', href: 'https://myvault.app.vz.gay' },
   { label: 'pdftoblade.app.vz.gay', href: 'https://pdftoblade.app.vz.gay' },
   { label: 'directqr.app.vz.gay', href: 'https://directqr.app.vz.gay' },

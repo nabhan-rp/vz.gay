@@ -11,6 +11,7 @@ interface ServiceDirectoryProps {
   filter: DirectoryFilter;
   onFilterChange: (filter: DirectoryFilter) => void;
   searchQuery: string;
+  isVerifiedAdult21: boolean;
   onSelectService: (service: VzService) => void;
 }
 
@@ -20,6 +21,7 @@ export function ServiceDirectory({
   filter,
   onFilterChange,
   searchQuery,
+  isVerifiedAdult21,
   onSelectService,
 }: ServiceDirectoryProps) {
   const t = UI_COPY[lang].directory;
@@ -32,11 +34,16 @@ export function ServiceDirectory({
     { id: 'developer_cloud', label: t.tabs.developer_cloud },
     { id: 'media_content', label: t.tabs.media_content },
     { id: 'education', label: t.tabs.education },
+    { id: 'system_community', label: t.tabs.system_community },
   ];
 
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredServices = services.filter((svc) => {
+    if (svc.ageRestricted && !isVerifiedAdult21) {
+      return false;
+    }
+
     const matchesCategory =
       filter === 'all'
         ? true
@@ -55,6 +62,7 @@ export function ServiceDirectory({
       svc.description[lang],
       ...(svc.clientDomainPatterns ?? []),
       ...(svc.liveChildren?.map((c) => `${c.name} ${c.domain} ${c.altDomain ?? ''}`) ?? []),
+      ...(svc.highlights?.map((h) => `${h.label[lang]} ${h.value[lang]}`) ?? []),
     ]
       .join(' ')
       .toLowerCase();
@@ -72,6 +80,11 @@ export function ServiceDirectory({
           <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
             {t.sectionSubtitle}
           </p>
+          {isVerifiedAdult21 && (
+            <p className="mt-2 font-mono text-xs text-emerald-700 dark:text-emerald-400">
+              {t.adultUnlockedHint}
+            </p>
+          )}
         </div>
 
         {/* Interactive Category Tabs */}
@@ -130,12 +143,13 @@ export function ServiceDirectory({
             const statusText = t.statusLabels[service.status];
             const domainCount = service.clientDomainPatterns?.length ?? 0;
             const liveChildrenCount = service.liveChildren?.length ?? 0;
+            const targetHref = service.launchUrl || `https://${service.primaryDomain}`;
 
             if (isLive) {
               return (
                 <a
                   key={service.id}
-                  href={`https://${service.primaryDomain}`}
+                  href={targetHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex flex-col justify-between p-6 rounded-xl bg-white dark:bg-[#13161C] border border-slate-200 dark:border-[#232732] hover:border-blue-500/60 dark:hover:border-blue-400/60 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
