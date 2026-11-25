@@ -631,8 +631,8 @@ export const VZ_SERVICES: VzService[] = [
   },
   {
     id: 'lovelogicalai',
-    primaryDomain: 'lovelogicalai.kopi.pw',
-    altDomains: ['lovelogicalai.pages.dev'],
+    primaryDomain: 'lovelogicalai.pages.dev',
+    altDomains: ['lovelogicalai.kopi.pw'],
     launchUrl: 'https://lovelogicalai.pages.dev',
     category: 'media_content',
     secondaryCategories: ['developer_cloud'],
@@ -651,8 +651,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Interactive AI-powered web application exploring communication dynamics, compatibility insights, and logical reasoning in relationships.',
     },
     architectureNotes: {
-      id: 'Tersedia melalui domain klien lovelogicalai.kopi.pw serta mirror aktif lovelogicalai.pages.dev.',
-      en: 'Available across client domain lovelogicalai.kopi.pw and active mirror lovelogicalai.pages.dev.',
+      id: 'Sudah aktif dan dapat langsung diakses melalui lovelogicalai.pages.dev serta domain klien lovelogicalai.kopi.pw.',
+      en: 'Live and directly accessible at lovelogicalai.pages.dev alongside client domain lovelogicalai.kopi.pw.',
     },
   },
   {
@@ -818,7 +818,7 @@ export const VZ_SERVICES: VzService[] = [
     id: 'mail',
     primaryDomain: 'mail.vz.gay',
     category: 'productivity',
-    status: 'development',
+    status: 'live',
     iconName: 'mail',
     name: {
       id: 'VZ Mail',
@@ -833,8 +833,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Email client with a fast conversational bubble interface connected to chat.vz.gay. Messages live locally on your device with zero server mailbox retention.',
     },
     architectureNotes: {
-      id: 'Privasi maksimal tanpa penyimpanan email di server. Sinkronisasi antar perangkat dilakukan melalui fitur ekspor & impor berkas cadangan terenkripsi (.eml, .mbox, .enc).',
-      en: 'Privacy-first local-device architecture: zero server mailbox storage; cross-device sync works via export/import backup files (.eml, .mbox, .enc).',
+      id: 'Sudah aktif di mail.vz.gay dengan prinsip privasi maksimal tanpa penyimpanan email di server. Sinkronisasi antar perangkat dilakukan melalui ekspor & impor berkas cadangan terenkripsi (.eml, .mbox, .enc).',
+      en: 'Live at mail.vz.gay with a privacy-first local-device architecture and zero server mailbox storage; cross-device sync works via encrypted backup files (.eml, .mbox, .enc).',
     },
   },
   {
@@ -865,8 +865,8 @@ export const VZ_SERVICES: VzService[] = [
     liveChildren: [
       {
         name: 'LoveLogical AI',
-        domain: 'lovelogicalai.kopi.pw',
-        altDomain: 'lovelogicalai.pages.dev',
+        domain: 'lovelogicalai.pages.dev',
+        altDomain: 'lovelogicalai.kopi.pw',
         kind: 'app',
         description: {
           id: 'Aplikasi web interaktif analisis relasi & penalaran logis berbasis AI',
@@ -975,7 +975,7 @@ export const VZ_SERVICES: VzService[] = [
     id: 'links',
     primaryDomain: 'links.vz.gay',
     category: 'web_business',
-    status: 'development',
+    status: 'live',
     iconName: 'link-2',
     name: {
       id: 'VZ Links',
@@ -990,8 +990,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'SaaS platform for customizable link-in-bio pages, fast short URLs, QR generation, and integrated click statistics.',
     },
     architectureNotes: {
-      id: 'Dapat dihubungkan dengan analitik metrics.vz.gay serta halaman profil publik profile.vz.gay/$USERNAME.',
-      en: 'Connects cleanly with metrics.vz.gay analytics and public pages on profile.vz.gay/$USERNAME.',
+      id: 'Sudah aktif di links.vz.gay serta dirancang terhubung dengan analitik metrics.vz.gay dan halaman profil publik profile.vz.gay/$USERNAME.',
+      en: 'Live at links.vz.gay and designed to integrate with metrics.vz.gay analytics and public pages on profile.vz.gay/$USERNAME.',
     },
   },
   {
@@ -1652,8 +1652,8 @@ export const CLIENT_DOMAIN_MATRIX = [
     roleId: 'Website Builder',
     roleEn: 'Website Builder',
     patterns: ['*.orgz.top', '*.kopi.pw', '*.jajanan.online', '*.web.vz.gay', '*.site.vz.gay'],
-    routingNoteId: 'Subdomain situs klien otomatis (termasuk lovelogicalai.kopi.pw)',
-    routingNoteEn: 'Automated client site routing (including lovelogicalai.kopi.pw)',
+    routingNoteId: 'Subdomain situs klien otomatis (termasuk lovelogicalai.pages.dev / lovelogicalai.kopi.pw)',
+    routingNoteEn: 'Automated client site routing (including lovelogicalai.pages.dev / lovelogicalai.kopi.pw)',
   },
   {
     service: 'go-blog.vz.gay / goblog.vz.gay',
