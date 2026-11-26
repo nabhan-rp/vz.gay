@@ -1,9 +1,11 @@
 import {
+  Activity,
   BarChart3,
   BookMarked,
   BookOpen,
   Box,
   Briefcase,
+  Building2,
   Calculator,
   Clapperboard,
   ClipboardList,
@@ -13,6 +15,7 @@ import {
   Contact,
   CreditCard,
   Database,
+  EyeOff,
   Feather,
   FileText,
   FileUp,
@@ -23,6 +26,7 @@ import {
   GraduationCap,
   Headphones,
   HeartHandshake,
+  HeartPulse,
   Image as ImageIcon,
   Layers,
   LayoutGrid,
@@ -45,10 +49,12 @@ import {
   Smile,
   Sparkles,
   Store,
+  Sun,
   Table2,
   TrendingUp,
   UserCircle2,
   Users,
+  Video,
   Webhook,
   Wrench,
 } from 'lucide-react';
@@ -165,5 +171,17 @@ export function ServiceIcon({ name, className = 'w-5 h-5' }: ServiceIconProps) {
       return <MessagesSquare className={className} />;
     case 'shield-alert':
       return <ShieldAlert className={className} />;
+    case 'activity':
+      return <Activity className={className} />;
+    case 'building-2':
+      return <Building2 className={className} />;
+    case 'eye-off':
+      return <EyeOff className={className} />;
+    case 'heart-pulse':
+      return <HeartPulse className={className} />;
+    case 'sun':
+      return <Sun className={className} />;
+    case 'video':
+      return <Video className={className} />;
   }
 }

@@ -22,7 +22,6 @@ import { ServiceIcon } from './ServiceIcon';
 interface HomeOverviewProps {
   lang: Language;
   searchQuery: string;
-  isVerifiedAdult21: boolean;
   onNavigate: (to: string) => void;
   onSelectService: (service: VzService) => void;
 }
@@ -43,25 +42,25 @@ const HOME_COPY = {
         path: '/services',
         meta: '/services',
         title: 'Direktori Layanan Ekosistem',
-        desc: 'Telusuri 30+ layanan aktif dan yang sedang dikembangkan lintas 7 kategori.',
+        desc: 'Telusuri 35+ layanan aktif dan terencana lintas 7 kategori termasuk 21zone & dukungan baru.',
       },
       {
         path: '/desk',
         meta: '/desk',
-        title: 'VZ Desk Suite (17 Aplikasi)',
-        desc: 'Suite produktivitas, dokumen, spreadsheet, desain 3D, analitik, dan komunikasi.',
+        title: 'VZ Desk Suite (17 Aplikasi Aktif)',
+        desc: '17 aplikasi produktivitas, dokumen, 3D, analitik, dan komunikasi + view.vz.gay & pub.vz.gay.',
       },
       {
         path: '/live-domains',
         meta: '/live-domains',
         title: 'Sub-Aplikasi Aktif & Peta Domain',
-        desc: 'Akses sub-aplikasi yang sudah berjalan beserta matriks opsi domain klien & 301.',
+        desc: 'Akses sub-aplikasi yang sudah berjalan beserta matriks opsi domain klien & pengalihan 301.',
       },
       {
         path: '/about',
-        meta: '/about',
-        title: 'SSO Terpadu & Identitas Mitra',
-        desc: 'Autentikasi tunggal accounts.vz.gay, myaccount.vz.gay, dan naungan galbay.',
+        meta: '/about · /legal',
+        title: 'Akun myaccount.vz.gay & Legal',
+        desc: 'Tautan langsung myaccount.vz.gay, naungan galbay, serta pusat Legal & Abuse / DMCA.',
       },
     ],
     categoryTitle: 'Pintasan Kategori Direktori',
@@ -82,25 +81,25 @@ const HOME_COPY = {
         path: '/services',
         meta: '/services',
         title: 'Ecosystem Service Directory',
-        desc: 'Browse 30+ live and upcoming services organized across 7 focused categories.',
+        desc: 'Browse 35+ live and planned services organized across 7 focused categories.',
       },
       {
         path: '/desk',
         meta: '/desk',
-        title: 'VZ Desk Suite (17 Apps)',
-        desc: 'Unified cloud productivity, documents, spreadsheets, 3D/design, analytics, and chat.',
+        title: 'VZ Desk Suite (17 Live Apps)',
+        desc: '17 live cloud productivity, docs, 3D/design, analytics, and chat apps + view.vz.gay & pub.vz.gay.',
       },
       {
         path: '/live-domains',
         meta: '/live-domains',
         title: 'Live Sub-Apps & Domain Matrix',
-        desc: 'Launch active tools under VZ Play & Codeplace and inspect client domain routing.',
+        desc: 'Launch active tools under VZ Desk, Play & Codeplace and inspect client domain routing.',
       },
       {
         path: '/about',
-        meta: '/about',
-        title: 'Unified SSO & Partner Identity',
-        desc: 'Single sign-on via accounts.vz.gay, myaccount.vz.gay, and galbay corporate umbrella.',
+        meta: '/about · /legal',
+        title: 'myaccount.vz.gay & Legal Center',
+        desc: 'Direct myaccount.vz.gay access, galbay partner umbrella, and Abuse / DMCA center.',
       },
     ],
     categoryTitle: 'Direct Category Routes',
@@ -111,7 +110,6 @@ const HOME_COPY = {
 export function HomeOverview({
   lang,
   searchQuery,
-  isVerifiedAdult21,
   onNavigate,
   onSelectService,
 }: HomeOverviewProps) {
@@ -129,9 +127,8 @@ export function HomeOverview({
 
   const liveServices = VZ_SERVICES.filter((svc) => svc.status === 'live');
 
-  // When user types a query on `/`, show instant matches across services + VZ Desk tools
   const allSearchableServices: VzService[] = [
-    ...VZ_SERVICES.filter((svc) => !svc.ageRestricted || isVerifiedAdult21),
+    ...VZ_SERVICES,
     ...VZ_DESK_APPS.map(deskToolToService),
   ];
 
@@ -189,7 +186,7 @@ export function HomeOverview({
           ) : (
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {instantMatches.map((svc) => {
-                const isLive = svc.status === 'live';
+                const isLive = svc.status === 'live' && !svc.ageRestricted;
                 const targetHref = svc.launchUrl || `https://${svc.primaryDomain}`;
                 if (isLive) {
                   return (
@@ -289,7 +286,7 @@ export function HomeOverview({
           })}
         </div>
 
-        {/* Category Sub-Route Shortcuts (/services/web, /services/edu, etc.) */}
+        {/* Category Sub-Route Shortcuts */}
         <div className="mt-5 pt-5 border-t border-slate-200/80 dark:border-[#232732] flex flex-wrap items-center gap-2.5">
           <span className="text-xs font-medium text-slate-500 dark:text-slate-400 mr-1">
             {t.categoryTitle}:
@@ -362,8 +359,8 @@ export function HomeOverview({
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#1E232D] flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>{service.shortType[lang]}</span>
-                  <span className="font-medium text-emerald-700 dark:text-emerald-400">
+                  <span className="truncate pr-2">{service.shortType[lang]}</span>
+                  <span className="font-medium text-emerald-700 dark:text-emerald-400 shrink-0">
                     {dirCopy.statusLabels.live}
                   </span>
                 </div>

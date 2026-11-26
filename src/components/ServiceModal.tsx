@@ -123,12 +123,16 @@ export function ServiceModal({ service, lang, onClose }: ServiceModalProps) {
             className={`p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${
               service.status === 'coming_soon'
                 ? 'bg-violet-50/70 dark:bg-violet-950/25 border-violet-200 dark:border-violet-900/60 text-violet-950 dark:text-violet-200'
-                : 'bg-slate-50 dark:bg-[#0E1117] border-slate-200/80 dark:border-[#232732] text-slate-600 dark:text-slate-300'
+                : service.status === 'live'
+                  ? 'bg-emerald-50/70 dark:bg-emerald-950/25 border-emerald-200 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200'
+                  : 'bg-slate-50 dark:bg-[#0E1117] border-slate-200/80 dark:border-[#232732] text-slate-600 dark:text-slate-300'
             }`}
           >
             {service.status === 'coming_soon'
               ? t.serviceModal.comingSoonNotice
-              : t.serviceModal.devNotice}
+              : service.status === 'live'
+                ? t.serviceModal.liveNotice
+                : t.serviceModal.devNotice}
           </div>
 
           {/* Primary & Alias Domains */}

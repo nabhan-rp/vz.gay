@@ -60,7 +60,13 @@ export type ServiceIconName =
   | 'server'
   | 'headphones'
   | 'messages-square'
-  | 'shield-alert';
+  | 'shield-alert'
+  | 'activity'
+  | 'building-2'
+  | 'eye-off'
+  | 'heart-pulse'
+  | 'sun'
+  | 'video';
 
 export interface LiveChildApp {
   name: string;
@@ -502,19 +508,22 @@ export function deskToolToService(tool: VzDeskTool): VzService {
     id: tool.id,
     primaryDomain: tool.domain,
     category: 'productivity',
-    status: 'development',
+    status: 'live',
     iconName: tool.iconName,
     name: tool.name,
     shortType: tool.reference,
     description: tool.description,
     architectureNotes: {
-      id: `Bagian dari ekosistem VZ Desk (desk.vz.gay). ${tool.formatNote.id}. Mendukung ekspor ke format standar industri & perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG), autentikasi SSO (accounts.vz.gay), enkripsi offline .enc lewat myvault.app.vz.gay, serta rencana integrasi dengan NurDB (nurdb.vz.gay — Segera Hadir / Belum Tersedia).`,
-      en: `Part of the VZ Desk suite (desk.vz.gay). ${tool.formatNote.en}. Supports industry and office file exports (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG), Auth0 SSO autosave (accounts.vz.gay), optional offline .enc encryption via myvault.app.vz.gay, and future integration with NurDB (nurdb.vz.gay — Coming Soon / Not Yet Available).`,
+      id: `Sudah aktif (Live) sebagai bagian dari suite VZ Desk (desk.vz.gay). ${tool.formatNote.id}. Mendukung ekspor ke format standar industri & perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG), publikasi UGC publik ke view.vz.gay dan pub.vz.gay, autentikasi SSO (accounts.vz.gay), enkripsi offline .enc lewat myvault.app.vz.gay, serta rencana integrasi dengan NurDB (nurdb.vz.gay — Segera Hadir / Belum Tersedia).`,
+      en: `Live as part of the VZ Desk suite (desk.vz.gay). ${tool.formatNote.en}. Supports industry and office file exports (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG), public UGC publishing via view.vz.gay and pub.vz.gay, SSO autosave (accounts.vz.gay), optional offline .enc encryption via myvault.app.vz.gay, and future integration with NurDB (nurdb.vz.gay — Coming Soon / Not Yet Available).`,
     },
     highlights: [
       {
-        label: { id: 'Payung Suite', en: 'Parent Suite' },
-        value: { id: 'VZ Desk (desk.vz.gay)', en: 'VZ Desk (desk.vz.gay)' },
+        label: { id: 'Payung Suite & Publikasi UGC', en: 'Parent Suite & Public UGC Publishing' },
+        value: {
+          id: 'VZ Desk (desk.vz.gay) · Publikasi publik via view.vz.gay & pub.vz.gay',
+          en: 'VZ Desk (desk.vz.gay) · Public publishing via view.vz.gay & pub.vz.gay',
+        },
       },
       {
         label: { id: 'Format & Ekspor', en: 'Formats & Export' },
@@ -728,22 +737,25 @@ export const VZ_SERVICES: VzService[] = [
   {
     id: 'desk',
     primaryDomain: 'desk.vz.gay',
+    altDomains: ['view.vz.gay', 'pub.vz.gay'],
     category: 'productivity',
-    status: 'development',
+    status: 'live',
     iconName: 'briefcase',
     name: {
       id: 'VZ Desk',
       en: 'VZ Desk',
     },
     shortType: {
-      id: 'Suite Produktivitas & Kreatif (17 Layanan)',
-      en: 'Productivity & Creative Suite (17 Apps)',
+      id: 'Suite Produktivitas & Kreatif (17 Layanan + View/Pub)',
+      en: 'Productivity & Creative Suite (17 Apps + View/Pub)',
     },
     description: {
-      id: 'Meja kerja digital terpadu (Docs, Sheets, Presentations, Craft 3D, Design, Motion, Draw, Forms, Math, Ekonometrics, Metrics, Diary, Press, Flowcharts, Chat, Groups, Contacts) berbasis penyimpanan teks polos yang ringan dengan dukungan ekspor penuh ke format dokumen perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG, OBJ, VCF).',
-      en: 'Unified cloud workspace uniting 17 productivity, creative, analytics, and communication tools built on lightweight plain-text storage with full export compatibility for standard office formats (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG, OBJ, VCF).',
+      id: 'Meja kerja digital terpadu yang sudah aktif bersama 17 sub-aplikasinya (Docs, Sheets, Presentations, Craft 3D, Design, Motion, Draw, Forms, Math, Ekonometrics, Metrics, Diary, Press, Flowcharts, Chat, Groups, Contacts) serta subdomain publikasi UGC view.vz.gay dan pub.vz.gay dengan dukungan ekspor format perkantoran (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG, OBJ, VCF).',
+      en: 'Live unified cloud workspace uniting all 17 active productivity, creative, analytics, and communication apps plus public UGC publishing domains view.vz.gay and pub.vz.gay, backed by plain-text storage and full office format exports (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, CSV, SVG, OBJ, VCF).',
     },
     clientDomainPatterns: [
+      'view.vz.gay',
+      'pub.vz.gay',
       'docs.vz.gay',
       'sheets.vz.gay',
       'presentations.vz.gay',
@@ -762,11 +774,38 @@ export const VZ_SERVICES: VzService[] = [
       'groups.vz.gay',
       'contacts.vz.gay',
     ],
+    liveChildren: [
+      {
+        name: 'VZ Desk View (UGC Viewer)',
+        domain: 'view.vz.gay',
+        kind: 'app',
+        description: {
+          id: 'Subdomain publik untuk membaca dan menampilkan hasil karya atau dokumen VZ Desk secara publik',
+          en: 'Public viewer subdomain for sharing and displaying published VZ Desk creations and documents',
+        },
+      },
+      {
+        name: 'VZ Desk Pub (UGC Publishing)',
+        domain: 'pub.vz.gay',
+        kind: 'app',
+        description: {
+          id: 'Subdomain penerbitan konten buatan pengguna (UGC) langsung dari seluruh aplikasi VZ Desk',
+          en: 'User-generated content (UGC) publishing endpoint for instant sharing from VZ Desk apps',
+        },
+      },
+    ],
     architectureNotes: {
-      id: 'Menyimpan berkas sumber secara hemat ruang (.md, .csv, .svg, .typ, .vcf) dengan konversi ekspor/impor ke format dokumen kantor (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF), kompresi media WebP/AVIF, cloud autosave lewat accounts.vz.gay, opsi enkripsi offline .enc menggunakan myvault.app.vz.gay, serta rencana integrasi dengan NurDB (Segera Hadir / Belum Tersedia).',
-      en: 'Stores compact plain-text source files (.md, .csv, .svg, .typ, .vcf) with seamless export/import for office document formats (DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF), WebP/AVIF media compression, accounts.vz.gay SSO autosave, offline .enc encryption via myvault.app.vz.gay, and future integration with NurDB (Coming Soon / Not Yet Available).',
+      id: 'Sudah aktif di desk.vz.gay beserta seluruh 17 sub-aplikasi dan 2 domain publikasi UGC baru (view.vz.gay & pub.vz.gay). Menyimpan berkas sumber secara hemat ruang (.md, .csv, .svg, .typ, .vcf) dengan ekspor DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF, enkripsi offline .enc via myvault.app.vz.gay, serta rencana integrasi dengan NurDB (Segera Hadir / Belum Tersedia).',
+      en: 'Live at desk.vz.gay along with all 17 sub-apps and 2 new public UGC publishing subdomains (view.vz.gay & pub.vz.gay). Stores compact plain-text source files (.md, .csv, .svg, .typ, .vcf) with DOC/DOCX, XLS/XLSX, PPT/PPTX, PDF exports, offline .enc encryption via myvault.app.vz.gay, and planned NurDB integration (Coming Soon / Not Yet Available).',
     },
     highlights: [
+      {
+        label: { id: '17 Sub-Aplikasi & Publikasi UGC', en: '17 Live Sub-Apps & UGC Domains' },
+        value: {
+          id: '17 sub-aplikasi produktivitas aktif + view.vz.gay & pub.vz.gay untuk penerbitan publik',
+          en: 'All 17 productivity sub-apps live + view.vz.gay & pub.vz.gay for public publishing',
+        },
+      },
       {
         label: { id: 'Ekspor Format Kantor & Standar', en: 'Office & Open Format Exports' },
         value: {
@@ -781,36 +820,30 @@ export const VZ_SERVICES: VzService[] = [
           en: 'Browser SSO autosave + encrypted .enc containers via myvault.app.vz.gay',
         },
       },
-      {
-        label: { id: 'Integrasi Ekosistem', en: 'Ecosystem Integration' },
-        value: {
-          id: 'Terhubung ke mail.vz.gay & media.vz.gay · Rencana konektor nurdb.vz.gay (Segera Hadir)',
-          en: 'Connected to mail.vz.gay & media.vz.gay · Planned nurdb.vz.gay connector (Coming Soon)',
-        },
-      },
     ],
   },
   {
     id: 'app',
     primaryDomain: 'app.vz.gay',
     category: 'productivity',
-    status: 'development',
+    status: 'live',
     iconName: 'layout-grid',
     name: {
       id: 'VZ App Hub',
       en: 'VZ App Hub',
     },
     shortType: {
-      id: 'Peluncur Aplikasi',
-      en: 'App Workspace',
+      id: 'Peluncur Aplikasi Web (*.app.vz.gay)',
+      en: 'Web App Launcher (*.app.vz.gay)',
     },
     description: {
-      id: 'Pusat aplikasi web terpadu untuk mengelola ruang kerja, utilitas harian, dan integrasi akun terpusat.',
-      en: 'Unified web application launcher for managing daily workspaces, utilities, and central account integrations.',
+      id: 'Pusat aplikasi web terpadu yang sudah aktif untuk mengakses berbagai utilitas harian dan aplikasi mandiri di bawah namespace *.app.vz.gay bersama VZ Play.',
+      en: 'Live unified web application launcher for accessing daily utility tools and standalone web apps under *.app.vz.gay alongside VZ Play.',
     },
+    clientDomainPatterns: ['*.app.vz.gay', '*.game.vz.gay'],
     architectureNotes: {
-      id: 'Saat ini sedang dalam pengembangan aktif dan akan terhubung ke SSO accounts.vz.gay.',
-      en: 'Currently under active development and will integrate directly with accounts.vz.gay SSO.',
+      id: 'Sudah aktif di app.vz.gay dan bersinergi dengan play.vz.gay untuk mengindeks aplikasi utilitas *.app.vz.gay.',
+      en: 'Live at app.vz.gay and paired with play.vz.gay for indexing *.app.vz.gay utility applications.',
     },
   },
   {
@@ -838,21 +871,21 @@ export const VZ_SERVICES: VzService[] = [
   },
   {
     id: 'builder',
-    primaryDomain: 'builder.cloud.vz.gay',
+    primaryDomain: 'builder.vz.gay',
     category: 'web_business',
-    status: 'development',
+    status: 'live',
     iconName: 'globe',
     name: {
-      id: 'VZ Web Builder',
-      en: 'VZ Web Builder',
+      id: 'VZ Builder',
+      en: 'VZ Builder',
     },
     shortType: {
-      id: 'Website Builder',
-      en: 'Website Builder',
+      id: 'Website Builder, Go-Blog & Marketplace Hub',
+      en: 'Website Builder, Go-Blog & Marketplace Hub',
     },
     description: {
-      id: 'Pembuat situs web instan berbasis cloud dengan penerbitan cepat dan dukungan banyak subdomain klien.',
-      en: 'Cloud-powered website builder with rapid publishing and multi-domain client routing.',
+      id: 'Pembuat situs web instan berbasis cloud yang sudah aktif di builder.vz.gay dengan penerbitan cepat dan dukungan multi-domain klien (*.orgz.top, *.kopi.pw, *.web.vz.gay, *.site.vz.gay).',
+      en: 'Live cloud-powered website builder at builder.vz.gay featuring rapid publishing and multi-domain client routing (*.orgz.top, *.kopi.pw, *.web.vz.gay, *.site.vz.gay).',
     },
     clientDomainPatterns: [
       '*.orgz.top',
@@ -873,8 +906,8 @@ export const VZ_SERVICES: VzService[] = [
       },
     ],
     architectureNotes: {
-      id: 'Menargetkan publikasi situs statis dan dinamis secara instan dengan opsi domain kustom klien yang beragam.',
-      en: 'Designed to publish static and dynamic sites rapidly with flexible client subdomain choices.',
+      id: 'Sudah aktif di hostname satu tingkat builder.vz.gay (menggantikan builder.cloud.vz.gay agar kompatibel penuh dengan SSL wildcard Cloudflare).',
+      en: 'Live on single-level hostname builder.vz.gay (replacing builder.cloud.vz.gay for clean Cloudflare wildcard SSL support).',
     },
   },
   {
@@ -882,7 +915,7 @@ export const VZ_SERVICES: VzService[] = [
     primaryDomain: 'go-blog.vz.gay',
     altDomains: ['goblog.vz.gay'],
     category: 'web_business',
-    status: 'development',
+    status: 'live',
     iconName: 'pen-line',
     name: {
       id: 'Go-Blog',
@@ -893,24 +926,45 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Blog & Article Publishing Platform',
     },
     description: {
-      id: 'Platform penerbitan blog dan manajemen artikel modern dengan editor Markdown/WYSIWYG, umpan RSS otomatis, ekspor arsip tulisan, serta dukungan subdomain penulis khusus.',
-      en: 'Modern blog and article publishing platform featuring Markdown/rich-text editing, automatic RSS feeds, content export archives, and dedicated writer subdomains.',
+      id: 'Platform penerbitan blog dan manajemen artikel modern yang sudah aktif di go-blog.vz.gay dan goblog.vz.gay dengan editor Markdown/WYSIWYG, umpan RSS otomatis, ekspor arsip tulisan, serta subdomain penulis *.kaca.blog.',
+      en: 'Live blog and article publishing platform at go-blog.vz.gay and goblog.vz.gay featuring Markdown/rich-text editing, automatic RSS feeds, content archives, and writer subdomains under *.kaca.blog.',
     },
-    clientDomainPatterns: ['*.kaca.blog', '*.blog.vz.gay'],
-    redirectRules: [
-      { from: 'kaca.blog', to: 'https://go-blog.vz.gay', code: 301 },
-      { from: 'blog.vz.gay', to: 'https://goblog.vz.gay', code: 301 },
-    ],
+    clientDomainPatterns: ['*.kaca.blog'],
+    redirectRules: [{ from: 'kaca.blog', to: 'https://go-blog.vz.gay', code: 301 }],
     architectureNotes: {
-      id: 'Domain root kaca.blog dan blog.vz.gay diarahkan permanen (HTTP 301) menuju go-blog.vz.gay dan goblog.vz.gay.',
-      en: 'Root domains kaca.blog and blog.vz.gay perform a permanent HTTP 301 redirect to go-blog.vz.gay and goblog.vz.gay.',
+      id: 'Sudah aktif di go-blog.vz.gay dan goblog.vz.gay. Domain root kaca.blog diarahkan permanen (HTTP 301) ke go-blog.vz.gay, sedangkan blog.vz.gay kini berdiri sendiri sebagai blog resmi VZ.',
+      en: 'Live at go-blog.vz.gay and goblog.vz.gay. Root domain kaca.blog redirects (HTTP 301) to go-blog.vz.gay, while blog.vz.gay operates independently as the official VZ Blog.',
+    },
+  },
+  {
+    id: 'blog',
+    primaryDomain: 'blog.vz.gay',
+    category: 'web_business',
+    secondaryCategories: ['media_content'],
+    status: 'live',
+    iconName: 'newspaper',
+    name: {
+      id: 'VZ Official Blog',
+      en: 'VZ Official Blog',
+    },
+    shortType: {
+      id: 'Blog Resmi & Catatan Rilis Ekosistem',
+      en: 'Official Ecosystem Blog & Release Notes',
+    },
+    description: {
+      id: 'Publikasi resmi ekosistem vz.gay untuk pengumuman rilis layanan, artikel arsitektur teknis, panduan pengguna, dan pembaruan produk tanpa subdomain klien tingkat dua.',
+      en: 'Official vz.gay publication for platform release announcements, engineering notes, user guides, and ecosystem updates on a clean dedicated domain without level-2 client subdomains.',
+    },
+    architectureNotes: {
+      id: 'Sudah aktif di blog.vz.gay sebagai blog resmi internal VZ (tidak lagi dialihkan ke Go-Blog maupun memakai *.blog.vz.gay karena batas SSL wildcard Cloudflare pada subdomain tingkat 2).',
+      en: 'Live at blog.vz.gay as the official VZ blog (no longer redirecting to Go-Blog or using *.blog.vz.gay due to Cloudflare level-2 wildcard SSL limitations).',
     },
   },
   {
     id: 'business',
     primaryDomain: 'business.vz.gay',
     category: 'web_business',
-    status: 'development',
+    status: 'live',
     iconName: 'store',
     name: {
       id: 'VZ Business',
@@ -921,14 +975,10 @@ export const VZ_SERVICES: VzService[] = [
       en: 'SaaS Marketplace & Storefront Generator',
     },
     description: {
-      id: 'Generator marketplace dan etalase toko online SaaS siap pakai bagi pelaku usaha dengan subdomain bisnis instan (*.jajanan.online, *.biz.orgz.top, *.biz.vz.gay), dilengkapi opsi paket source code self-hosted di demo.jajanan.online.',
-      en: 'Turnkey SaaS marketplace and online storefront generator for merchants with instant business subdomains (*.jajanan.online, *.biz.orgz.top, *.biz.vz.gay), complemented by a self-hosted code edition at demo.jajanan.online.',
+      id: 'Generator marketplace dan etalase toko online SaaS yang sudah aktif di business.vz.gay dengan subdomain bisnis instan (*.jajanan.online, *.biz.orgz.top), dilengkapi opsi paket source code self-hosted di demo.jajanan.online.',
+      en: 'Live turnkey SaaS marketplace and online storefront generator at business.vz.gay with instant merchant subdomains (*.jajanan.online, *.biz.orgz.top), complemented by a self-hosted code edition at demo.jajanan.online.',
     },
-    clientDomainPatterns: [
-      '*.jajanan.online',
-      '*.biz.orgz.top',
-      '*.biz.vz.gay',
-    ],
+    clientDomainPatterns: ['*.jajanan.online', '*.biz.orgz.top'],
     liveChildren: [
       {
         name: 'SkripX Self-Hosted Marketplace Demo',
@@ -942,8 +992,8 @@ export const VZ_SERVICES: VzService[] = [
     ],
     sponsor: 'jajanserver.com',
     architectureNotes: {
-      id: 'Didukung dan disponsori oleh jajanserver.com. Domain wildcard *.jajanan.online digunakan untuk tenant versi SaaS, sedangkan domain tunggal demo.jajanan.online dikhususkan untuk demo source code self-hosting.',
-      en: 'Supported and sponsored by jajanserver.com. Wildcard *.jajanan.online powers multi-tenant SaaS storefronts, while the single domain demo.jajanan.online showcases the self-hosted source code package.',
+      id: 'Sudah aktif di business.vz.gay dengan dukungan sponsor jajanserver.com. Domain wildcard *.jajanan.online dan *.biz.orgz.top digunakan untuk tenant versi SaaS, sedangkan demo.jajanan.online khusus untuk demo source code self-hosting (biz.vz.gay kini dialokasikan ke VZ Work).',
+      en: 'Live at business.vz.gay and sponsored by jajanserver.com. Wildcards *.jajanan.online and *.biz.orgz.top power SaaS storefronts, while demo.jajanan.online showcases the self-hosted source code package (biz.vz.gay is now paired with VZ Work).',
     },
   },
   {
@@ -1232,7 +1282,7 @@ export const VZ_SERVICES: VzService[] = [
     id: 'play',
     primaryDomain: 'play.vz.gay',
     category: 'media_content',
-    status: 'development',
+    status: 'live',
     iconName: 'gamepad-2',
     name: {
       id: 'VZ Play',
@@ -1243,8 +1293,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Games & Web Apps Hub',
     },
     description: {
-      id: 'Direktori game ringan dan aplikasi utilitas web interaktif. Beberapa aplikasi dan game sudah aktif dan dapat langsung digunakan sekarang.',
-      en: 'Hub for browser games and interactive web utilities. Several standalone apps and games are already live today.',
+      id: 'Direktori game ringan dan aplikasi utilitas web interaktif yang sudah aktif di play.vz.gay bersama app.vz.gay dan games.vz.gay.',
+      en: 'Live hub for browser games and interactive web utilities at play.vz.gay alongside app.vz.gay and games.vz.gay.',
     },
     clientDomainPatterns: ['*.game.vz.gay', '*.app.vz.gay'],
     liveChildren: [
@@ -1287,8 +1337,34 @@ export const VZ_SERVICES: VzService[] = [
       },
     ],
     architectureNotes: {
-      id: 'Memisahkan namespace *.game.vz.gay untuk game dan *.app.vz.gay untuk aplikasi utilitas web non-game.',
-      en: 'Separates *.game.vz.gay for games and *.app.vz.gay for non-game web utilities.',
+      id: 'Sudah aktif di play.vz.gay. Memisahkan namespace *.game.vz.gay untuk game dan *.app.vz.gay untuk aplikasi utilitas web non-game.',
+      en: 'Live at play.vz.gay. Separates *.game.vz.gay for games and *.app.vz.gay for non-game web utilities.',
+    },
+  },
+  {
+    id: 'games',
+    primaryDomain: 'games.vz.gay',
+    altDomains: ['game.vz.gay'],
+    category: 'media_content',
+    secondaryCategories: ['developer_cloud'],
+    status: 'live',
+    iconName: 'gamepad-2',
+    name: {
+      id: 'VZ Games',
+      en: 'VZ Games',
+    },
+    shortType: {
+      id: 'Portal Mini-Games & Creator Studio',
+      en: 'Mini-Games Portal & Creator Studio',
+    },
+    description: {
+      id: 'Portal mini-games berbasis browser dan studio kreator game interaktif yang sudah aktif di games.vz.gay dan game.vz.gay di bawah ekosistem *.game.vz.gay.',
+      en: 'Live browser mini-games portal and interactive game creator studio at games.vz.gay and game.vz.gay across the *.game.vz.gay ecosystem.',
+    },
+    clientDomainPatterns: ['*.game.vz.gay'],
+    architectureNotes: {
+      id: 'Sudah aktif di games.vz.gay dan alias game.vz.gay dengan studio kreator serta peluncur game ringan langsung di browser.',
+      en: 'Live at games.vz.gay and alias game.vz.gay with a built-in creator studio and instant browser game launcher.',
     },
   },
   {
@@ -1571,12 +1647,216 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Support',
     },
     shortType: {
-      id: 'Tiket Bantuan, Live Chat & Kontak',
-      en: 'Ticketing, Live Chat & Contact',
+      id: 'Pusat Dukungan, Tiket, Panel Teknisi & AI Agents',
+      en: 'Support Center, Ticketing, Tech Panel & AI Agents',
     },
     description: {
-      id: 'Pusat bantuan resmi untuk seluruh platform vz.gay yang menyediakan sistem tiket (ticketing), live chat, dan kanal kontak pengguna.',
-      en: 'Official help center for the vz.gay platform offering ticketing, live chat support, and direct contact channels.',
+      id: 'Pusat layanan pelanggan (CS) dan dukungan teknis terdedikasi untuk seluruh ekosistem vz.gay—dilengkapi sistem tiket (ticketing), Panel Teknisi (Tech Panel), Panel Pelanggan (Customer Panel), Live Chat real-time, serta kotak obrolan agen AI (AI Agents Chatbox).',
+      en: 'Dedicated customer service and technical support center for the vz.gay ecosystem featuring multi-tier ticketing, Technician Panel, Customer Panel, real-time Live Chat, and an interactive AI Agents Chatbox.',
+    },
+    architectureNotes: {
+      id: 'Dirancang dengan pemisahan antarmuka Panel Pelanggan dan Panel Teknisi/CS, triase tiket otomatis oleh agen AI, live chat eskalasi manusia, serta pusat pelaporan abuse/DMCA terpadu.',
+      en: 'Architected with dedicated Customer and Technician/CS panels, AI agent triage chatbox, human live chat escalation, and unified abuse/DMCA intake.',
+    },
+    highlights: [
+      {
+        label: { id: 'Panel & Kanal Layanan', en: 'Panels & Service Channels' },
+        value: {
+          id: 'Customer Panel · Technician Panel · Sistem Tiket Multi-Prioritas · Live Chat Real-Time',
+          en: 'Customer Panel · Technician Panel · Multi-Priority Ticketing · Real-Time Live Chat',
+        },
+      },
+      {
+        label: { id: 'Otomasi Agen AI', en: 'AI Agent Automation' },
+        value: {
+          id: 'AI Agents Chatbox untuk diagnosa awal, panduan layanan, dan eskalasi tiket otomatis',
+          en: 'AI Agents Chatbox for guided troubleshooting, service guidance, and automated ticket routing',
+        },
+      },
+    ],
+  },
+  {
+    id: 'health',
+    primaryDomain: 'health.vz.gay',
+    category: 'system_community',
+    secondaryCategories: ['education'],
+    status: 'development',
+    iconName: 'heart-pulse',
+    name: {
+      id: 'VZ Health',
+      en: 'VZ Health',
+    },
+    shortType: {
+      id: 'Portal Berita RSS Kesehatan & Linimasa Dukungan Pemulihan',
+      en: 'Health RSS Aggregator & Recovery Community Timeline',
+    },
+    description: {
+      id: 'Pusat informasi kesehatan yang menghimpun umpan RSS berita dan artikel dari kanal resmi kementerian kesehatan/pemerintah serta portal medis terpercaya, dipadukan dengan linimasa komunitas dukungan pemulihan publik berformat timeline seperti di republikjomokerto.game.vz.gay.',
+      en: 'Public health hub aggregating RSS news and medical articles from official government health ministries and trusted medical portals, paired with an open recovery & wellness community timeline modeled after republikjomokerto.game.vz.gay.',
+    },
+    architectureNotes: {
+      id: 'Menggabungkan agregasi feed RSS kesehatan terkurasi dengan ruang komunitas pemulihan publik berbasis timeline kronologis (kiriman teks, foto, catatan progres, dan dukungan sesama anggota).',
+      en: 'Combines curated health RSS feed aggregation with a chronological public recovery support timeline (text updates, progress logs, media posts, and peer encouragement).',
+    },
+    highlights: [
+      {
+        label: { id: 'Agregasi Feed RSS Kesehatan', en: 'Health RSS Feed Aggregation' },
+        value: {
+          id: 'Kanal berita resmi kementerian kesehatan, otoritas medis pemerintah & blog kesehatan terverifikasi',
+          en: 'Official government health ministry bulletins & verified medical portal RSS feeds',
+        },
+      },
+      {
+        label: { id: 'Linimasa Komunitas Pemulihan', en: 'Recovery Community Timeline' },
+        value: {
+          id: 'Format timeline publik interaktif seperti di republikjomokerto.game.vz.gay untuk dukungan pemulihan apa pun',
+          en: 'Interactive public timeline format modeled after republikjomokerto.game.vz.gay for open recovery support',
+        },
+      },
+    ],
+  },
+  {
+    id: 'fit',
+    primaryDomain: 'fit.vz.gay',
+    category: 'productivity',
+    secondaryCategories: ['system_community'],
+    status: 'development',
+    iconName: 'activity',
+    name: {
+      id: 'VZ Fit',
+      en: 'VZ Fit',
+    },
+    shortType: {
+      id: 'Pelacak BMI/IMT, Workout Harian & Hub Olahraga Terpadu',
+      en: 'BMI/IMT Tracker, Daily Workouts & Unified Fitness Hub',
+    },
+    description: {
+      id: 'Platform kebugaran dan olahraga untuk memantau BMI/IMT serta jadwal workout harian. Menyediakan satu dasbor terpadu di mana pengguna dapat login dan menghubungkan berbagai aplikasi pelacak kesehatan, lari, maupun perangkat olahraga eksternal ke satu tempat, dilengkapi timeline komunitas olahraga seperti di republikjomokerto.game.vz.gay.',
+      en: 'Sports and fitness platform for monitoring BMI/IMT and daily workout routines. Offers a unified dashboard where users sign in once to link external health trackers, running apps, and wearable ecosystems, plus a sports community timeline modeled after republikjomokerto.game.vz.gay.',
+    },
+    architectureNotes: {
+      id: 'Satu akun VZ untuk sinkronisasi konektor OAuth lintas layanan kebugaran dan pelacak lari eksternal ke satu dasbor metrik terpusat, ditambah feed linimasa komunitas olahraga.',
+      en: 'Single VZ sign-in with OAuth connectors linking external health, fitness, and running platforms into one unified dashboard alongside a public sports community timeline.',
+    },
+    highlights: [
+      {
+        label: { id: 'Pelacakan Tubuh & Latihan', en: 'Body & Workout Tracking' },
+        value: {
+          id: 'Kalkulator & riwayat BMI/IMT · Target workout harian · Catatan lari, kalori & durasi latihan',
+          en: 'BMI/IMT calculator & trends · Daily workout logs · Distance, pace & session duration tracking',
+        },
+      },
+      {
+        label: { id: 'Konektor Lintas Layanan & Timeline', en: 'Cross-App Connectors & Timeline' },
+        value: {
+          id: '1 aplikasi terpadu untuk menghubungkan pelacak kesehatan/olahraga eksternal + timeline komunitas ala republikjomokerto.game.vz.gay',
+          en: '1 unified hub connecting external health & activity trackers + community timeline modeled after republikjomokerto.game.vz.gay',
+        },
+      },
+    ],
+  },
+  {
+    id: 'menfess',
+    primaryDomain: 'menfess.vz.gay',
+    category: 'media_content',
+    secondaryCategories: ['system_community'],
+    status: 'development',
+    iconName: 'eye-off',
+    name: {
+      id: 'VZ Menfess',
+      en: 'VZ Menfess',
+    },
+    shortType: {
+      id: 'Pesan Anonim, Kiriman Publik & Ruang Chat Anonim',
+      en: 'Anonymous Confessions, Posts & Chat Rooms',
+    },
+    description: {
+      id: 'Platform layanan menfess, papan kiriman anonim, tanya-jawab publik, serta obrolan anonim dengan fitur lebih kaya—mendukung kotak pesan terjadwal, balasan berutas, kartu visual siap bagikan, dan filter moderasi keselamatan.',
+      en: 'Feature-rich anonymous confession, Q&A post board, and anonymous chat platform supporting scheduled drops, threaded replies, shareable visual cards, and active safety moderation filters.',
+    },
+    architectureNotes: {
+      id: 'Dirancang dengan kontrol privasi pengirim, penyaringan kata kasar otomatis, dukungan sematan ke media sosial, dan kepatuhan penuh terhadap standar keselamatan TLD .gay.',
+      en: 'Built with sender-privacy safeguards, automated abuse filtering, social card exports, and strict .gay TLD safety compliance.',
+    },
+  },
+  {
+    id: 'talk',
+    primaryDomain: 'talk.vz.gay',
+    category: 'productivity',
+    secondaryCategories: ['system_community'],
+    status: 'development',
+    iconName: 'video',
+    name: {
+      id: 'VZ Talk',
+      en: 'VZ Talk',
+    },
+    shortType: {
+      id: 'Panggilan Suara & Rapat Video WebRTC',
+      en: 'Browser WebRTC Voice & Video Meetings',
+    },
+    description: {
+      id: 'Layanan telepon suara dan konferensi video real-time berbasis WebRTC langsung dari browser tanpa perlu memasang aplikasi tambahan—mendukung ruang rapat instan, berbagi layar, dan obrolan teks sesi.',
+      en: 'Real-time voice calling and video conferencing powered by browser-native WebRTC with instant meeting rooms, screen sharing, and session chat without extra software installs.',
+    },
+    architectureNotes: {
+      id: 'Menggunakan koneksi WebRTC terenkripsi peer-to-peer / SFU dengan tautan ruang cepat yang terintegrasi dengan chat.vz.gay dan VZ Desk.',
+      en: 'Powered by encrypted WebRTC peer-to-peer / SFU rooms with instant shareable links bridged to chat.vz.gay and VZ Desk.',
+    },
+  },
+  {
+    id: 'work',
+    primaryDomain: 'work.vz.gay',
+    altDomains: ['biz.vz.gay'],
+    category: 'web_business',
+    secondaryCategories: ['productivity'],
+    status: 'development',
+    iconName: 'building-2',
+    name: {
+      id: 'VZ Work',
+      en: 'VZ Work',
+    },
+    shortType: {
+      id: 'Ruang Kerja Enterprise, CRM & Operasional Tim',
+      en: 'Enterprise Workspace, CRM & Team Operations',
+    },
+    description: {
+      id: 'Platform ruang kerja terpadu untuk perusahaan dan tim (enterprise workspace) mencakup manajemen CRM pelanggan, pipeline penjualan, papan tugas proyek, penjadwalan, persetujuan dokumen, serta operasional tim di work.vz.gay dan biz.vz.gay.',
+      en: 'Unified enterprise workspace for organizations and teams featuring CRM pipelines, project task boards, scheduling, internal approvals, and team operations across work.vz.gay and biz.vz.gay.',
+    },
+    architectureNotes: {
+      id: 'Domain biz.vz.gay kini dialokasikan khusus bersama work.vz.gay sebagai portal ruang kerja enterprise terintegrasi dengan suite VZ Desk dan SSO accounts.vz.gay.',
+      en: 'Domain biz.vz.gay is now dedicated alongside work.vz.gay as the enterprise workspace portal integrated with VZ Desk and accounts.vz.gay SSO.',
+    },
+  },
+  {
+    id: 'spiritual-group',
+    primaryDomain: 'religion.vz.gay',
+    altDomains: ['religi.vz.gay', 'spiritual.vz.gay', 'consiousness.vz.gay'],
+    category: 'education',
+    secondaryCategories: ['system_community'],
+    status: 'development',
+    iconName: 'sun',
+    name: {
+      id: 'VZ Religion, Spiritual & Consiousness',
+      en: 'VZ Religion, Spiritual & Consiousness',
+    },
+    shortType: {
+      id: 'Grup Edukasi Keagamaan, Spiritualitas & Kesadaran Diri',
+      en: 'Religion, Spirituality & Consciousness Suite',
+    },
+    description: {
+      id: 'Satu grup layanan terpadu untuk studi lintas agama dan literatur keagamaan (religion.vz.gay / religi.vz.gay), ruang refleksi spiritualitas (spiritual.vz.gay), serta kajian kesadaran diri dan ketenangan batin (consiousness.vz.gay).',
+      en: 'One unified service group covering comparative religious studies and literature (religion.vz.gay / religi.vz.gay), spiritual reflection spaces (spiritual.vz.gay), and mindfulness and consciousness exploration (consiousness.vz.gay).',
+    },
+    clientDomainPatterns: [
+      'religion.vz.gay',
+      'religi.vz.gay',
+      'spiritual.vz.gay',
+      'consiousness.vz.gay',
+    ],
+    architectureNotes: {
+      id: 'Menghimpun empat subdomain tematik (religion.vz.gay, religi.vz.gay, spiritual.vz.gay, dan consiousness.vz.gay) ke dalam satu kesatuan grup ruang belajar dan refleksi yang inklusif.',
+      en: 'Unifies four thematic subdomains (religion.vz.gay, religi.vz.gay, spiritual.vz.gay, and consiousness.vz.gay) under one cohesive, inclusive learning and reflection hub.',
     },
   },
   {
@@ -1610,16 +1890,16 @@ export const VZ_SERVICES: VzService[] = [
       en: '21Zone (21+)',
     },
     shortType: {
-      id: 'Area Dewasa Terverifikasi (SSO 21+)',
-      en: 'Age-Verified Adult Zone (SSO 21+)',
+      id: 'Area Dewasa Terbatas (Gerbang Usia 21+ & IP Regional)',
+      en: 'Age-Gated Adult Zone (21+ & Regional IP Gate)',
     },
     description: {
-      id: 'Layanan konten dewasa (NSFW) khusus pengguna terverifikasi SSO dengan usia 21 tahun ke atas, tunduk penuh pada pembatasan wilayah IP dan hukum internasional.',
-      en: 'Restricted adult (NSFW) service visible exclusively to SSO-authenticated users aged 21+, governed by regional IP restrictions and strict international compliance.',
+      id: 'Layanan konten dewasa (NSFW) khusus pengguna berusia 21 tahun ke atas. Memerlukan konfirmasi usia 21+ dan persetujuan pembatasan wilayah IP serta kebijakan nol toleransi sebelum tautan dapat dibuka.',
+      en: 'Restricted adult (NSFW) service exclusively for users aged 21 and older. Requires interactive 21+ age confirmation and regional IP / zero-tolerance compliance acknowledgment before launching.',
     },
     architectureNotes: {
-      id: 'Hanya ditampilkan setelah pengguna masuk melalui SSO (accounts.vz.gay) dan memverifikasi tanggal lahir usia 21+.',
-      en: 'Only revealed after signing in via SSO (accounts.vz.gay) with a verified Date of Birth of 21 years or older.',
+      id: 'Ditampilkan di direktori dengan gerbang konfirmasi interaktif usia 21+ dan pembatasan IP regional Cloudflare sebelum membuka tautan eksternal.',
+      en: 'Listed in the directory behind an interactive 21+ age and Cloudflare regional IP compliance confirmation gate prior to opening.',
     },
     complianceNotice: {
       title: {
@@ -1632,8 +1912,8 @@ export const VZ_SERVICES: VzService[] = [
           en: 'Regional IP Restriction (Cloudflare Geo-Blocking): Access is automatically blocked in countries or jurisdictions prohibiting NSFW content to comply with local laws and avoid government restrictions.',
         },
         {
-          id: 'Verifikasi Wajib SSO + Usia 21+: Layanan ini disembunyikan dari publik dan hanya tampil bagi akun SSO terautentikasi dengan tanggal lahir (BoD) berusia 21 tahun ke atas.',
-          en: 'Mandatory SSO + 21+ Verification: Hidden from public directories and accessible only to authenticated SSO accounts with a verified Date of Birth of 21+.',
+          id: 'Konfirmasi Wajib Usia 21+: Pengguna wajib memasukkan tanggal lahir berusia 21 tahun ke atas serta menyetujui ketentuan kepatuhan sebelum tautan 21zone.vz.gay dibuka.',
+          en: 'Mandatory 21+ Age Confirmation: Users must verify a Date of Birth aged 21 or older and accept compliance terms before launching 21zone.vz.gay.',
         },
         {
           id: 'Kepatuhan Ketat Aturan TLD .gay & Hukum Internasional (DILARANG KERAS): Konten yang berkaitan dengan narkotika/obat ilegal, eksploitasi/pornografi anak (CSAM), perdagangan manusia, senjata api/terkait, kekerasan, kejahatan siber berat, atau tindak kriminal fisik dalam bentuk apa pun dilarang mutlak.',
@@ -1646,36 +1926,52 @@ export const VZ_SERVICES: VzService[] = [
 
 export const CLIENT_DOMAIN_MATRIX = [
   {
-    service: 'builder.cloud.vz.gay',
-    roleId: 'Website Builder',
-    roleEn: 'Website Builder',
-    patterns: ['*.orgz.top', '*.kopi.pw', '*.jajanan.online', '*.web.vz.gay', '*.site.vz.gay'],
-    routingNoteId: 'Subdomain situs klien otomatis (termasuk lovelogicai.kopi.pw)',
-    routingNoteEn: 'Automated client site routing (including lovelogicai.kopi.pw)',
+    service: 'desk.vz.gay (Live)',
+    roleId: 'VZ Desk Suite (17 Aplikasi + UGC)',
+    roleEn: 'VZ Desk Suite (17 Apps + UGC)',
+    patterns: ['view.vz.gay', 'pub.vz.gay', 'docs.vz.gay', 'sheets.vz.gay', 'presentations.vz.gay', '+ 14 sub-apps'],
+    routingNoteId: 'Seluruh 17 sub-aplikasi sudah aktif (HTTP 200) + view.vz.gay & pub.vz.gay untuk publikasi UGC publik',
+    routingNoteEn: 'All 17 productivity sub-apps live (HTTP 200) + view.vz.gay & pub.vz.gay for public UGC publishing',
   },
   {
-    service: 'go-blog.vz.gay / goblog.vz.gay',
+    service: 'builder.vz.gay (Live)',
+    roleId: 'Website Builder, Go-Blog & Hub',
+    roleEn: 'Website Builder, Go-Blog & Hub',
+    patterns: ['*.orgz.top', '*.kopi.pw', '*.jajanan.online', '*.web.vz.gay', '*.site.vz.gay'],
+    routingNoteId: 'Hostname level-1 aktif (menggantikan builder.cloud.vz.gay) termasuk lovelogicai.kopi.pw',
+    routingNoteEn: 'Live level-1 hostname (replacing builder.cloud.vz.gay) including lovelogicai.kopi.pw',
+  },
+  {
+    service: 'go-blog.vz.gay / goblog.vz.gay (Live)',
     roleId: 'Platform Blogging',
     roleEn: 'Blogging Platform',
-    patterns: ['*.kaca.blog', '*.blog.vz.gay'],
-    routingNoteId: '301 kaca.blog & blog.vz.gay ke portal blog',
-    routingNoteEn: '301 kaca.blog & blog.vz.gay to blog portal',
+    patterns: ['*.kaca.blog'],
+    routingNoteId: '301 kaca.blog ke go-blog.vz.gay · blog.vz.gay kini berdiri sendiri sebagai blog resmi VZ',
+    routingNoteEn: '301 kaca.blog to go-blog.vz.gay · blog.vz.gay now serves independently as the official VZ Blog',
   },
   {
-    service: 'business.vz.gay',
+    service: 'blog.vz.gay (Live)',
+    roleId: 'Blog Resmi Ekosistem VZ',
+    roleEn: 'Official VZ Ecosystem Blog',
+    patterns: ['blog.vz.gay'],
+    routingNoteId: 'Tanpa subdomain klien tingkat 2 karena batas SSL wildcard Cloudflare',
+    routingNoteEn: 'Single official domain without level-2 client wildcards due to Cloudflare SSL limits',
+  },
+  {
+    service: 'business.vz.gay (Live)',
     roleId: 'Marketplace Generator (SaaS & Self-Hosted)',
     roleEn: 'Marketplace Generator (SaaS & Self-Hosted)',
-    patterns: ['*.jajanan.online (SaaS)', 'demo.jajanan.online (Self-Hosted Code)', '*.biz.orgz.top', '*.biz.vz.gay'],
+    patterns: ['*.jajanan.online (SaaS)', 'demo.jajanan.online (Self-Hosted Code)', '*.biz.orgz.top'],
     routingNoteId: 'Sponsor jajanserver.com · *.jajanan.online untuk SaaS & demo.jajanan.online khusus kode self-host',
     routingNoteEn: 'Sponsored by jajanserver.com · *.jajanan.online for SaaS & demo.jajanan.online for self-hosted code',
   },
   {
-    service: 'play.vz.gay',
-    roleId: 'Pusat Game & Aplikasi',
-    roleEn: 'Games & Apps Hub',
+    service: 'games.vz.gay / play.vz.gay / app.vz.gay (Live)',
+    roleId: 'Pusat Game & Aplikasi Web',
+    roleEn: 'Games & Web Apps Hub',
     patterns: ['*.game.vz.gay', '*.app.vz.gay'],
-    routingNoteId: '4 aplikasi & game aktif tersedia',
-    routingNoteEn: '4 live apps & games available',
+    routingNoteId: 'Portal games.vz.gay (game.vz.gay), play.vz.gay, dan app.vz.gay aktif (HTTP 200) bersama 4+ sub-app',
+    routingNoteEn: 'games.vz.gay (game.vz.gay), play.vz.gay, and app.vz.gay live (HTTP 200) with 4+ active sub-apps',
   },
   {
     service: 'codeplace.vz.gay',
@@ -1684,6 +1980,14 @@ export const CLIENT_DOMAIN_MATRIX = [
     patterns: ['*.code.vz.gay', 'demo.jajanan.online'],
     routingNoteId: '4 demo aktif: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
     routingNoteEn: '4 live demos: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
+  },
+  {
+    service: 'work.vz.gay / biz.vz.gay (Planned)',
+    roleId: 'Ruang Kerja Enterprise & CRM',
+    roleEn: 'Enterprise Workspace & CRM',
+    patterns: ['work.vz.gay', 'biz.vz.gay'],
+    routingNoteId: 'Domain biz.vz.gay kini dipasangkan dengan work.vz.gay untuk operasional enterprise',
+    routingNoteEn: 'biz.vz.gay is now paired with work.vz.gay for enterprise workspace operations',
   },
   {
     service: 'nurdb.vz.gay (Segera Hadir)',

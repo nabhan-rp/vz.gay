@@ -1,17 +1,25 @@
-import { useState } from 'react';
-import { ArrowUpRight, Server } from 'lucide-react';
+import { useState, type MouseEvent } from 'react';
+import { ArrowRight, ArrowUpRight, Server } from 'lucide-react';
 import { UI_COPY, type Language } from '../data/i18n';
 
 interface EdgeAndSsoSectionProps {
   lang: Language;
-  onOpenSso: () => void;
+  onNavigate: (to: string) => void;
 }
 
 const EDGE_IMAGE_PATH = '/src/assets/images/edge_cloud_architecture_1795413602779.jpg';
 
-export function EdgeAndSsoSection({ lang, onOpenSso }: EdgeAndSsoSectionProps) {
+export function EdgeAndSsoSection({ lang, onNavigate }: EdgeAndSsoSectionProps) {
   const [imgError, setImgError] = useState(false);
   const t = UI_COPY[lang].edgeAndSso;
+
+  const handleLegalClick = (e: MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
+    onNavigate(path);
+  };
 
   return (
     <section
@@ -51,11 +59,12 @@ export function EdgeAndSsoSection({ lang, onOpenSso }: EdgeAndSsoSectionProps) {
           </div>
         </div>
 
-        {/* 2x2 Account & Ecosystem Grid */}
+        {/* 2x2 Account & Compliance Grid */}
         <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {t.cards.map((card, idx) => {
             const isSso = idx === 0;
             const isDashboard = idx === 1;
+            const isLegal = idx === 3;
             return (
               <div
                 key={card.title}
@@ -75,13 +84,15 @@ export function EdgeAndSsoSection({ lang, onOpenSso }: EdgeAndSsoSectionProps) {
 
                 {isSso && (
                   <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#1E232D] flex items-center justify-between gap-2">
-                    <button
-                      type="button"
-                      onClick={onOpenSso}
-                      className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                    <a
+                      href="https://accounts.vz.gay"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-mono text-xs text-blue-600 dark:text-blue-400 hover:underline"
                     >
-                      accounts.vz.gay
-                    </button>
+                      <span>accounts.vz.gay</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
                   </div>
                 )}
 
@@ -95,6 +106,19 @@ export function EdgeAndSsoSection({ lang, onOpenSso }: EdgeAndSsoSectionProps) {
                     >
                       <span>myaccount.vz.gay</span>
                       <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  </div>
+                )}
+
+                {isLegal && (
+                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#1E232D] flex items-center justify-between gap-2">
+                    <a
+                      href="/legal/terms"
+                      onClick={(e) => handleLegalClick(e, '/legal/terms')}
+                      className="inline-flex items-center gap-1 font-mono text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      <span>/legal/terms · /legal/abuse</span>
+                      <ArrowRight className="w-3 h-3" />
                     </a>
                   </div>
                 )}

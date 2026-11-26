@@ -17,20 +17,24 @@ interface HeroSearchProps {
 
 const LIVE_SHORTCUTS = [
   { label: 'search.vz.gay', href: 'https://search.vz.gay' },
+  { label: 'desk.vz.gay', href: 'https://desk.vz.gay' },
+  { label: 'view.vz.gay', href: 'https://view.vz.gay' },
+  { label: 'pub.vz.gay', href: 'https://pub.vz.gay' },
   { label: 'files.vz.gay', href: 'https://files.vz.gay' },
   { label: 'mail.vz.gay', href: 'https://mail.vz.gay' },
   { label: 'links.vz.gay', href: 'https://links.vz.gay' },
+  { label: 'games.vz.gay', href: 'https://games.vz.gay' },
+  { label: 'play.vz.gay', href: 'https://play.vz.gay' },
+  { label: 'app.vz.gay', href: 'https://app.vz.gay' },
+  { label: 'builder.vz.gay', href: 'https://builder.vz.gay' },
+  { label: 'go-blog.vz.gay', href: 'https://go-blog.vz.gay' },
+  { label: 'blog.vz.gay', href: 'https://blog.vz.gay' },
+  { label: 'business.vz.gay', href: 'https://business.vz.gay' },
   { label: 'demo.jajanan.online', href: 'https://demo.jajanan.online' },
   { label: 'omnipostai.code.vz.gay', href: 'https://omnipostai.code.vz.gay' },
   { label: 'lovelogicai.kopi.pw', href: 'https://lovelogicai.kopi.pw' },
   { label: 'marimenulis.web.id', href: 'https://www.marimenulis.web.id/' },
   { label: 'republikjomokerto.vercel.app', href: 'https://republikjomokerto.vercel.app' },
-  { label: 'myvault.app.vz.gay', href: 'https://myvault.app.vz.gay' },
-  { label: 'pdftoblade.app.vz.gay', href: 'https://pdftoblade.app.vz.gay' },
-  { label: 'directqr.app.vz.gay', href: 'https://directqr.app.vz.gay' },
-  { label: 'inkframeflipbook.game.vz.gay', href: 'https://inkframeflipbook.game.vz.gay' },
-  { label: 'lensastudio.code.vz.gay', href: 'https://lensastudio.code.vz.gay' },
-  { label: 'wiyataxlms.code.vz.gay', href: 'https://wiyataxlms.code.vz.gay' },
 ];
 
 export function HeroSearch({

@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { DirectoryFilter } from '../components/ServiceDirectory';
 
-export type RouteView = 'home' | 'services' | 'desk' | 'live_domains' | 'about';
+export type RouteView = 'home' | 'services' | 'desk' | 'live_domains' | 'about' | 'legal';
+export type LegalTab = 'terms' | 'privacy' | 'abuse';
 
 export interface ParsedRoute {
   view: RouteView;
   filter: DirectoryFilter;
+  legalTab: LegalTab;
   pathname: string;
 }
 
@@ -40,40 +42,62 @@ export function filterToPath(filter: DirectoryFilter): string {
   return FILTER_TO_PATH[filter] || '/services';
 }
 
+export function legalTabToPath(tab: LegalTab): string {
+  return `/legal/${tab}`;
+}
+
 export function parsePathname(rawPathname: string): ParsedRoute {
-  const clean = rawPathname.replace(/\/+$/, '') || '/';
+  const clean = rawPathname.replace(/\/+$/, '').toLowerCase() || '/';
 
   if (clean === '/') {
-    return { view: 'home', filter: 'all', pathname: '/' };
+    return { view: 'home', filter: 'all', legalTab: 'terms', pathname: '/' };
   }
 
   if (clean === '/desk' || clean === '/vz-desk') {
-    return { view: 'desk', filter: 'all', pathname: '/desk' };
+    return { view: 'desk', filter: 'all', legalTab: 'terms', pathname: '/desk' };
   }
 
   if (clean === '/live-domains' || clean === '/live' || clean === '/domains') {
-    return { view: 'live_domains', filter: 'all', pathname: '/live-domains' };
+    return { view: 'live_domains', filter: 'all', legalTab: 'terms', pathname: '/live-domains' };
   }
 
   if (clean === '/about' || clean === '/infrastructure' || clean === '/partners') {
-    return { view: 'about', filter: 'all', pathname: '/about' };
+    return { view: 'about', filter: 'all', legalTab: 'terms', pathname: '/about' };
+  }
+
+  if (clean === '/legal' || clean === '/legal/terms' || clean === '/terms' || clean === '/tos') {
+    return { view: 'legal', filter: 'all', legalTab: 'terms', pathname: '/legal/terms' };
+  }
+
+  if (clean === '/legal/privacy' || clean === '/privacy') {
+    return { view: 'legal', filter: 'all', legalTab: 'privacy', pathname: '/legal/privacy' };
+  }
+
+  if (
+    clean === '/legal/abuse' ||
+    clean === '/legal/dmca' ||
+    clean === '/abuse' ||
+    clean === '/dmca'
+  ) {
+    return { view: 'legal', filter: 'all', legalTab: 'abuse', pathname: '/legal/abuse' };
   }
 
   if (clean === '/services') {
-    return { view: 'services', filter: 'all', pathname: '/services' };
+    return { view: 'services', filter: 'all', legalTab: 'terms', pathname: '/services' };
   }
 
   if (clean.startsWith('/services/')) {
-    const slug = clean.slice('/services/'.length).split('/')[0].toLowerCase();
+    const slug = clean.slice('/services/'.length).split('/')[0];
     const mappedFilter = SLUG_TO_FILTER[slug] || 'all';
     return {
       view: 'services',
       filter: mappedFilter,
+      legalTab: 'terms',
       pathname: filterToPath(mappedFilter),
     };
   }
 
-  return { view: 'home', filter: 'all', pathname: '/' };
+  return { view: 'home', filter: 'all', legalTab: 'terms', pathname: '/' };
 }
 
 export function usePathRouter() {
