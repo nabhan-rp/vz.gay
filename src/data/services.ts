@@ -630,17 +630,16 @@ export const VZ_SERVICES: VzService[] = [
     },
   },
   {
-    id: 'lovelogicalai',
-    primaryDomain: 'lovelogicalai.pages.dev',
-    altDomains: ['lovelogicalai.kopi.pw'],
-    launchUrl: 'https://lovelogicalai.pages.dev',
+    id: 'lovelogicai',
+    primaryDomain: 'lovelogicai.kopi.pw',
+    launchUrl: 'https://lovelogicai.kopi.pw',
     category: 'media_content',
     secondaryCategories: ['developer_cloud'],
     status: 'live',
     iconName: 'heart-handshake',
     name: {
-      id: 'LoveLogical AI',
-      en: 'LoveLogical AI',
+      id: 'LoveLogic AI',
+      en: 'LoveLogic AI',
     },
     shortType: {
       id: 'Aplikasi Web Analisis Relasi & Logika AI',
@@ -651,8 +650,8 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Interactive AI-powered web application exploring communication dynamics, compatibility insights, and logical reasoning in relationships.',
     },
     architectureNotes: {
-      id: 'Sudah aktif dan dapat langsung diakses melalui lovelogicalai.pages.dev serta domain klien lovelogicalai.kopi.pw.',
-      en: 'Live and directly accessible at lovelogicalai.pages.dev alongside client domain lovelogicalai.kopi.pw.',
+      id: 'Sudah aktif dan dapat langsung diakses melalui domain klien lovelogicai.kopi.pw.',
+      en: 'Live and directly accessible via client domain lovelogicai.kopi.pw.',
     },
   },
   {
@@ -864,9 +863,8 @@ export const VZ_SERVICES: VzService[] = [
     ],
     liveChildren: [
       {
-        name: 'LoveLogical AI',
-        domain: 'lovelogicalai.pages.dev',
-        altDomain: 'lovelogicalai.kopi.pw',
+        name: 'LoveLogic AI',
+        domain: 'lovelogicai.kopi.pw',
         kind: 'app',
         description: {
           id: 'Aplikasi web interaktif analisis relasi & penalaran logis berbasis AI',
@@ -1652,8 +1650,8 @@ export const CLIENT_DOMAIN_MATRIX = [
     roleId: 'Website Builder',
     roleEn: 'Website Builder',
     patterns: ['*.orgz.top', '*.kopi.pw', '*.jajanan.online', '*.web.vz.gay', '*.site.vz.gay'],
-    routingNoteId: 'Subdomain situs klien otomatis (termasuk lovelogicalai.pages.dev / lovelogicalai.kopi.pw)',
-    routingNoteEn: 'Automated client site routing (including lovelogicalai.pages.dev / lovelogicalai.kopi.pw)',
+    routingNoteId: 'Subdomain situs klien otomatis (termasuk lovelogicai.kopi.pw)',
+    routingNoteEn: 'Automated client site routing (including lovelogicai.kopi.pw)',
   },
   {
     service: 'go-blog.vz.gay / goblog.vz.gay',

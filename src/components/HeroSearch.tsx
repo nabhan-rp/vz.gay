@@ -22,7 +22,7 @@ const LIVE_SHORTCUTS = [
   { label: 'links.vz.gay', href: 'https://links.vz.gay' },
   { label: 'demo.jajanan.online', href: 'https://demo.jajanan.online' },
   { label: 'omnipostai.code.vz.gay', href: 'https://omnipostai.code.vz.gay' },
-  { label: 'lovelogicalai.pages.dev', href: 'https://lovelogicalai.pages.dev' },
+  { label: 'lovelogicai.kopi.pw', href: 'https://lovelogicai.kopi.pw' },
   { label: 'marimenulis.web.id', href: 'https://www.marimenulis.web.id/' },
   { label: 'republikjomokerto.vercel.app', href: 'https://republikjomokerto.vercel.app' },
   { label: 'myvault.app.vz.gay', href: 'https://myvault.app.vz.gay' },
