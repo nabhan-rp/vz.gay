@@ -30,6 +30,7 @@ import {
   Image as ImageIcon,
   Layers,
   LayoutGrid,
+  Leaf,
   Library,
   Link2,
   Mail,
@@ -183,5 +184,7 @@ export function ServiceIcon({ name, className = 'w-5 h-5' }: ServiceIconProps) {
       return <Sun className={className} />;
     case 'video':
       return <Video className={className} />;
+    case 'leaf':
+      return <Leaf className={className} />;
   }
 }

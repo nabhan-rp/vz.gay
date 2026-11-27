@@ -22,7 +22,7 @@ export const UI_COPY = {
       title: 'Satu pintu masuk untuk seluruh layanan vz.gay.',
       subtitle:
         'Telusuri web melalui search.vz.gay, akses aplikasi produktivitas, game, builder, dan blog yang sudah berjalan, serta jelajahi seluruh ekosistem vz.gay.',
-      searchPlaceholder: 'Cari di search.vz.gay atau saring layanan (misal: desk, games, blog, nurdb)...',
+      searchPlaceholder: 'Cari di search.vz.gay atau saring layanan (misal: desk, codeplace, green, nurdb)...',
       searchSubmit: 'Cari',
       searchClear: 'Reset',
       searchHint: 'Tekan / untuk fokus · Enter mencari langsung ke search.vz.gay',
@@ -84,7 +84,7 @@ export const UI_COPY = {
     liveAndDomains: {
       sectionTitle: 'Aplikasi Aktif & Peta Domain Klien',
       sectionSubtitle:
-        'Platform inti seperti VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Blog Resmi VZ, dan VZ Business kini sudah aktif bersama peta domain kustom pengguna.',
+        'Platform inti seperti VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Blog Resmi VZ, VZ Business, dan VZ Codeplace kini sudah aktif bersama peta domain kustom pengguna.',
       liveSpotlightTitle: 'Sub-Aplikasi & Publikasi Aktif',
       imageAlt: 'Ruang kerja digital ekosistem vz.gay',
       imageCaption: 'Ekosistem multi-aplikasi vz.gay · Seluruh layanan utama aktif',
@@ -199,7 +199,7 @@ export const UI_COPY = {
       title: 'One gateway to every service across vz.gay.',
       subtitle:
         'Search the open web with search.vz.gay, launch live productivity, games, builder, and blog suites, and explore the full vz.gay digital ecosystem.',
-      searchPlaceholder: 'Search via search.vz.gay or filter services (e.g., desk, games, blog, nurdb)...',
+      searchPlaceholder: 'Search via search.vz.gay or filter services (e.g., desk, codeplace, green, nurdb)...',
       searchSubmit: 'Search',
       searchClear: 'Reset',
       searchHint: 'Press / to focus · Enter searches directly on search.vz.gay',
@@ -261,7 +261,7 @@ export const UI_COPY = {
     liveAndDomains: {
       sectionTitle: 'Live Apps & Client Domain Matrix',
       sectionSubtitle:
-        'Core platforms including VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Official VZ Blog, and VZ Business are now live alongside multi-domain client routing.',
+        'Core platforms including VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Official VZ Blog, VZ Business, and VZ Codeplace are now live alongside multi-domain client routing.',
       liveSpotlightTitle: 'Live Sub-Apps & Publishing Endpoints',
       imageAlt: 'Digital workspace for vz.gay ecosystem',
       imageCaption: 'vz.gay Multi-App Ecosystem · Core Suites Live',

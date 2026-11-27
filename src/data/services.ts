@@ -66,7 +66,8 @@ export type ServiceIconName =
   | 'eye-off'
   | 'heart-pulse'
   | 'sun'
-  | 'video';
+  | 'video'
+  | 'leaf';
 
 export interface LiveChildApp {
   name: string;
@@ -1129,19 +1130,19 @@ export const VZ_SERVICES: VzService[] = [
     id: 'codeplace',
     primaryDomain: 'codeplace.vz.gay',
     category: 'developer_cloud',
-    status: 'development',
+    status: 'live',
     iconName: 'code-2',
     name: {
-      id: 'Codeplace',
-      en: 'Codeplace',
+      id: 'VZ Codeplace',
+      en: 'VZ Codeplace',
     },
     shortType: {
       id: 'Katalog Source Code & Template Aplikasi',
       en: 'Source Code & App Template Marketplace',
     },
     description: {
-      id: 'Pusat distribusi template aplikasi dan source code siap pakai berbasis Node.js, TypeScript, PHP, hingga aplikasi Android Kotlin yang masing-masing dilengkapi demo aktif langsung.',
-      en: 'Source code and application template marketplace for Node.js, TypeScript, PHP, and Kotlin Android projects, each paired with a live interactive preview.',
+      id: 'Pusat distribusi template aplikasi dan source code siap pakai berbasis Node.js, TypeScript, PHP, hingga aplikasi Android Kotlin yang sudah aktif di codeplace.vz.gay dan dilengkapi demo langsung.',
+      en: 'Live source code and application template marketplace at codeplace.vz.gay for Node.js, TypeScript, PHP, and Kotlin Android projects, each paired with an interactive preview.',
     },
     clientDomainPatterns: ['*.code.vz.gay', 'demo.jajanan.online'],
     liveChildren: [
@@ -1184,8 +1185,8 @@ export const VZ_SERVICES: VzService[] = [
       },
     ],
     architectureNotes: {
-      id: 'Setiap paket kode atau template aplikasi memiliki lingkungan pratinjau langsung di bawah *.code.vz.gay atau domain demo khusus seperti demo.jajanan.online.',
-      en: 'Every template or self-hosted code package includes a live preview environment under *.code.vz.gay or dedicated demo hostnames such as demo.jajanan.online.',
+      id: 'Sudah aktif di codeplace.vz.gay. Setiap paket kode atau template aplikasi memiliki lingkungan pratinjau langsung di bawah *.code.vz.gay atau domain demo khusus seperti demo.jajanan.online.',
+      en: 'Live at codeplace.vz.gay. Every template or self-hosted code package includes a live preview environment under *.code.vz.gay or dedicated demo hostnames such as demo.jajanan.online.',
     },
   },
   {
@@ -1568,6 +1569,60 @@ export const VZ_SERVICES: VzService[] = [
       id: 'Sistem manajemen dan penerbitan jurnal ilmiah akses terbuka untuk pengiriman naskah (DOC/DOCX, LaTeX, PDF), proses telaah sejawat (peer-review), pengindeksan metadata DOI/BibTeX, dan publikasi riset.',
       en: 'Open-access academic journal management and publishing platform for manuscript submissions (DOC/DOCX, LaTeX, PDF), peer-review workflows, DOI/BibTeX metadata indexing, and research publication.',
     },
+  },
+  {
+    id: 'green',
+    primaryDomain: 'green.vz.gay',
+    category: 'education',
+    secondaryCategories: ['system_community'],
+    status: 'development',
+    iconName: 'leaf',
+    name: {
+      id: 'VZ Green',
+      en: 'VZ Green',
+    },
+    shortType: {
+      id: 'Edukasi Lingkungan, Jejak Karbon & Konservasi Flora-Fauna',
+      en: 'Environmental Education, Carbon Index & Conservation Hub',
+    },
+    description: {
+      id: 'Layanan edukasi lingkungan hidup, komunitas pegiat dan aktivis kelestarian alam, pelacak indeks jejak karbon (carbon footprint) harian, serta pusat konservasi flora, fauna, dan perlindungan hewan. Melalui VZ Green, vz.gay memperluas kebijakan anti-kekerasan bawaan TLD .gay agar melindungi bukan hanya manusia, melainkan seluruh makhluk hidup.',
+      en: 'Environmental education platform, conservation activist community, daily carbon footprint index tracker, and flora, fauna, and animal welfare protection hub. Through VZ Green, vz.gay expands the foundational .gay TLD anti-harassment and non-violence policy to protect not only humans, but all living beings.',
+    },
+    architectureNotes: {
+      id: 'Memadukan modul literasi ekologi, kalkulator indeks emisi karbon harian, direktori aksi konservasi flora & fauna, jaringan relawan lingkungan, serta penegakan prinsip anti-kekerasan lintas spesies yang selaras dengan perluasan kebijakan di vz.gay/legal.',
+      en: 'Combines ecological literacy modules, a daily carbon footprint index calculator, flora and fauna conservation action directories, an environmental activist network, and cross-species anti-cruelty safeguards aligned with the expanded vz.gay/legal policy.',
+    },
+    highlights: [
+      {
+        label: { id: 'Indeks Jejak Karbon Harian', en: 'Daily Carbon Footprint Index' },
+        value: {
+          id: 'Pelacakan emisi harian transportasi, energi & pola konsumsi lengkap dengan target pengurangan bertahap',
+          en: 'Daily emissions tracking across transit, energy & habits with actionable reduction benchmarks',
+        },
+      },
+      {
+        label: { id: 'Konservasi Flora, Fauna & Satwa', en: 'Flora, Fauna & Animal Protection' },
+        value: {
+          id: 'Edukasi keanekaragaman hayati, pemetaan habitat, serta kampanye perlindungan & kesejahteraan hewan',
+          en: 'Biodiversity literacy, habitat awareness, and wildlife conservation & animal welfare advocacy',
+        },
+      },
+      {
+        label: { id: 'Komunitas Pegiat & Aktivis Lingkungan', en: 'Environmental Activist Community' },
+        value: {
+          id: 'Ruang kolaborasi aksi hijau, proyek penghijauan, dan pelaporan isu kerusakan ekologi secara terbuka',
+          en: 'Collaborative hub for green initiatives, reforestation drives, and transparent ecological advocacy',
+        },
+      },
+      {
+        label: { id: 'Perluasan Kebijakan Non-Kekerasan .gay', en: 'Expanded .gay All-Beings Protection' },
+        value: {
+          id: 'Melindungi seluruh makhluk hidup (manusia, hewan & ekosistem) dari kekerasan, pelecehan, dan kekejaman',
+          en: 'Protecting all living beings (humans, animals & ecosystems) from violence, harassment, and cruelty',
+        },
+      },
+    ],
   },
   {
     id: 'cdn',
@@ -1974,12 +2029,12 @@ export const CLIENT_DOMAIN_MATRIX = [
     routingNoteEn: 'games.vz.gay (game.vz.gay), play.vz.gay, and app.vz.gay live (HTTP 200) with 4+ active sub-apps',
   },
   {
-    service: 'codeplace.vz.gay',
+    service: 'codeplace.vz.gay (Live)',
     roleId: 'Katalog Source Code & Template',
     roleEn: 'Source Code & Template Hub',
     patterns: ['*.code.vz.gay', 'demo.jajanan.online'],
-    routingNoteId: '4 demo aktif: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
-    routingNoteEn: '4 live demos: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
+    routingNoteId: 'Sudah aktif di codeplace.vz.gay bersama 4 demo: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
+    routingNoteEn: 'Live at codeplace.vz.gay with 4 active demos: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
   },
   {
     service: 'work.vz.gay / biz.vz.gay (Planned)',

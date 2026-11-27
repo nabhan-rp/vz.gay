@@ -41,11 +41,11 @@ const LEGAL_COPY = {
     termsSections: [
       {
         heading: '1. Ruang Lingkup & Naungan Operasional',
-        body: 'Seluruh layanan di bawah domain *.vz.gay (termasuk desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, dan business.vz.gay) serta jajanserver.com dikelola di bawah naungan resmi PT Galeri Langkah Bahagia Yuwana (galbay).',
+        body: 'Seluruh layanan di bawah domain *.vz.gay (termasuk desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, business.vz.gay, codeplace.vz.gay, dan green.vz.gay) serta jajanserver.com dikelola di bawah naungan resmi PT Galeri Langkah Bahagia Yuwana (galbay).',
       },
       {
-        heading: '2. Kepatuhan Wajib TLD .gay & Kebijakan Nol Toleransi',
-        body: 'Pengguna wajib mematuhi kebijakan registri TLD .gay dan hukum internasional yang berlaku. Dilarang keras menerbitkan, mengunggah, atau menautkan ujaran kebencian (anti-LGBTQ+ atau diskriminasi SARA), konten eksploitasi anak (CSAM), narkotika ilegal, perdagangan manusia, senjata api, kekerasan, phishing, malware, maupun aktivitas kriminal dalam bentuk apa pun.',
+        heading: '2. Kepatuhan TLD .gay & Perlindungan Seluruh Makhluk Hidup',
+        body: 'Pengguna wajib mematuhi kebijakan registri TLD .gay dan hukum internasional yang berlaku. vz.gay memperluas prinsip anti-pelecehan dan anti-kekerasan bawaan .gay agar melindungi bukan hanya manusia, melainkan seluruh makhluk hidup (hewan serta flora dan fauna dilindungi). Dilarang keras menerbitkan, mengunggah, atau menautkan ujaran kebencian (anti-LGBTQ+ atau diskriminasi SARA), konten eksploitasi anak (CSAM), kekejaman terhadap hewan (animal cruelty), perusakan atau eksploitasi satwa dan ekologi ilegal, narkotika ilegal, perdagangan manusia, senjata api, kekerasan terhadap makhluk hidup mana pun, phishing, malware, maupun aktivitas kriminal lainnya.',
       },
       {
         heading: '3. Konten Buatan Pengguna (UGC) & Domain Publik',
@@ -82,6 +82,7 @@ const LEGAL_COPY = {
         { value: 'dmca', label: 'Pelanggaran Hak Cipta / DMCA Takedown' },
         { value: 'phishing', label: 'Phishing, Penipuan atau Malware' },
         { value: 'tld_violation', label: 'Ujaran Kebencian / Pelanggaran Kebijakan TLD .gay' },
+        { value: 'animal_eco', label: 'Kekerasan / Kekejaman terhadap Hewan & Eksploitasi Satwa / Ekologi' },
         { value: 'illegal', label: 'Konten Ilegal / CSAM / Kekerasan (Prioritas Darurat)' },
         { value: 'spam', label: 'Spam / Penyalahgunaan Form, Links, atau Mail' },
       ],
@@ -122,11 +123,11 @@ const LEGAL_COPY = {
     termsSections: [
       {
         heading: '1. Scope & Corporate Umbrella',
-        body: 'All platforms under *.vz.gay (including desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, and business.vz.gay) as well as jajanserver.com operate under PT Galeri Langkah Bahagia Yuwana (galbay).',
+        body: 'All platforms under *.vz.gay (including desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, business.vz.gay, codeplace.vz.gay, and green.vz.gay) as well as jajanserver.com operate under PT Galeri Langkah Bahagia Yuwana (galbay).',
       },
       {
-        heading: '2. Mandatory .gay TLD Compliance & Zero-Tolerance Policy',
-        body: 'All users must adhere to .gay registry rules and international law. Hate speech (including anti-LGBTQ+ harassment), child exploitation (CSAM), illegal drugs, human trafficking, firearms, violence, phishing, malware, and criminal conduct are strictly prohibited.',
+        heading: '2. .gay TLD Compliance & Protection for All Living Beings',
+        body: 'All users must adhere to .gay registry rules and international law. vz.gay expands the foundational .gay anti-harassment and non-violence standard beyond humans to protect all living beings (including animals, wildlife, and protected flora and fauna). Hate speech (including anti-LGBTQ+ harassment), child exploitation (CSAM), animal cruelty, illegal wildlife exploitation or ecological violence, illegal drugs, human trafficking, firearms, violence toward any living creature, phishing, malware, and criminal conduct are strictly prohibited.',
       },
       {
         heading: '3. User-Generated Content (UGC) & Public Subdomains',
@@ -163,6 +164,7 @@ const LEGAL_COPY = {
         { value: 'dmca', label: 'Copyright Infringement / DMCA Takedown' },
         { value: 'phishing', label: 'Phishing, Fraud or Malware' },
         { value: 'tld_violation', label: 'Hate Speech / .gay TLD Policy Violation' },
+        { value: 'animal_eco', label: 'Animal Cruelty, Wildlife Exploitation & Ecological Harm' },
         { value: 'illegal', label: 'Illegal Content / CSAM / Violence (Urgent)' },
         { value: 'spam', label: 'Spam / Form, Links, or Mail Abuse' },
       ],
@@ -545,8 +547,8 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {lang === 'id'
-                    ? 'Seluruh pelaporan untuk mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, dan builder.vz.gay ditangani terpusat.'
-                    : 'Reports covering mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, and builder.vz.gay are handled centrally.'}
+                    ? 'Seluruh pelaporan untuk mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, builder.vz.gay, codeplace.vz.gay, dan layanan komunitas ditangani terpusat.'
+                    : 'Reports covering mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, builder.vz.gay, codeplace.vz.gay, and community apps are handled centrally.'}
                 </p>
                 <div className="pt-2 border-t border-slate-100 dark:border-[#1E232D] space-y-2 text-xs font-mono">
                   <a

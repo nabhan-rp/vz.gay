@@ -30,6 +30,7 @@ const LIVE_SHORTCUTS = [
   { label: 'go-blog.vz.gay', href: 'https://go-blog.vz.gay' },
   { label: 'blog.vz.gay', href: 'https://blog.vz.gay' },
   { label: 'business.vz.gay', href: 'https://business.vz.gay' },
+  { label: 'codeplace.vz.gay', href: 'https://codeplace.vz.gay' },
   { label: 'demo.jajanan.online', href: 'https://demo.jajanan.online' },
   { label: 'omnipostai.code.vz.gay', href: 'https://omnipostai.code.vz.gay' },
   { label: 'lovelogicai.kopi.pw', href: 'https://lovelogicai.kopi.pw' },
