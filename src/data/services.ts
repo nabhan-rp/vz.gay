@@ -1372,23 +1372,23 @@ export const VZ_SERVICES: VzService[] = [
     id: 'wonderplace',
     primaryDomain: 'wonderplace.vz.gay',
     category: 'media_content',
-    status: 'development',
+    status: 'live',
     iconName: 'heart-handshake',
     name: {
-      id: 'Wonderplace',
-      en: 'Wonderplace',
+      id: 'WonderPlace',
+      en: 'WonderPlace',
     },
     shortType: {
       id: 'Jejaring Sosial Ruang Aman & Inklusif',
       en: 'Inclusive Safe-Space Social Network',
     },
     description: {
-      id: 'Platform jejaring sosial komunitas sebagai ruang aman inklusif berlandaskan humanisme universal, kesetaraan, dan penghormatan martabat manusia sesuai dengan ToS TLD .gay.',
-      en: 'Community social networking platform built as an inclusive safe space rooted in universal humanism, equality, and human dignity in full alignment with .gay TLD Terms of Service.',
+      id: 'Platform jejaring sosial komunitas yang sudah aktif di wonderplace.vz.gay sebagai ruang aman inklusif untuk berbagi kiriman, foto, dan interaksi berlandaskan humanisme universal sesuai ToS TLD .gay.',
+      en: 'Live community social networking platform at wonderplace.vz.gay built as an inclusive safe space for sharing posts, photos, and connections rooted in universal humanism and .gay TLD Terms of Service.',
     },
     architectureNotes: {
-      id: 'Dikelola dengan moderasi komunitas aktif untuk menjaga ruang interaksi yang aman, setara, dan bebas ujaran kebencian sesuai kebijakan TLD .gay.',
-      en: 'Operated with active community moderation to uphold an inclusive, harassment-free environment aligned with .gay TLD policy.',
+      id: 'Sudah aktif (HTTP 200) di wonderplace.vz.gay dengan moderasi komunitas aktif untuk menjaga ruang interaksi yang aman, setara, dan bebas ujaran kebencian sesuai kebijakan TLD .gay.',
+      en: 'Live (HTTP 200) at wonderplace.vz.gay and operated with active community moderation to uphold an inclusive, harassment-free environment aligned with .gay TLD policy.',
     },
   },
   {

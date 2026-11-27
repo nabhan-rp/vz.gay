@@ -41,7 +41,7 @@ const LEGAL_COPY = {
     termsSections: [
       {
         heading: '1. Ruang Lingkup & Naungan Operasional',
-        body: 'Seluruh layanan di bawah domain *.vz.gay (termasuk desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, business.vz.gay, codeplace.vz.gay, dan green.vz.gay) serta jajanserver.com dikelola di bawah naungan resmi PT Galeri Langkah Bahagia Yuwana (galbay).',
+        body: 'Seluruh layanan di bawah domain *.vz.gay (termasuk desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, business.vz.gay, codeplace.vz.gay, wonderplace.vz.gay, dan green.vz.gay) serta jajanserver.com dikelola di bawah naungan resmi PT Galeri Langkah Bahagia Yuwana (galbay).',
       },
       {
         heading: '2. Kepatuhan TLD .gay & Perlindungan Seluruh Makhluk Hidup',
@@ -123,7 +123,7 @@ const LEGAL_COPY = {
     termsSections: [
       {
         heading: '1. Scope & Corporate Umbrella',
-        body: 'All platforms under *.vz.gay (including desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, business.vz.gay, codeplace.vz.gay, and green.vz.gay) as well as jajanserver.com operate under PT Galeri Langkah Bahagia Yuwana (galbay).',
+        body: 'All platforms under *.vz.gay (including desk.vz.gay, view.vz.gay, pub.vz.gay, mail.vz.gay, links.vz.gay, games.vz.gay, play.vz.gay, app.vz.gay, builder.vz.gay, go-blog.vz.gay, blog.vz.gay, business.vz.gay, codeplace.vz.gay, wonderplace.vz.gay, and green.vz.gay) as well as jajanserver.com operate under PT Galeri Langkah Bahagia Yuwana (galbay).',
       },
       {
         heading: '2. .gay TLD Compliance & Protection for All Living Beings',
@@ -547,8 +547,8 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {lang === 'id'
-                    ? 'Seluruh pelaporan untuk mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, builder.vz.gay, codeplace.vz.gay, dan layanan komunitas ditangani terpusat.'
-                    : 'Reports covering mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, builder.vz.gay, codeplace.vz.gay, and community apps are handled centrally.'}
+                    ? 'Seluruh pelaporan untuk mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, builder.vz.gay, codeplace.vz.gay, wonderplace.vz.gay, dan layanan komunitas ditangani terpusat.'
+                    : 'Reports covering mail.vz.gay, links.vz.gay, desk.vz.gay, view/pub.vz.gay, games.vz.gay, builder.vz.gay, codeplace.vz.gay, wonderplace.vz.gay, and community apps are handled centrally.'}
                 </p>
                 <div className="pt-2 border-t border-slate-100 dark:border-[#1E232D] space-y-2 text-xs font-mono">
                   <a
