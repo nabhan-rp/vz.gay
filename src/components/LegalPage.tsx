@@ -1,12 +1,16 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import {
+  AlertCircle,
   ArrowUpRight,
   CheckCircle2,
   Copy,
   FileWarning,
+  Loader2,
   Lock,
+  RefreshCw,
   Scale,
   Send,
+  ShieldCheck,
 } from 'lucide-react';
 import type { Language } from '../data/i18n';
 import { legalTabToPath, type LegalTab } from '../hooks/usePathRouter';
@@ -25,7 +29,81 @@ interface SubmittedTicket {
   submittedAt: string;
 }
 
+interface TurnstileRenderOptions {
+  sitekey: string;
+  theme?: 'light' | 'dark' | 'auto';
+  language?: string;
+  callback?: (token: string) => void;
+  'expired-callback'?: () => void;
+  'error-callback'?: () => void;
+}
+
+interface TurnstileApi {
+  render: (container: HTMLElement, options: TurnstileRenderOptions) => string;
+  reset: (widgetId?: string) => void;
+  remove: (widgetId: string) => void;
+}
+
+declare global {
+  interface Window {
+    turnstile?: TurnstileApi;
+  }
+}
+
 const TICKET_HISTORY_KEY = 'vz_legal_abuse_tickets';
+const TURNSTILE_SCRIPT_ID = 'cf-turnstile-api-script';
+const TURNSTILE_SCRIPT_SRC =
+  'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+
+function getSupportApiBaseUrl(): string {
+  const raw = import.meta.env.VITE_SUPPORT_API_URL;
+  if (typeof raw === 'string' && raw.trim().length > 0) {
+    return raw.trim().replace(/\/+$/, '');
+  }
+  return 'https://support.vz.gay';
+}
+
+function getTurnstileSiteKey(): string {
+  const raw = import.meta.env.VITE_SUPPORT_TURNSTILE_SITE_KEY;
+  return typeof raw === 'string' ? raw.trim() : '';
+}
+
+function normalizeAndValidateTargetUrl(raw: string): string | null {
+  const trimmed = raw.trim();
+  if (!trimmed || trimmed.length > 2048) return null;
+  try {
+    const parsed = new URL(trimmed);
+    if (
+      (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') ||
+      Boolean(parsed.username) ||
+      Boolean(parsed.password)
+    ) {
+      return null;
+    }
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
+function buildConciseSubject(category: string, validatedUrl: string): string {
+  const tag = category.trim().toUpperCase() || 'ABUSE';
+  let targetSummary = validatedUrl;
+  try {
+    const parsed = new URL(validatedUrl);
+    const cleanPath = parsed.pathname && parsed.pathname !== '/' ? parsed.pathname : '';
+    targetSummary = `${parsed.host}${cleanPath}`;
+  } catch {
+    // Fallback to raw URL string
+  }
+  const prefix = `[${tag}] Abuse Report — `;
+  const maxTargetLen = Math.max(20, 190 - prefix.length);
+  const clippedTarget =
+    targetSummary.length > maxTargetLen
+      ? `${targetSummary.slice(0, maxTargetLen - 3)}...`
+      : targetSummary;
+  return `${prefix}${clippedTarget}`.slice(0, 200);
+}
 
 const LEGAL_COPY = {
   id: {
@@ -98,16 +176,39 @@ const LEGAL_COPY = {
         'Jelaskan lokasi konten, dasar kepemilikan hak cipta (untuk DMCA), atau bukti penyalahgunaan secara ringkas...',
       goodFaithLabel:
         'Saya menyatakan dengan itikad baik bahwa informasi dalam laporan ini akurat dan penggunaan materi terlapor tidak diizinkan oleh pemilik hak atau melanggar ketentuan layanan vz.gay.',
+      turnstileLabel: 'Verifikasi Keamanan Cloudflare Turnstile',
+      turnstileMissingKeyTitle: 'Kunci Situs Turnstile Belum Dikonfigurasi',
+      turnstileMissingKeyDesc:
+        'Variabel VITE_SUPPORT_TURNSTILE_SITE_KEY belum diatur pada environment ini. Pengiriman langsung ke API tiket dinonaktifkan sementara; Anda tetap dapat mengirim laporan melalui tombol email abuse@vz.gay di bawah.',
+      turnstileRequiredError:
+        'Selesaikan verifikasi manusia Cloudflare Turnstile terlebih dahulu sebelum mengirim laporan.',
+      turnstileLoadError:
+        'Widget verifikasi Cloudflare Turnstile gagal dimuat. Muat ulang tantangan atau gunakan jalur email abuse@vz.gay.',
+      refreshTurnstile: 'Muat Ulang Verifikasi',
       submitBtn: 'Kirim Laporan & Buat Nomor Tiket',
-      validationRequired: 'Lengkapi URL terlapor, nama, email valid, rincian bukti, dan centang pernyataan itikad baik.',
-      ticketSuccessTitle: 'Laporan Tercatat — Nomor Referensi Dibuat',
+      submittingBtn: 'Mengirim Laporan ke VZ Support...',
+      validationRequired:
+        'Lengkapi URL terlapor (wajib diawali https:// atau http://), nama (maks 120 karakter), email valid, rincian bukti (maks 10.000 karakter), dan centang pernyataan itikad baik.',
+      error400:
+        'Permintaan ditolak (HTTP 400): Periksa kembali format URL terlapor (harus URL lengkap https:// atau http://), alamat email, dan panjang teks laporan Anda.',
+      error403:
+        'Verifikasi keamanan atau izin Origin ditolak (HTTP 403): Tantangan Cloudflare Turnstile tidak valid/kedaluwarsa atau domain pengirim belum diizinkan. Silakan ulangi verifikasi Turnstile.',
+      error413:
+        'Ukuran laporan terlalu besar (HTTP 413): Batas ukuran permintaan Worker adalah 16 KiB (maksimal 10.000 karakter isi laporan). Mohon ringkas rincian laporan Anda lalu kirim kembali.',
+      error405_415:
+        'Kesalahan konfigurasi protokol/format API (HTTP 405/415): Endpoint hanya menerima metode POST dengan header Content-Type: application/json.',
+      error503:
+        'Layanan tiket VZ Support sedang belum aktif atau dalam pemeliharaan konfigurasi (HTTP 503). Data formulir Anda tetap tersimpan—coba lagi nanti atau kirim langsung via email abuse@vz.gay.',
+      errorNetwork:
+        'Tidak dapat terhubung ke server tiket VZ Support saat ini. Isian Anda tidak hilang—silakan coba kirim ulang atau gunakan tombol eskalasi email abuse@vz.gay di bawah.',
+      ticketSuccessTitle: 'Laporan Tercatat di Server — Nomor Referensi Resmi Dibuat',
       ticketSuccessDesc:
-        'Simpan nomor tiket di bawah ini. Untuk eskalasi cepat ke tim Trust & Safety, klik tombol kirim email langsung atau buka tiket di support.vz.gay.',
+        'Tiket Anda telah tersimpan di basis data VZ Support. Simpan nomor referensi resmi di bawah ini untuk tindak lanjut bersama tim Trust & Safety.',
       copyTicket: 'Salin ID Tiket',
       copied: 'Tersalin',
       escalateMail: 'Kirim via Email (abuse@vz.gay)',
-      escalateSupport: 'Buka Tiket di support.vz.gay',
-      recentHistoryTitle: 'Riwayat Laporan di Browser Ini',
+      escalateSupport: 'Buka Portal support.vz.gay',
+      recentHistoryTitle: 'Riwayat Tiket Terverifikasi di Browser Ini',
     },
   },
   en: {
@@ -180,32 +281,65 @@ const LEGAL_COPY = {
         'Describe the offending URL, proof of copyright ownership (for DMCA), or abuse details...',
       goodFaithLabel:
         'I state in good faith that the information provided in this report is accurate and that the reported material is unauthorized or violates vz.gay Terms of Service.',
+      turnstileLabel: 'Cloudflare Turnstile Human Verification',
+      turnstileMissingKeyTitle: 'Turnstile Site Key Not Configured',
+      turnstileMissingKeyDesc:
+        'VITE_SUPPORT_TURNSTILE_SITE_KEY is not set in this environment. Direct API ticket creation is disabled until configured; you can still send your report via the abuse@vz.gay email fallback below.',
+      turnstileRequiredError:
+        'Please complete the Cloudflare Turnstile human verification challenge before submitting.',
+      turnstileLoadError:
+        'The Cloudflare Turnstile verification widget failed to load. Please refresh the challenge or use the abuse@vz.gay email fallback.',
+      refreshTurnstile: 'Refresh Verification',
       submitBtn: 'Submit Report & Generate Ticket ID',
+      submittingBtn: 'Submitting Report to VZ Support...',
       validationRequired:
-        'Please complete the target URL, reporter name, valid email, details, and check the good-faith statement.',
-      ticketSuccessTitle: 'Report Recorded — Reference Ticket Generated',
+        'Please complete a valid target URL (starting with https:// or http://), reporter name (max 120 chars), valid email, details (max 10,000 chars), and check the good-faith statement.',
+      error400:
+        'Invalid report data (HTTP 400): Please verify that the reported URL is a full https:// or http:// address and all required fields are within length limits.',
+      error403:
+        'Human verification or Origin check failed (HTTP 403): The Cloudflare Turnstile token expired/failed or this origin is not yet whitelisted. Please complete the refreshed Turnstile challenge.',
+      error413:
+        'Report payload too large (HTTP 413): The support Worker enforces a 16 KiB request limit (max 10,000 characters). Please shorten your report details and try again.',
+      error405_415:
+        'API method or content-type mismatch (HTTP 405/415): The endpoint accepts only POST requests with Content-Type: application/json.',
+      error503:
+        'The VZ Support ticket service is currently unavailable or awaiting backend binding configuration (HTTP 503). Your form input is preserved—retry shortly or send directly via abuse@vz.gay.',
+      errorNetwork:
+        'Could not reach the VZ Support ticket API right now. Your input has been preserved—please retry or use the direct abuse@vz.gay email button below.',
+      ticketSuccessTitle: 'Report Recorded — Official Ticket Reference Created',
       ticketSuccessDesc:
-        'Save your reference ID below. For immediate Trust & Safety triage, send the pre-filled email escalation or open a ticket on support.vz.gay.',
+        'Your report has been saved to the VZ Support database. Keep the reference ID below for Trust & Safety follow-up.',
       copyTicket: 'Copy Ticket ID',
       copied: 'Copied',
       escalateMail: 'Send via Email (abuse@vz.gay)',
-      escalateSupport: 'Open Ticket on support.vz.gay',
-      recentHistoryTitle: 'Recent Submissions in This Browser',
+      escalateSupport: 'Open support.vz.gay Portal',
+      recentHistoryTitle: 'Verified Tickets Submitted in This Browser',
     },
   },
 } as const;
 
 export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
   const t = LEGAL_COPY[lang];
+  const turnstileSiteKey = getTurnstileSiteKey();
+  const supportApiBaseUrl = getSupportApiBaseUrl();
+
   const [category, setCategory] = useState('dmca');
   const [targetUrl, setTargetUrl] = useState('');
   const [reporterName, setReporterName] = useState('');
   const [reporterEmail, setReporterEmail] = useState('');
   const [details, setDetails] = useState('');
   const [goodFaith, setGoodFaith] = useState(false);
+
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileError, setTurnstileError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
   const [latestTicket, setLatestTicket] = useState<SubmittedTicket | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const turnstileContainerRef = useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+
   const [history, setHistory] = useState<SubmittedTicket[]>(() => {
     try {
       const raw = localStorage.getItem(TICKET_HISTORY_KEY);
@@ -219,46 +353,241 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
     return [];
   });
 
+  const resetTurnstileWidget = useCallback(() => {
+    setTurnstileToken('');
+    setTurnstileError(false);
+    if (window.turnstile && turnstileWidgetIdRef.current) {
+      try {
+        window.turnstile.reset(turnstileWidgetIdRef.current);
+      } catch {
+        // Ignore widget reset errors
+      }
+    }
+  }, []);
+
+  const renderTurnstileWidget = useCallback(() => {
+    if (!turnstileSiteKey || !turnstileContainerRef.current || !window.turnstile) {
+      return;
+    }
+
+    if (turnstileWidgetIdRef.current) {
+      try {
+        window.turnstile.remove(turnstileWidgetIdRef.current);
+      } catch {
+        // Ignore removal errors
+      }
+      turnstileWidgetIdRef.current = null;
+    }
+
+    turnstileContainerRef.current.innerHTML = '';
+    const isDark = document.documentElement.classList.contains('dark');
+
+    try {
+      turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: turnstileSiteKey,
+        theme: isDark ? 'dark' : 'light',
+        language: lang,
+        callback: (token: string) => {
+          setTurnstileToken(token);
+          setTurnstileError(false);
+        },
+        'expired-callback': () => {
+          setTurnstileToken('');
+        },
+        'error-callback': () => {
+          setTurnstileToken('');
+          setTurnstileError(true);
+        },
+      });
+    } catch {
+      setTurnstileError(true);
+    }
+  }, [lang, turnstileSiteKey]);
+
   useEffect(() => {
     setFormError('');
   }, [activeTab]);
 
-  const handleSubmitAbuse = (e: FormEvent) => {
+  useEffect(() => {
+    if (activeTab !== 'abuse' || !turnstileSiteKey) {
+      return;
+    }
+
+    setTurnstileToken('');
+    setTurnstileError(false);
+
+    if (window.turnstile) {
+      renderTurnstileWidget();
+      return () => {
+        if (window.turnstile && turnstileWidgetIdRef.current) {
+          try {
+            window.turnstile.remove(turnstileWidgetIdRef.current);
+          } catch {
+            // Ignore cleanup errors
+          }
+          turnstileWidgetIdRef.current = null;
+        }
+      };
+    }
+
+    let script = document.getElementById(TURNSTILE_SCRIPT_ID) as HTMLScriptElement | null;
+    const handleLoad = () => {
+      renderTurnstileWidget();
+    };
+    const handleError = () => {
+      setTurnstileError(true);
+    };
+
+    if (!script) {
+      script = document.createElement('script');
+      script.id = TURNSTILE_SCRIPT_ID;
+      script.src = TURNSTILE_SCRIPT_SRC;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    script.addEventListener('load', handleLoad);
+    script.addEventListener('error', handleError);
+
+    return () => {
+      script?.removeEventListener('load', handleLoad);
+      script?.removeEventListener('error', handleError);
+      if (window.turnstile && turnstileWidgetIdRef.current) {
+        try {
+          window.turnstile.remove(turnstileWidgetIdRef.current);
+        } catch {
+          // Ignore cleanup errors
+        }
+        turnstileWidgetIdRef.current = null;
+      }
+    };
+  }, [activeTab, turnstileSiteKey, renderTurnstileWidget]);
+
+  const handleSubmitAbuse = async (e: FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const trimmedName = reporterName.trim();
+    const trimmedEmail = reporterEmail.trim();
+    const trimmedDetails = details.trim();
+    const validatedTargetUrl = normalizeAndValidateTargetUrl(targetUrl);
+
     if (
-      !targetUrl.trim() ||
-      !reporterName.trim() ||
-      !emailPattern.test(reporterEmail.trim()) ||
-      !details.trim() ||
+      !validatedTargetUrl ||
+      !trimmedName ||
+      trimmedName.length > 120 ||
+      !emailPattern.test(trimmedEmail) ||
+      trimmedEmail.length > 254 ||
+      !trimmedDetails ||
+      trimmedDetails.length > 10000 ||
       !goodFaith
     ) {
       setFormError(t.abuse.validationRequired);
       return;
     }
 
-    setFormError('');
-    const randomCode = Math.random().toString(36).slice(2, 6).toUpperCase();
-    const ticket: SubmittedTicket = {
-      id: `VZ-ABUSE-${new Date().getFullYear()}-${randomCode}`,
-      category,
-      targetUrl: targetUrl.trim(),
-      reporterEmail: reporterEmail.trim(),
-      submittedAt: new Date().toISOString().slice(0, 10),
-    };
-
-    const nextHistory = [ticket, ...history].slice(0, 5);
-    setHistory(nextHistory);
-    setLatestTicket(ticket);
-    try {
-      localStorage.setItem(TICKET_HISTORY_KEY, JSON.stringify(nextHistory));
-    } catch {
-      // Ignore storage errors
+    if (!turnstileSiteKey) {
+      setFormError(t.abuse.turnstileMissingKeyDesc);
+      return;
     }
 
-    setTargetUrl('');
-    setDetails('');
-    setGoodFaith(false);
+    if (!turnstileToken) {
+      setFormError(t.abuse.turnstileRequiredError);
+      return;
+    }
+
+    setFormError('');
+    setLatestTicket(null);
+    setIsSubmitting(true);
+
+    const subject = buildConciseSubject(category, validatedTargetUrl);
+    const requestBodyJson = JSON.stringify({
+      customerName: trimmedName,
+      reporterEmail: trimmedEmail,
+      subject,
+      body: trimmedDetails,
+      category,
+      targetUrl: validatedTargetUrl,
+      turnstileToken,
+    });
+
+    if (new TextEncoder().encode(requestBodyJson).byteLength > 16 * 1024) {
+      setIsSubmitting(false);
+      setFormError(t.abuse.error413);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${supportApiBaseUrl}/api/public/tickets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: requestBodyJson,
+      });
+
+      let data: {
+        ok?: boolean;
+        ticket?: { id?: number; reference?: string };
+      } | null = null;
+
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+
+      const serverReference =
+        typeof data?.ticket?.reference === 'string' ? data.ticket.reference.trim() : '';
+
+      if (response.status === 201 && data?.ok === true && serverReference.length > 0) {
+        const ticket: SubmittedTicket = {
+          id: serverReference,
+          category,
+          targetUrl: validatedTargetUrl,
+          reporterEmail: trimmedEmail,
+          submittedAt: new Date().toISOString().slice(0, 10),
+        };
+
+        const nextHistory = [ticket, ...history].slice(0, 5);
+        setHistory(nextHistory);
+        setLatestTicket(ticket);
+        try {
+          localStorage.setItem(TICKET_HISTORY_KEY, JSON.stringify(nextHistory));
+        } catch {
+          // Ignore storage errors
+        }
+
+        setTargetUrl('');
+        setDetails('');
+        setGoodFaith(false);
+        resetTurnstileWidget();
+        return;
+      }
+
+      resetTurnstileWidget();
+
+      if (response.status === 400) {
+        setFormError(t.abuse.error400);
+      } else if (response.status === 403) {
+        setFormError(t.abuse.error403);
+      } else if (response.status === 413) {
+        setFormError(t.abuse.error413);
+      } else if (response.status === 405 || response.status === 415) {
+        setFormError(t.abuse.error405_415);
+      } else if (response.status === 503) {
+        setFormError(t.abuse.error503);
+      } else {
+        setFormError(t.abuse.errorNetwork);
+      }
+    } catch {
+      resetTurnstileWidget();
+      setFormError(t.abuse.errorNetwork);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCopyTicket = async (id: string) => {
@@ -277,12 +606,25 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
     { id: 'abuse', label: t.tabs.abuse, icon: FileWarning },
   ];
 
-  const mailtoSubject = latestTicket
+  const successMailtoSubject = latestTicket
     ? `[${latestTicket.id}] ${latestTicket.category.toUpperCase()} Report: ${latestTicket.targetUrl}`
     : '[VZ Legal] Abuse / DMCA Report';
-  const mailtoBody = latestTicket
+  const successMailtoBody = latestTicket
     ? `Ticket Ref: ${latestTicket.id}\nTarget URL: ${latestTicket.targetUrl}\nReporter Email: ${latestTicket.reporterEmail}`
     : '';
+
+  const draftMailtoSubject = `[VZ Legal] ${category.toUpperCase()} Report${
+    targetUrl.trim() ? `: ${targetUrl.trim()}` : ''
+  }`;
+  const draftMailtoBody = [
+    `Category: ${category}`,
+    `Target URL: ${targetUrl.trim() || '-'}`,
+    `Reporter Name: ${reporterName.trim() || '-'}`,
+    `Reporter Email: ${reporterEmail.trim() || '-'}`,
+    '',
+    'Evidence & Details:',
+    details.trim() || '-',
+  ].join('\n');
 
   return (
     <section className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-14">
@@ -391,20 +733,22 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                       className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
                     >
                       <Copy className="w-3.5 h-3.5" />
-                      <span>{copiedId === latestTicket.id ? t.abuse.copied : t.abuse.copyTicket}</span>
+                      <span>
+                        {copiedId === latestTicket.id ? t.abuse.copied : t.abuse.copyTicket}
+                      </span>
                     </button>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3">
                     <a
-                      href={`mailto:abuse@vz.gay?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`}
+                      href={`mailto:abuse@vz.gay?subject=${encodeURIComponent(successMailtoSubject)}&body=${encodeURIComponent(successMailtoBody)}`}
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors whitespace-nowrap"
                     >
                       <span>{t.abuse.escalateMail}</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </a>
                     <a
-                      href="https://support.vz.gay"
+                      href={supportApiBaseUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-[#191E29] border border-slate-200 dark:border-[#2A303E] rounded-lg hover:border-blue-500/60 transition-colors whitespace-nowrap"
@@ -427,8 +771,9 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                   <select
                     id="abuse-category"
                     value={category}
+                    disabled={isSubmitting}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                    className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600 disabled:opacity-60"
                   >
                     {t.abuse.categories.map((cat) => (
                       <option key={cat.value} value={cat.value}>
@@ -447,12 +792,14 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                   </label>
                   <input
                     id="abuse-target-url"
-                    type="text"
+                    type="url"
                     required
+                    maxLength={2048}
+                    disabled={isSubmitting}
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
                     placeholder={t.abuse.targetUrlPlaceholder}
-                    className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                    className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600 disabled:opacity-60"
                   />
                 </div>
 
@@ -468,10 +815,12 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                       id="abuse-reporter-name"
                       type="text"
                       required
+                      maxLength={120}
+                      disabled={isSubmitting}
                       value={reporterName}
                       onChange={(e) => setReporterName(e.target.value)}
                       placeholder={t.abuse.reporterNamePlaceholder}
-                      className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                      className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600 disabled:opacity-60"
                     />
                   </div>
                   <div>
@@ -485,10 +834,12 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                       id="abuse-reporter-email"
                       type="email"
                       required
+                      maxLength={254}
+                      disabled={isSubmitting}
                       value={reporterEmail}
                       onChange={(e) => setReporterEmail(e.target.value)}
                       placeholder={t.abuse.reporterEmailPlaceholder}
-                      className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                      className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600 disabled:opacity-60"
                     />
                   </div>
                 </div>
@@ -504,16 +855,19 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                     id="abuse-details"
                     rows={4}
                     required
+                    maxLength={10000}
+                    disabled={isSubmitting}
                     value={details}
                     onChange={(e) => setDetails(e.target.value)}
                     placeholder={t.abuse.detailsPlaceholder}
-                    className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                    className="mt-1.5 w-full px-3.5 py-2.5 text-sm rounded-lg bg-white dark:bg-[#0E1117] border border-slate-300 dark:border-[#2A303E] text-slate-900 dark:text-white focus:outline-none focus:border-blue-600 disabled:opacity-60"
                   />
                 </div>
 
                 <label className="flex items-start gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-[#0E1117] border border-slate-200 dark:border-[#232732] cursor-pointer">
                   <input
                     type="checkbox"
+                    disabled={isSubmitting}
                     checked={goodFaith}
                     onChange={(e) => setGoodFaith(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600 shrink-0"
@@ -523,18 +877,90 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                   </span>
                 </label>
 
+                {/* Cloudflare Turnstile Verification Block */}
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0E1117] border border-slate-200 dark:border-[#232732] space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                      <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                      <span>{t.abuse.turnstileLabel}</span>
+                    </span>
+
+                    {turnstileSiteKey && (
+                      <button
+                        type="button"
+                        onClick={resetTurnstileWidget}
+                        disabled={isSubmitting}
+                        className="inline-flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                      >
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        <span>{t.abuse.refreshTurnstile}</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {turnstileSiteKey ? (
+                    <div>
+                      <div ref={turnstileContainerRef} className="min-h-[65px]" />
+                      {turnstileError && (
+                        <p className="mt-2 text-xs text-rose-600 dark:text-rose-400">
+                          {t.abuse.turnstileLoadError}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-amber-800 dark:text-amber-300 space-y-2">
+                      <p className="font-semibold">{t.abuse.turnstileMissingKeyTitle}</p>
+                      <p className="leading-relaxed">{t.abuse.turnstileMissingKeyDesc}</p>
+                      <div className="pt-1">
+                        <a
+                          href={`mailto:abuse@vz.gay?subject=${encodeURIComponent(draftMailtoSubject)}&body=${encodeURIComponent(draftMailtoBody)}`}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-100 bg-white dark:bg-[#181D27] border border-slate-300 dark:border-[#2A303E] rounded-lg hover:border-blue-500/60 transition-colors whitespace-nowrap"
+                        >
+                          <span>{t.abuse.escalateMail}</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 {formError && (
-                  <p role="alert" className="text-xs sm:text-sm font-medium text-rose-600 dark:text-rose-400">
-                    {formError}
-                  </p>
+                  <div
+                    role="alert"
+                    className="p-4 rounded-xl bg-rose-50/80 dark:bg-rose-950/25 border border-rose-200 dark:border-rose-900/60 space-y-3"
+                  >
+                    <div className="flex items-start gap-2.5 text-rose-800 dark:text-rose-300">
+                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                      <p className="text-xs sm:text-sm font-medium leading-relaxed">{formError}</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2.5 pl-6">
+                      <a
+                        href={`mailto:abuse@vz.gay?subject=${encodeURIComponent(draftMailtoSubject)}&body=${encodeURIComponent(draftMailtoBody)}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-100 bg-white dark:bg-[#181D27] border border-rose-200 dark:border-rose-900/60 rounded-lg hover:border-blue-500/60 transition-colors whitespace-nowrap"
+                      >
+                        <span>{t.abuse.escalateMail}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
                 )}
 
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors cursor-pointer"
+                  disabled={isSubmitting || !turnstileSiteKey}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>{t.abuse.submitBtn}</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>{t.abuse.submittingBtn}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>{t.abuse.submitBtn}</span>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -543,7 +969,9 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
             <div className="lg:col-span-4 space-y-4">
               <div className="p-5 rounded-xl bg-white dark:bg-[#13161C] border border-slate-200 dark:border-[#232732] space-y-3">
                 <h3 className="font-display text-sm font-semibold text-slate-900 dark:text-white">
-                  {lang === 'id' ? 'Kanal Kepatuhan Lintas Layanan' : 'Cross-Service Compliance Channels'}
+                  {lang === 'id'
+                    ? 'Kanal Kepatuhan Lintas Layanan'
+                    : 'Cross-Service Compliance Channels'}
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {lang === 'id'
@@ -559,7 +987,7 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                   <a
-                    href="https://support.vz.gay"
+                    href={supportApiBaseUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between text-blue-600 dark:text-blue-400 hover:underline"

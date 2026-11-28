@@ -43,6 +43,7 @@ import {
   Palette,
   PenLine,
   PenTool,
+  PhoneCall,
   Presentation,
   Search,
   Server,
@@ -186,5 +187,7 @@ export function ServiceIcon({ name, className = 'w-5 h-5' }: ServiceIconProps) {
       return <Video className={className} />;
     case 'leaf':
       return <Leaf className={className} />;
+    case 'phone-call':
+      return <PhoneCall className={className} />;
   }
 }

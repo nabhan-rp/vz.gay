@@ -67,7 +67,8 @@ export type ServiceIconName =
   | 'heart-pulse'
   | 'sun'
   | 'video'
-  | 'leaf';
+  | 'leaf'
+  | 'phone-call';
 
 export interface LiveChildApp {
   name: string;
@@ -1702,30 +1703,36 @@ export const VZ_SERVICES: VzService[] = [
       en: 'VZ Support',
     },
     shortType: {
-      id: 'Pusat Dukungan, Tiket, Panel Teknisi & AI Agents',
-      en: 'Support Center, Ticketing, Tech Panel & AI Agents',
+      id: 'Pusat Tiket Dukungan (Worker + D1), Konsol Teknisi & Roadmap CS AI',
+      en: 'Support Ticket Intake (Worker + D1), Tech Console & AI Support Roadmap',
     },
     description: {
-      id: 'Pusat layanan pelanggan (CS) dan dukungan teknis terdedikasi untuk seluruh ekosistem vz.gay—dilengkapi sistem tiket (ticketing), Panel Teknisi (Tech Panel), Panel Pelanggan (Customer Panel), Live Chat real-time, serta kotak obrolan agen AI (AI Agents Chatbox).',
-      en: 'Dedicated customer service and technical support center for the vz.gay ecosystem featuring multi-tier ticketing, Technician Panel, Customer Panel, real-time Live Chat, and an interactive AI Agents Chatbox.',
+      id: 'Pusat layanan bantuan dan tiket dukungan resmi ekosistem vz.gay. Rilis fondasi v1 berbasis Cloudflare Worker + D1 menyediakan intake tiket publik (POST /api/public/tickets) yang dilindungi Cloudflare Turnstile serta Konsol Teknisi (Technician Console) yang diamankan dengan Cloudflare Access JWT, disusul tahap pengembangan berikutnya untuk Customer Panel, Live Chat, dan AI Agents Chatbox.',
+      en: 'Dedicated support and ticket management center for the vz.gay ecosystem. Its v1 Cloudflare Worker + D1 foundation provides Turnstile-protected public ticket intake (POST /api/public/tickets) and a Cloudflare Access JWT-protected Technician Console, with upcoming roadmap phases adding a Customer Lookup Panel, real-time Live Chat, and an AI Agents Chatbox.',
     },
     architectureNotes: {
-      id: 'Dirancang dengan pemisahan antarmuka Panel Pelanggan dan Panel Teknisi/CS, triase tiket otomatis oleh agen AI, live chat eskalasi manusia, serta pusat pelaporan abuse/DMCA terpadu.',
-      en: 'Architected with dedicated Customer and Technician/CS panels, AI agent triage chatbox, human live chat escalation, and unified abuse/DMCA intake.',
+      id: 'Arsitektur v1 berjalan mandiri sebagai Cloudflare Worker dengan database D1 (SUPPORT_DB / vz_support_db), validasi CORS + Cloudflare Turnstile untuk pelaporan publik dari vz.gay/legal/abuse, serta autentikasi Cloudflare Access JWT untuk rute staf (/, /api/tickets). Fitur notifikasi email, lampiran berkas, pelacakan status mandiri (Customer Panel), Live Chat, dan AI Agents Chatbox masuk dalam peta jalan (roadmap) tahap berikutnya.',
+      en: 'The v1 architecture runs independently as a Cloudflare Worker backed by D1 (SUPPORT_DB / vz_support_db), enforcing CORS + server-side Turnstile verification for public submissions from vz.gay/legal/abuse and Cloudflare Access JWT validation for staff routes (/, /api/tickets). Email notifications, attachments, public customer ticket lookup, Live Chat, and the AI Agents Chatbox are scheduled for upcoming roadmap phases.',
     },
     highlights: [
       {
-        label: { id: 'Panel & Kanal Layanan', en: 'Panels & Service Channels' },
+        label: {
+          id: 'Modul Inti v1 (Worker + D1 + Turnstile + Access)',
+          en: 'Core v1 Modules (Worker + D1 + Turnstile + Access)',
+        },
         value: {
-          id: 'Customer Panel · Technician Panel · Sistem Tiket Multi-Prioritas · Live Chat Real-Time',
-          en: 'Customer Panel · Technician Panel · Multi-Priority Ticketing · Real-Time Live Chat',
+          id: 'Public Ticket Intake (POST /api/public/tickets) · Penyimpanan D1 (SUPPORT_DB) · Technician Console dengan Cloudflare Access JWT',
+          en: 'Public Ticket Intake (POST /api/public/tickets) · D1 Storage (SUPPORT_DB) · Cloudflare Access JWT Technician Console',
         },
       },
       {
-        label: { id: 'Otomasi Agen AI', en: 'AI Agent Automation' },
+        label: {
+          id: 'Roadmap Tahap Berikutnya (Belum Aktif di v1)',
+          en: 'Upcoming Roadmap Phases (Planned Post-v1)',
+        },
         value: {
-          id: 'AI Agents Chatbox untuk diagnosa awal, panduan layanan, dan eskalasi tiket otomatis',
-          en: 'AI Agents Chatbox for guided troubleshooting, service guidance, and automated ticket routing',
+          id: 'Customer Panel & Cek Status Tiket Publik · Live Chat Real-Time · AI Agents Chatbox · Notifikasi Email & SLA',
+          en: 'Customer Ticket Lookup Panel · Real-Time Live Chat · AI Agents Chatbox · Automated Email & SLA Workflows',
         },
       },
     ],
@@ -1840,23 +1847,79 @@ export const VZ_SERVICES: VzService[] = [
     category: 'productivity',
     secondaryCategories: ['system_community'],
     status: 'development',
-    iconName: 'video',
+    iconName: 'phone-call',
     name: {
       id: 'VZ Talk',
       en: 'VZ Talk',
     },
     shortType: {
-      id: 'Panggilan Suara & Rapat Video WebRTC',
-      en: 'Browser WebRTC Voice & Video Meetings',
+      id: 'Panggilan Suara & Video Personal 1:1 (WebRTC)',
+      en: '1:1 Direct WebRTC Voice & Video Calling',
     },
     description: {
-      id: 'Layanan telepon suara dan konferensi video real-time berbasis WebRTC langsung dari browser tanpa perlu memasang aplikasi tambahan—mendukung ruang rapat instan, berbagi layar, dan obrolan teks sesi.',
-      en: 'Real-time voice calling and video conferencing powered by browser-native WebRTC with instant meeting rooms, screen sharing, and session chat without extra software installs.',
+      id: 'Layanan komunikasi telepon suara dan panggilan tatap muka langsung 1-lawan-1 (1:1) berbasis WebRTC di browser tanpa instalasi aplikasi tambahan. Dirancang khusus untuk percakapan personal berlatensi rendah, terpisah dari layanan konferensi grup di room.vz.gay.',
+      en: 'Browser-native 1-on-1 (1:1) direct voice and video calling powered by peer-to-peer WebRTC without extra app installs. Built specifically for low-latency personal conversations, distinct from multi-participant meetings on room.vz.gay.',
     },
     architectureNotes: {
-      id: 'Menggunakan koneksi WebRTC terenkripsi peer-to-peer / SFU dengan tautan ruang cepat yang terintegrasi dengan chat.vz.gay dan VZ Desk.',
-      en: 'Powered by encrypted WebRTC peer-to-peer / SFU rooms with instant shareable links bridged to chat.vz.gay and VZ Desk.',
+      id: 'Berfokus khusus pada koneksi langsung peer-to-peer (P2P) WebRTC 1:1 yang ringan dan terenkripsi ujung-ke-ujung (terhubung dengan chat.vz.gay dan kontak SSO), sedangkan rapat grup multi-peserta dialokasikan ke room.vz.gay.',
+      en: 'Focused strictly on lightweight, encrypted 1:1 peer-to-peer (P2P) WebRTC calling bridged with chat.vz.gay and SSO contacts, while multi-participant video conferences live on room.vz.gay.',
     },
+    highlights: [
+      {
+        label: { id: 'Sasaran & Mode Komunikasi', en: 'Target Use Case & Mode' },
+        value: {
+          id: 'Khusus panggilan personal 1:1 (Suara & Video P2P langsung antar dua pengguna)',
+          en: 'Dedicated 1:1 personal calling (direct P2P voice & video between two participants)',
+        },
+      },
+      {
+        label: { id: 'Pemisahan dengan VZ Room', en: 'Separation from VZ Room' },
+        value: {
+          id: 'talk.vz.gay untuk telepon 1:1 cepat · room.vz.gay khusus untuk video conference grup & ruang rapat',
+          en: 'talk.vz.gay for instant 1:1 calls · room.vz.gay dedicated to group video conferences & meeting rooms',
+        },
+      },
+    ],
+  },
+  {
+    id: 'room',
+    primaryDomain: 'room.vz.gay',
+    category: 'productivity',
+    secondaryCategories: ['system_community', 'web_business'],
+    status: 'development',
+    iconName: 'video',
+    name: {
+      id: 'VZ Room',
+      en: 'VZ Room',
+    },
+    shortType: {
+      id: 'Konferensi Video Grup & Ruang Rapat WebRTC',
+      en: 'Multi-Participant WebRTC Video Conferencing & Rooms',
+    },
+    description: {
+      id: 'Platform konferensi video multi-peserta (video conference) dan ruang rapat virtual berbasis WebRTC langsung dari browser—mendukung rapat tim, kelas daring, webinar, berbagi layar multi-presenter, moderasi ruang, serta obrolan grup sesi (terpisah dari talk.vz.gay yang dikhususkan untuk panggilan 1:1).',
+      en: 'Browser-based multi-participant WebRTC video conferencing and virtual meeting rooms supporting team standups, online classes, webinars, screen sharing, host moderation controls, and in-room group chat (distinct from talk.vz.gay which handles 1:1 calls).',
+    },
+    architectureNotes: {
+      id: 'Menggunakan arsitektur WebRTC Selective Forwarding Unit (SFU) untuk menjaga kestabilan konferensi video banyak peserta sekaligus, terintegrasi dengan jadwal rapat di work.vz.gay dan kolaborasi dokumen VZ Desk.',
+      en: 'Powered by a WebRTC Selective Forwarding Unit (SFU) topology to scale multi-participant video rooms reliably, integrated with work.vz.gay team scheduling and VZ Desk collaboration.',
+    },
+    highlights: [
+      {
+        label: { id: 'Sasaran & Kapasitas Ruang', en: 'Target Audience & Room Features' },
+        value: {
+          id: 'Khusus video conference grup, rapat tim, diskusi komunitas & presentasi berbagi layar multi-peserta',
+          en: 'Dedicated to group video conferences, team meetings, community townhalls & multi-presenter screen sharing',
+        },
+      },
+      {
+        label: { id: 'Diferensiasi Fungsi WebRTC', en: 'WebRTC Service Differentiation' },
+        value: {
+          id: 'room.vz.gay untuk konferensi ruang rapat grup (SFU) · talk.vz.gay khusus panggilan personal 1:1 (P2P)',
+          en: 'room.vz.gay for group conference rooms (SFU) · talk.vz.gay for 1:1 direct personal calls (P2P)',
+        },
+      },
+    ],
   },
   {
     id: 'work',

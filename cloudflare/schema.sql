@@ -31,5 +31,5 @@ CREATE TABLE IF NOT EXISTS redirect_rules (
 );
 
 INSERT OR REPLACE INTO redirect_rules (id, source_host, target_url, status_code, service_id) VALUES
-  ('redir-kaca-blog', 'kaca.blog', 'https://go-blog.vz.gay', 301, 'go-blog'),
-  ('redir-blog-vz', 'blog.vz.gay', 'https://goblog.vz.gay', 301, 'go-blog');
+  ('redir-kaca-blog', 'kaca.blog', 'https://go-blog.vz.gay', 301, 'go-blog');
+

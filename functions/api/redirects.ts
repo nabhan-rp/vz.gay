@@ -28,13 +28,6 @@ export const onRequestGet: PagesFunction = async (context) => {
           status_code: 301,
           service_id: 'go-blog',
         },
-        {
-          id: 'redir-blog-vz',
-          source_host: 'blog.vz.gay',
-          target_url: 'https://goblog.vz.gay',
-          status_code: 301,
-          service_id: 'go-blog',
-        },
       ],
     }),
     {
