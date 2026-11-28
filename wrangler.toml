@@ -8,14 +8,14 @@ APP_DOMAIN = "vz.gay"
 AUTH0_DOMAIN = "accounts.vz.gay"
 ACCOUNT_DASHBOARD_URL = "https://myaccount.vz.gay"
 SPONSOR_DOMAIN = "jajanserver.com"
+VITE_SUPPORT_API_URL = "https://support.vz.gay"
+VITE_SUPPORT_TURNSTILE_SITE_KEY = "0x4AAAAAAGWaOorjmzmCqhEP"
 
 # Catatan Arsitektur:
 # 1. Tiket laporan Abuse/DMCA dari /legal/abuse dikirim langsung ke Cloudflare Worker terpisah
 #    di support.vz.gay (POST /api/public/tickets) yang memiliki database D1 tersendiri (SUPPORT_DB / vz_support_db).
-# 2. Untuk mengaktifkan form tiket publik di Cloudflare Pages (vz.gay), atur Environment Variables
-#    di Cloudflare Pages Dashboard (Settings -> Environment variables):
-#      VITE_SUPPORT_API_URL = "https://support.vz.gay"
-#      VITE_SUPPORT_TURNSTILE_SITE_KEY = "<PUBLIC_TURNSTILE_SITE_KEY_ANDA>"
+# 2. Public Site Key Turnstile (0x4AAAAAAGWaOorjmzmCqhEP) sudah disetel sebagai default di kode & [vars].
+#    Secret Key Turnstile (TURNSTILE_SECRET_KEY) HANYA disimpan di secret Worker support.vz.gay.
 # 3. Blok D1, KV, dan R2 di bawah ini HANYA opsional untuk endpoint Pages Functions internal
 #    (/functions/api/services.ts, /functions/api/redirects.ts, /functions/api/assets/*) apabila
 #    suatu saat katalog direktori layanan ingin disajikan dari database edge, bukan dari kode statis.

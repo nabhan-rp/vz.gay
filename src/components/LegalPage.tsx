@@ -31,6 +31,7 @@ interface SubmittedTicket {
 
 interface TurnstileRenderOptions {
   sitekey: string;
+  action?: string;
   theme?: 'light' | 'dark' | 'auto';
   language?: string;
   callback?: (token: string) => void;
@@ -63,9 +64,14 @@ function getSupportApiBaseUrl(): string {
   return 'https://support.vz.gay';
 }
 
+const DEFAULT_TURNSTILE_SITE_KEY = '0x4AAAAAAGWaOorjmzmCqhEP';
+
 function getTurnstileSiteKey(): string {
   const raw = import.meta.env.VITE_SUPPORT_TURNSTILE_SITE_KEY;
-  return typeof raw === 'string' ? raw.trim() : '';
+  if (typeof raw === 'string' && raw.trim().length > 0) {
+    return raw.trim();
+  }
+  return DEFAULT_TURNSTILE_SITE_KEY;
 }
 
 function normalizeAndValidateTargetUrl(raw: string): string | null {
@@ -385,6 +391,7 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
     try {
       turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
         sitekey: turnstileSiteKey,
+        action: 'abuse_report',
         theme: isDark ? 'dark' : 'light',
         language: lang,
         callback: (token: string) => {

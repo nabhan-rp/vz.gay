@@ -2,7 +2,7 @@
 
 > **Catatan Privasi & Build**: Dokumen ini berada di dalam direktori `/docs` pada repositori Git. Karena Vite hanya memaketkan modul dari `src/` dan menyalin aset statis dari `public/` ke dalam hasil build `/dist`, seluruh berkas di dalam `/docs` **tidak akan pernah dipublikasikan ke `/dist`**, tidak bisa diakses publik lewat URL web, dan **tidak terindeks oleh mesin pencari (SEO)**.
 >
-> Dokumen ini telah diselaraskan sepenuhnya dengan 6 dokumen referensi resmi pada repositori `nabhan-rp/vzsupport/docs` (`ARCHITECTURE.md`, `PORTAL-INTEGRATION.md`, `CLOUDFLARE.md`, `PRODUCTION-CHECKLIST.md`, `LOCAL-DEVELOPMENT.md`, dan `TROUBLESHOOTING.md`).
+> Dokumen ini telah diselaraskan sepenuhnya dengan 6 dokumen referensi resmi pada repositori `nabhan-rp/vzsupport/docs` (`ARCHITECTURE.md`, `PORTAL-INTEGRATION.md`, `CLOUDFLARE.md`, `PRODUCTION-CHECKLIST.md`, `LOCAL-DEVELOPMENT.md`, dan `TROUBLESHOOTING.md`) serta alur **Existing-Widget Cloudflare Turnstile Spin** untuk Site Key **`0x4AAAAAAGWaOorjmzmCqhEP`**.
 
 ---
 
@@ -14,7 +14,9 @@ Ekosistem pelaporan Abuse / DMCA dan pusat bantuan VZ terdiri dari **dua reposit
 ┌───────────────────────────────────────────────────────────────────────────┐
 │ 1. Portal Utama: vz.gay (Cloudflare Pages / Google AI Studio Project)     │
 │    · Halaman: https://vz.gay/legal/abuse                                  │
-│    · Menampilkan form laporan + widget Cloudflare Turnstile (Site Key)    │
+│    · Menampilkan form laporan + widget Cloudflare Turnstile               │
+│      (Site Key Publik: 0x4AAAAAAGWaOorjmzmCqhEP · Action: "abuse_report") │
+│    · Single-use token lifecycle: window.turnstile.reset(widgetId)         │
 │    · Memvalidasi batas ukuran payload <= 16 KiB & URL absolut http/https  │
 │    · Mengirim HTTP POST JSON lintas-origin (CORS) ke support.vz.gay       │
 └─────────────────────────────────────┬─────────────────────────────────────┘
@@ -27,6 +29,7 @@ Ekosistem pelaporan Abuse / DMCA dan pusat bantuan VZ terdiri dari **dua reposit
 │    · Repo: nabhan-rp/vzsupport (apps/support-worker)                      │
 │    · Endpoint Publik (Bypass Access): POST /api/public/tickets            │
 │    · Endpoint Teknisi/CS (Wajib Access JWT): GET /, GET/POST /api/tickets │
+│    · Secret Turnstile: TURNSTILE_SECRET_KEY (diverifikasi ke siteverify)  │
 │    · Database Cloudflare D1: SUPPORT_DB (vz_support_db)                   │
 └───────────────────────────────────────────────────────────────────────────┘
 ```
@@ -95,25 +98,56 @@ Sesuai `ARCHITECTURE.md` di repo `vzsupport`:
    ```
    *(Untuk pengujian D1 lokal, gunakan `--local`; untuk produksi gunakan `--remote` sesuai `LOCAL-DEVELOPMENT.md`)*.
 
-### Langkah 2.2 — Buat Widget Cloudflare Turnstile (Anti-Spam Form Publik)
+### Langkah 2.2 — Mengikat Secret Key Turnstile (`0x4AAAAAAGWaOorjmzmCqhEP`) ke Worker `vzsupport` (Existing-Widget Flow)
 
-1. Buka **Cloudflare Dashboard** -> menu **Turnstile** -> klik **Add widget**.
-2. Beri nama widget misalnya `VZ Legal & Support Public Intake`.
-3. Tambahkan daftar **Hostnames** tempat formulir `/legal/abuse` dijalankan (tanpa `https://` dan tanpa slash):
-   - `vz.gay`
-   - `www.vz.gay`
-   - *(Opsional hanya saat pengujian preview aktif)*: hostname preview AI Studio / Cloudflare Pages Anda. Hapus hostname preview sementara sebelum rilis produksi penuh.
-4. Pilih mode widget **Managed**, lalu klik **Create**.
-5. Anda akan mendapatkan dua kunci:
-   - **Site Key (Publik)**: Dipasang di environment variable proyek `vz.gay` (`VITE_SUPPORT_TURNSTILE_SITE_KEY`).
-   - **Secret Key (Rahasia)**: **JANGAN PERNAH** ditaruh di kode frontend, variabel `VITE_`, atau di-commit ke Git. Simpan ke dalam secret Worker `vzsupport`:
-     ```bash
-     npx wrangler secret put TURNSTILE_SECRET_KEY --config apps/support-worker/wrangler.jsonc
-     ```
+Widget Cloudflare Turnstile Anda sudah dibuat dengan **Site Key Publik**:
+```text
+0x4AAAAAAGWaOorjmzmCqhEP
+```
+Site Key publik di atas **sudah dipasang sebagai default** di kode `vz.gay` (`/src/components/LegalPage.tsx`, `.env.example`, dan `wrangler.toml`) dengan parameter `action: 'abuse_report'` dan siklus token sekali-pakai (`window.turnstile.reset(widgetId)`).
+
+Sekarang, di terminal lokal repositori **`nabhan-rp/vzsupport`**, ikat **Secret Key** untuk widget `0x4AAAAAAGWaOorjmzmCqhEP` ke dalam Worker `vz-support-worker`:
+
+#### Opsi A — Input Secret Key Langsung dari Cloudflare Dashboard:
+```bash
+npx wrangler secret put TURNSTILE_SECRET_KEY --config apps/support-worker/wrangler.jsonc
+```
+*(Tempelkan Secret Key dari halaman Cloudflare Dashboard -> Turnstile -> Widget `0x4AAAAAAGWaOorjmzmCqhEP` saat diminta).*
+
+#### Opsi B — Otomatis via Alur Existing-Widget Wrangler (>= 4.109.0, Tanpa Menampilkan Secret di Layar):
+Jika Anda menggunakan Wrangler `>= 4.109.0` yang sudah terautentikasi ke akun Cloudflare Anda, Anda dapat memeriksa metadata domain widget, memvalidasi secret ke `siteverify` dengan token dummy (`XXXX.DUMMY.TOKEN.XXXX`), dan langsung menyimpannya ke `TURNSTILE_SECRET_KEY` di Worker `vz-support-worker`:
+
+```bash
+# 1. Periksa metadata widget (tanpa mencetak secret ke layar)
+WRANGLER_WRITE_LOGS=false WRANGLER_LOG=log WRANGLER_LOG_SANITIZE=true \
+  wrangler turnstile widget get "0x4AAAAAAGWaOorjmzmCqhEP" --json | \
+  jq '{sitekey: .sitekey, mode: .mode, clearance_level: .clearance_level, domains: .domains}'
+
+# 2. Ambil secret, validasi ke siteverify dengan dummy token, dan simpan ke Worker TURNSTILE_SECRET_KEY
+(
+  set +x
+  set -euo pipefail
+  export WRANGLER_WRITE_LOGS=false
+  export WRANGLER_LOG=log
+  export WRANGLER_LOG_SANITIZE=true
+  secret="$(wrangler turnstile widget get "0x4AAAAAAGWaOorjmzmCqhEP" --json | jq -er '.secret')"
+  # Validasi secret ke siteverify (harus menghasilkan invalid-input-response, BUKAN invalid-input-secret)
+  printf '%s' "$secret" | \
+    python3 -I -c 'import sys,urllib.parse; print(urllib.parse.urlencode({"secret":sys.stdin.read(),"response":"XXXX.DUMMY.TOKEN.XXXX"}),end="")' | \
+    curl --disable -sS "https://challenges.cloudflare.com/turnstile/v0/siteverify" \
+      -H "Content-Type: application/x-www-form-urlencoded" \
+      --data-binary @- | \
+    python3 -I -c 'import json,sys; d=json.load(sys.stdin); c=d.get("error-codes") or []; raise SystemExit(0 if d.get("success") is False and "invalid-input-response" in c and "invalid-input-secret" not in c else 1)'
+  # Simpan ke secret Worker vz-support-worker
+  printf '%s' "$secret" | wrangler secret put TURNSTILE_SECRET_KEY --config apps/support-worker/wrangler.jsonc
+  unset secret
+  echo "OK: TURNSTILE_SECRET_KEY berhasil divalidasi dan disimpan ke Worker."
+)
+```
 
 ### Langkah 2.3 — Konfigurasi Origin CORS & Hostname Turnstile di `wrangler.jsonc`
 
-Buka `apps/support-worker/wrangler.jsonc` di repo `vzsupport`, lalu pastikan bagian `"vars"` mencantumkan origin dan hostname yang tepat:
+Buka `apps/support-worker/wrangler.jsonc` di repo `vzsupport`, lalu pastikan bagian `"vars"` mencantumkan origin dan hostname yang sesuai dengan domain yang terdaftar pada widget `0x4AAAAAAGWaOorjmzmCqhEP`:
 
 ```jsonc
   "vars": {
@@ -155,20 +189,14 @@ Tambahkan juga aturan **Cloudflare Rate Limiting / WAF** untuk `POST https://sup
 
 ---
 
-## 3. Langkah Demi Langkah: Menghubungkan & Deploy Portal Utama (`vz.gay`)
+## 3. Konfigurasi Environment Variables di Portal Utama (`vz.gay`)
 
-Formulir di `/src/components/LegalPage.tsx` membaca dua variabel environment Vite pada saat build:
+Formulir di `/src/components/LegalPage.tsx` sudah memiliki nilai default siap pakai untuk produksi, dan tetap dapat di-override melalui variabel environment Vite pada saat build:
 
-| Nama Variabel | Wajib? | Nilai Produksi | Keterangan |
-| :--- | :---: | :--- | :--- |
-| `VITE_SUPPORT_API_URL` | Opsional | `https://support.vz.gay` | Base URL Worker VZ Support. Jika tidak disetel, otomatis default ke `https://support.vz.gay`. |
-| `VITE_SUPPORT_TURNSTILE_SITE_KEY` | **Wajib** | `<Site Key Publik Turnstile>` | Kunci publik widget Cloudflare Turnstile. Jika belum diisi, tombol kirim API dinonaktifkan dan form menampilkan pemberitahuan serta tombol fallback email `abuse@vz.gay`. |
-
-### Cara Mengatur di Cloudflare Pages Dashboard (`vz.gay`):
-
-1. Buka **Cloudflare Dashboard** -> **Workers & Pages** -> pilih proyek Pages **`vz-gay`**.
-2. Masuk ke tab **Settings** -> **Environment variables**.
-3. Tambahkan `VITE_SUPPORT_API_URL` dan `VITE_SUPPORT_TURNSTILE_SITE_KEY`, lalu jalankan build/deployment ulang.
+| Nama Variabel | Default di Kode `vz.gay` | Keterangan |
+| :--- | :--- | :--- |
+| `VITE_SUPPORT_API_URL` | `https://support.vz.gay` | Base URL Worker VZ Support. |
+| `VITE_SUPPORT_TURNSTILE_SITE_KEY` | `0x4AAAAAAGWaOorjmzmCqhEP` | Kunci publik widget Cloudflare Turnstile yang sudah aktif di `/legal/abuse`. |
 
 ---
 
@@ -216,7 +244,7 @@ Gunakan daftar periksa ini sebelum mengaktifkan formulir publik di produksi:
 - [ ] Skema `apps/support-worker/schema.sql` sudah diterapkan (`npm run db:apply:support`) ke database D1 produksi (`--remote`).
 - [ ] `ACCESS_TEAM_DOMAIN` dan `ACCESS_AUD` sudah diisi sesuai aplikasi Cloudflare Access staf.
 - [ ] `PUBLIC_FORM_ORIGINS` (`https://vz.gay,https://www.vz.gay`) dan `TURNSTILE_EXPECTED_HOSTNAMES` (`vz.gay,www.vz.gay`) sudah tepat.
-- [ ] `TURNSTILE_SECRET_KEY` sudah disimpan via `npx wrangler secret put TURNSTILE_SECRET_KEY`.
+- [ ] `TURNSTILE_SECRET_KEY` untuk widget `0x4AAAAAAGWaOorjmzmCqhEP` sudah disimpan via `wrangler secret put TURNSTILE_SECRET_KEY`.
 - [ ] Custom domain `support.vz.gay` sudah terhubung ke Worker dan `npm run check` lulus tanpa error.
 
 ### C. Kontrol Akses & Keamanan
@@ -226,7 +254,7 @@ Gunakan daftar periksa ini sebelum mengaktifkan formulir publik di produksi:
 - [ ] Aturan Cloudflare Rate Limiting / WAF aktif untuk `POST /api/public/tickets`.
 
 ### D. Verifikasi End-to-End Formulir Publik (`vz.gay/legal/abuse`)
-- [ ] `VITE_SUPPORT_TURNSTILE_SITE_KEY` dan `VITE_SUPPORT_API_URL` sudah disetel di Cloudflare Pages (`vz-gay`).
+- [ ] Site Key `0x4AAAAAAGWaOorjmzmCqhEP` sudah terpasang di `vz.gay` dan domain `vz.gay` / `www.vz.gay` terdaftar pada widget Turnstile di Cloudflare Dashboard.
 - [ ] Preflight `OPTIONS` dari `https://vz.gay` ke `https://support.vz.gay/api/public/tickets` menghasilkan `HTTP 204`.
 - [ ] Pengiriman laporan uji yang valid menghasilkan `HTTP 201`, menyimpan 1 baris di D1, dan menampilkan `ticket.reference` (`VZ-YYYY-NNNNNN`) di UI `vz.gay`.
-- [ ] Pengiriman yang gagal (email salah, URL bukan `http/https`, Turnstile gagal, atau origin tidak terdaftar) tidak membuat baris di D1 dan tidak menampilkan nomor tiket palsu di UI maupun `localStorage`.
+- [ ] Percobaan mengirim ulang token Turnstile yang sama (replay) ditolak dengan `HTTP 403` karena token Turnstile bersifat sekali-pakai (*single-use*).
