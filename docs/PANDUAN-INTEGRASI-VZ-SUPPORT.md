@@ -258,3 +258,68 @@ Gunakan daftar periksa ini sebelum mengaktifkan formulir publik di produksi:
 - [ ] Preflight `OPTIONS` dari `https://vz.gay` ke `https://support.vz.gay/api/public/tickets` menghasilkan `HTTP 204`.
 - [ ] Pengiriman laporan uji yang valid menghasilkan `HTTP 201`, menyimpan 1 baris di D1, dan menampilkan `ticket.reference` (`VZ-YYYY-NNNNNN`) di UI `vz.gay`.
 - [ ] Percobaan mengirim ulang token Turnstile yang sama (replay) ditolak dengan `HTTP 403` karena token Turnstile bersifat sekali-pakai (*single-use*).
+
+---
+
+## 6. Perbaikan Bug `{"error":"The request could not be completed"}` pada `apps/support-worker/src/index.js` (`vzsupport`)
+
+Jika saat membuka `https://support.vz.gay` (setelah berhasil login Cloudflare Access) muncul pesan:
+```json
+{"error":"The request could not be completed"}
+```
+
+### A. Penyebab Utama (Bug di `apps/support-worker/src/index.js` pada Repo `vzsupport`)
+Pada kode `apps/support-worker/src/index.js` bawaan Copilot di baris `268–274` (fungsi `getAccessSigningKey`), Worker mencari properti `certificateSet.jwk_public_certs`:
+```js
+const certificateSet = await response.json();
+if (!Array.isArray(certificateSet.jwk_public_certs)) {
+  throw new Error("Cloudflare Access returned no JWK signing keys");
+}
+```
+Padahal endpoint asli Cloudflare Access (`https://nabhanrp.cloudflareaccess.com/cdn-cgi/access/certs`) mengembalikan objek JSON standar JWKS dengan kunci **`keys`** (`{ "keys": [...], "public_cert": {...}, "public_certs": [...] }`), **bukan** `jwk_public_certs`. Akibatnya Worker selalu melempar `Error("Cloudflare Access returned no JWK signing keys")` yang ditangkap sebagai HTTP 500 `{"error":"The request could not be completed"}`.
+
+### B. Solusi Perbaikan di `apps/support-worker/src/index.js`
+Buka file `apps/support-worker/src/index.js` di repositori `nabhan-rp/vzsupport`, cari fungsi `getAccessSigningKey(teamDomain, keyId)` (sekitar baris 259–285), lalu ubah bagian pembacaan `certificateSet` menjadi:
+
+```js
+    const certificateSet = await response.json();
+    const jwkKeys = Array.isArray(certificateSet.keys)
+      ? certificateSet.keys
+      : certificateSet.jwk_public_certs;
+    if (!Array.isArray(jwkKeys)) {
+      throw new Error("Cloudflare Access returned no JWK signing keys");
+    }
+
+    const signingKeys = new Map();
+    for (const publicKey of jwkKeys) {
+      if (publicKey.kid && publicKey.kty === "RSA" && publicKey.n && publicKey.e) {
+        signingKeys.set(
+          publicKey.kid,
+          await crypto.subtle.importKey(
+            "jwk",
+            { kty: "RSA", n: publicKey.n, e: publicKey.e, alg: "RS256", ext: true },
+            { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+            false,
+            ["verify"]
+          )
+        );
+      }
+    }
+```
+*(Dengan mendukung `certificateSet.keys` sekaligus fallback `certificateSet.jwk_public_certs`, endpoint Cloudflare Access produksi akan langsung berjalan normal dan unit test `npm test` di `worker.test.js` juga tetap lulus 100%).*
+
+Setelah mengubah file tersebut:
+1. Pastikan tabel D1 produksi sudah diterapkan:
+   ```bash
+   npm run db:apply:support
+   ```
+2. Deploy ulang Worker `vz-support-worker`:
+   ```bash
+   npm run deploy:support
+   ```
+
+### C. Pastikan Policy `VZ Support Public Intake` (`support.vz.gay/api/public/tickets`) Menggunakan Action = `Bypass`
+Agar pengiriman formulir dari `https://vz.gay/legal/abuse` tidak ikut dihadang halaman login Cloudflare Access (`302 Found` / `403 Forbidden` pada preflight `OPTIONS`):
+1. Buka **Cloudflare Zero Trust** → **Access controls** → **Policies** → klik **`VZ Support Public Intake`**.
+2. Pastikan **Action** diatur ke **`Bypass`** (bukan `Allow`), dan di bagian **Include** pilih **`Everyone`**, lalu simpan.
+

@@ -755,7 +755,7 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </a>
                     <a
-                      href={supportApiBaseUrl}
+                      href={`${supportApiBaseUrl}/?ref=${encodeURIComponent(latestTicket.id)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-[#191E29] border border-slate-200 dark:border-[#2A303E] rounded-lg hover:border-blue-500/60 transition-colors whitespace-nowrap"
@@ -1014,9 +1014,15 @@ export function LegalPage({ lang, activeTab, onNavigate }: LegalPageProps) {
                     {history.map((item) => (
                       <div key={item.id} className="py-2.5 first:pt-0 last:pb-0 text-xs">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-mono font-semibold text-slate-900 dark:text-white tabular-nums">
-                            {item.id}
-                          </span>
+                          <a
+                            href={`${supportApiBaseUrl}/?ref=${encodeURIComponent(item.id)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 font-mono font-semibold text-blue-600 dark:text-blue-400 hover:underline tabular-nums"
+                          >
+                            <span>{item.id}</span>
+                            <ArrowUpRight className="w-3 h-3" />
+                          </a>
                           <span className="font-mono text-slate-400 tabular-nums">
                             {item.submittedAt}
                           </span>

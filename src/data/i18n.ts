@@ -84,7 +84,7 @@ export const UI_COPY = {
     liveAndDomains: {
       sectionTitle: 'Aplikasi Aktif & Peta Domain Klien',
       sectionSubtitle:
-        'Platform inti seperti VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Blog Resmi VZ, VZ Business, VZ Codeplace, dan WonderPlace kini sudah aktif bersama peta domain kustom pengguna.',
+        'Platform inti seperti VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Blog Resmi VZ, VZ Business, VZ Codeplace, WonderPlace, VZ AI, dan VZ Support kini sudah aktif bersama peta domain kustom pengguna.',
       liveSpotlightTitle: 'Sub-Aplikasi & Publikasi Aktif',
       imageAlt: 'Ruang kerja digital ekosistem vz.gay',
       imageCaption: 'Ekosistem multi-aplikasi vz.gay · Seluruh layanan utama aktif',
@@ -261,7 +261,7 @@ export const UI_COPY = {
     liveAndDomains: {
       sectionTitle: 'Live Apps & Client Domain Matrix',
       sectionSubtitle:
-        'Core platforms including VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Official VZ Blog, VZ Business, VZ Codeplace, and WonderPlace are now live alongside multi-domain client routing.',
+        'Core platforms including VZ Desk (+ view.vz.gay & pub.vz.gay), VZ Games, VZ Play, VZ App Hub, VZ Builder, Go-Blog, Official VZ Blog, VZ Business, VZ Codeplace, WonderPlace, VZ AI, and VZ Support are now live alongside multi-domain client routing.',
       liveSpotlightTitle: 'Live Sub-Apps & Publishing Endpoints',
       imageAlt: 'Digital workspace for vz.gay ecosystem',
       imageCaption: 'vz.gay Multi-App Ecosystem · Core Suites Live',

@@ -1265,20 +1265,62 @@ export const VZ_SERVICES: VzService[] = [
     id: 'ai',
     primaryDomain: 'ai.vz.gay',
     category: 'developer_cloud',
-    status: 'development',
+    secondaryCategories: ['productivity'],
+    status: 'live',
     iconName: 'sparkles',
     name: {
       id: 'VZ AI',
       en: 'VZ AI',
     },
     shortType: {
-      id: 'Ruang Kerja Kecerdasan Buatan',
-      en: 'AI Tools & Workspace',
+      id: 'Gerbang Resmi VZ AI & Pratinjau Interaktif chat.ai.vz.gay',
+      en: 'Official VZ AI Gateway & Interactive chat.ai.vz.gay Preview',
     },
     description: {
-      id: 'Rangkaian alat bantu kecerdasan buatan untuk produktivitas penulisan, ringkasan dokumen (DOCX/PDF/MD), analisis data tabel (CSV/XLSX), dan otomasi alur kerja lintas VZ Desk.',
-      en: 'Focused AI workspace for writing assistance, document summarization (DOCX/PDF/MD), tabular data analysis (CSV/XLSX), and workflow automation across VZ Desk.',
+      id: 'Halaman pengantar resmi VZ AI yang sudah aktif di ai.vz.gay dengan kotak pratinjau (sandbox) interaktif lokal di browser, sementara portal percakapan penuh sedang dikembangkan secara terpisah di chat.ai.vz.gay dengan dukungan Auth0 SSO (accounts.vz.gay), asisten dokumen & tabel VZ Desk (DOC/DOCX, CSV, XLS/XLSX), serta gerbang API platform.vz.gay.',
+      en: 'Official VZ AI gateway live at ai.vz.gay featuring a 100% in-browser interactive preview sandbox, while the full conversational workspace is being built on chat.ai.vz.gay with Auth0 SSO (accounts.vz.gay), VZ Desk document and spreadsheet assistance (DOC/DOCX, CSV, XLS/XLSX), and the platform.vz.gay API gateway.',
     },
+    clientDomainPatterns: [
+      'ai.vz.gay',
+      'chat.ai.vz.gay',
+      'platform.vz.gay/v1/ai/responses',
+    ],
+    architectureNotes: {
+      id: 'Sudah aktif (HTTP 200) di ai.vz.gay sebagai landing page statis murni di Cloudflare Pages (.pages.dev) dengan konsumsi 0 kuota Workers dan dilengkapi mesin pratinjau lokal di browser serta pendaftaran akses awal. Mengikuti pemisahan domain modern: ai.vz.gay berperan sebagai gerbang pengantar aktif, sedangkan antarmuka obrolan penuh ditempatkan di subdomain terdedikasi chat.ai.vz.gay (Dalam Pengembangan) dan REST API di platform.vz.gay/v1/ai/responses.',
+      en: 'Live (HTTP 200) at ai.vz.gay as a pure static landing gateway on Cloudflare Pages (.pages.dev) with zero Workers quota usage, complete with a local in-browser preview engine and early-access registration. Follows a clean domain split: ai.vz.gay serves as the live front door, while the full conversational workspace lives on chat.ai.vz.gay (In Development) and the REST API on platform.vz.gay/v1/ai/responses.',
+    },
+    highlights: [
+      {
+        label: {
+          id: 'Gerbang Statis & Sandbox Lokal (Aktif di ai.vz.gay)',
+          en: 'Static Gateway & In-Browser Sandbox (Live at ai.vz.gay)',
+        },
+        value: {
+          id: 'Halaman pengantar statis di Cloudflare Pages (0 kuota Workers) + pratinjau prompt interaktif 100% di browser & daftar akses awal',
+          en: 'Pure static Cloudflare Pages gateway (0 Workers quota) + 100% local in-browser interactive prompt sandbox & early-access waitlist',
+        },
+      },
+      {
+        label: {
+          id: 'Portal Chat Terdedikasi (chat.ai.vz.gay — Dalam Pengembangan)',
+          en: 'Dedicated Chat Portal (chat.ai.vz.gay — In Development)',
+        },
+        value: {
+          id: 'Ruang percakapan penuh dengan riwayat utas, unggah dokumen & Auth0 SSO (accounts.vz.gay), terpisah bersih dari landing page ai.vz.gay',
+          en: 'Full conversational workspace with thread history, document uploads & Auth0 SSO (accounts.vz.gay), cleanly separated from ai.vz.gay',
+        },
+      },
+      {
+        label: {
+          id: 'Integrasi VZ Desk & Gerbang API Developer',
+          en: 'VZ Desk Integration & Developer API Gateway',
+        },
+        value: {
+          id: 'Asisten penulisan & analisis data VZ Desk (DOC/DOCX, CSV, XLS/XLSX) · Endpoint REST JSON direncanakan di platform.vz.gay/v1/ai/responses',
+          en: 'VZ Desk document & tabular data assistant (DOC/DOCX, CSV, XLS/XLSX) · Planned REST JSON endpoint at platform.vz.gay/v1/ai/responses',
+        },
+      },
+    ],
   },
   {
     id: 'play',
@@ -1696,7 +1738,7 @@ export const VZ_SERVICES: VzService[] = [
     id: 'support',
     primaryDomain: 'support.vz.gay',
     category: 'system_community',
-    status: 'development',
+    status: 'live',
     iconName: 'headphones',
     name: {
       id: 'VZ Support',
@@ -1707,27 +1749,31 @@ export const VZ_SERVICES: VzService[] = [
       en: 'Support Ticket Intake (Worker + D1), Tech Console & AI Support Roadmap',
     },
     description: {
-      id: 'Pusat layanan bantuan dan tiket dukungan resmi ekosistem vz.gay. Rilis fondasi v1 berbasis Cloudflare Worker + D1 menyediakan intake tiket publik (POST /api/public/tickets) yang dilindungi Cloudflare Turnstile serta Konsol Teknisi (Technician Console) yang diamankan dengan Cloudflare Access JWT, disusul tahap pengembangan berikutnya untuk Customer Panel, Live Chat, dan AI Agents Chatbox.',
-      en: 'Dedicated support and ticket management center for the vz.gay ecosystem. Its v1 Cloudflare Worker + D1 foundation provides Turnstile-protected public ticket intake (POST /api/public/tickets) and a Cloudflare Access JWT-protected Technician Console, with upcoming roadmap phases adding a Customer Lookup Panel, real-time Live Chat, and an AI Agents Chatbox.',
+      id: 'Pusat layanan bantuan dan tiket dukungan resmi ekosistem vz.gay yang sudah aktif di support.vz.gay. Rilis fondasi v1 berbasis Cloudflare Worker + D1 menyediakan intake tiket publik (POST /api/public/tickets) yang dilindungi Cloudflare Turnstile serta Konsol Teknisi (Technician Console) yang diamankan dengan Cloudflare Access JWT, disusul tahap pengembangan berikutnya untuk Customer Panel, Live Chat, dan AI Agents Chatbox.',
+      en: 'Official support and ticket management center for the vz.gay ecosystem, now live at support.vz.gay. Its v1 Cloudflare Worker + D1 foundation provides Turnstile-protected public ticket intake (POST /api/public/tickets) and a Cloudflare Access JWT-protected Technician Console, with upcoming roadmap phases adding a Customer Lookup Panel, real-time Live Chat, and an AI Agents Chatbox.',
     },
+    clientDomainPatterns: [
+      'support.vz.gay',
+      'support.vz.gay/api/public/tickets',
+    ],
     architectureNotes: {
-      id: 'Arsitektur v1 berjalan mandiri sebagai Cloudflare Worker dengan database D1 (SUPPORT_DB / vz_support_db), validasi CORS + Cloudflare Turnstile untuk pelaporan publik dari vz.gay/legal/abuse, serta autentikasi Cloudflare Access JWT untuk rute staf (/, /api/tickets). Fitur notifikasi email, lampiran berkas, pelacakan status mandiri (Customer Panel), Live Chat, dan AI Agents Chatbox masuk dalam peta jalan (roadmap) tahap berikutnya.',
-      en: 'The v1 architecture runs independently as a Cloudflare Worker backed by D1 (SUPPORT_DB / vz_support_db), enforcing CORS + server-side Turnstile verification for public submissions from vz.gay/legal/abuse and Cloudflare Access JWT validation for staff routes (/, /api/tickets). Email notifications, attachments, public customer ticket lookup, Live Chat, and the AI Agents Chatbox are scheduled for upcoming roadmap phases.',
+      id: 'Sudah aktif di produksi sebagai Cloudflare Worker dengan database D1 (SUPPORT_DB / vz_support_db), validasi CORS + Cloudflare Turnstile (0x4AAAAAAGWaOorjmzmCqhEP) untuk pelaporan publik dari vz.gay/legal/abuse, serta autentikasi Cloudflare Access JWT untuk rute staf (/, /api/tickets). Fitur notifikasi email, lampiran berkas, pelacakan status mandiri (Customer Panel), Live Chat, dan AI Agents Chatbox masuk dalam peta jalan (roadmap) tahap berikutnya.',
+      en: 'Live in production as a Cloudflare Worker backed by D1 (SUPPORT_DB / vz_support_db), enforcing CORS + server-side Turnstile verification (0x4AAAAAAGWaOorjmzmCqhEP) for public submissions from vz.gay/legal/abuse and Cloudflare Access JWT validation for staff routes (/, /api/tickets). Email notifications, attachments, public customer ticket lookup, Live Chat, and the AI Agents Chatbox are scheduled for upcoming roadmap phases.',
     },
     highlights: [
       {
         label: {
-          id: 'Modul Inti v1 (Worker + D1 + Turnstile + Access)',
-          en: 'Core v1 Modules (Worker + D1 + Turnstile + Access)',
+          id: 'Modul Inti v1 Aktif (Worker + D1 + Turnstile + Access)',
+          en: 'Live Core v1 Modules (Worker + D1 + Turnstile + Access)',
         },
         value: {
-          id: 'Public Ticket Intake (POST /api/public/tickets) · Penyimpanan D1 (SUPPORT_DB) · Technician Console dengan Cloudflare Access JWT',
-          en: 'Public Ticket Intake (POST /api/public/tickets) · D1 Storage (SUPPORT_DB) · Cloudflare Access JWT Technician Console',
+          id: 'Public Ticket Intake (POST /api/public/tickets) · Penyimpanan D1 (vz_support_db) · Technician Console dengan Cloudflare Access JWT',
+          en: 'Public Ticket Intake (POST /api/public/tickets) · D1 Storage (vz_support_db) · Cloudflare Access JWT Technician Console',
         },
       },
       {
         label: {
-          id: 'Roadmap Tahap Berikutnya (Belum Aktif di v1)',
+          id: 'Roadmap Tahap Berikutnya (Pengembangan Lanjutan)',
           en: 'Upcoming Roadmap Phases (Planned Post-v1)',
         },
         value: {
@@ -2098,6 +2144,22 @@ export const CLIENT_DOMAIN_MATRIX = [
     patterns: ['*.code.vz.gay', 'demo.jajanan.online'],
     routingNoteId: 'Sudah aktif di codeplace.vz.gay bersama 4 demo: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
     routingNoteEn: 'Live at codeplace.vz.gay with 4 active demos: lensastudio, wiyataxlms, omnipostai.code.vz.gay & demo.jajanan.online',
+  },
+  {
+    service: 'ai.vz.gay (Live)',
+    roleId: 'Gerbang VZ AI & Pratinjau chat.ai.vz.gay',
+    roleEn: 'VZ AI Gateway & chat.ai.vz.gay Preview',
+    patterns: ['ai.vz.gay (Live Static Gateway)', 'chat.ai.vz.gay (In Dev)', 'platform.vz.gay/v1/ai/responses'],
+    routingNoteId: 'Landing page & sandbox lokal aktif (HTTP 200) di Cloudflare Pages · Portal obrolan penuh sedang dibangun di chat.ai.vz.gay',
+    routingNoteEn: 'Static landing page & local sandbox live (HTTP 200) on Cloudflare Pages · Full chat workspace in development at chat.ai.vz.gay',
+  },
+  {
+    service: 'support.vz.gay (Live)',
+    roleId: 'Pusat Tiket Bantuan & Konsol Teknisi',
+    roleEn: 'Support Ticket Intake & Tech Console',
+    patterns: ['support.vz.gay', 'support.vz.gay/api/public/tickets'],
+    routingNoteId: 'Worker + D1 (vz_support_db) aktif dengan verifikasi Turnstile dari vz.gay/legal/abuse & Cloudflare Access JWT',
+    routingNoteEn: 'Live Worker + D1 (vz_support_db) with Turnstile intake from vz.gay/legal/abuse & Cloudflare Access JWT',
   },
   {
     service: 'work.vz.gay / biz.vz.gay (Planned)',
